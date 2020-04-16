@@ -1,0 +1,109 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', Helvetica,
+    STHeiTi, sans-serif;
+  // 文字抗锯齿
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-width: 320px;
+  max-width: 1080px;
+  margin: 0 auto;
+  color: #333333;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption,
+th,
+td {
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+button,
+input[type='number'],
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='search'],
+select,
+textarea {
+  -webkit-appearance: none;
+  font-family: inherit;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+a,
+img {
+  border: none;
+  // 禁用长按页面时的弹出菜单
+  -webkit-touch-callout: none;
+}
+
+a {
+  background: transparent;
+  text-decoration: none;
+}
+
+a,
+input,
+button,
+textarea {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  &:focus {
+    outline: none;
+  }
+}
+
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// 禁止选中文本内容
+*:not(input, select, textarea) {
+  -webkit-user-select: none;
+}

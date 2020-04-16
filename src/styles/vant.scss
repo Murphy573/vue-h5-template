@@ -1,0 +1,25 @@
+/* 重置vant部分样式 */
+
+/* 修改vant 1px边框颜色 */
+[class*='van-hairline']::after {
+  border-color: #d5d5d5 !important;
+}
+
+/* 修改cell 内容:增加省略号 */
+.van-cell {
+  padding: 10px;
+  .van-cell__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* stepper input禁用背景色修改 */
+.van-stepper {
+  .van-stepper__input[disabled] {
+    background-color: #f2f3f5;
+    color: #333333;
+    -webkit-text-fill-color: #333333;
+  }
+}
