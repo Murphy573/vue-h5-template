@@ -1,4 +1,6 @@
-# litemall-h5
+# vue-h5-template
+
+**C 端模板**
 
 ## Project setup
 
@@ -24,6 +26,6 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
+### 使用
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+请查看 [murphy-cli](https://github.com/Murphy573/murphy-cli).
