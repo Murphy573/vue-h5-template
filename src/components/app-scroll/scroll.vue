@@ -8,6 +8,7 @@
 
 <script>
 import { getElement, getOffset } from '@/utils/dom';
+import { scrollToByAnimate } from '@/utils/scroll';
 
 /**
  * 获取滚动后偏移量
@@ -45,13 +46,6 @@ export default {
      * 是否开启横向滚动
      */
     scrollX: Boolean,
-    /**
-     * 开启横向滚动时设定宽度
-     */
-    scrollXWidth: {
-      type: String,
-      default: '100%'
-    },
     /**
      * 是否派发滚动事件
      */
@@ -122,7 +116,7 @@ export default {
       this.maxX = this.scroller.scrollWidth - this.scroller.clientWidth;
       this.maxY = this.scroller.scrollHeight - this.scroller.clientHeight;
     },
-    _translate (x, y) {
+    _translate (x, y, duration) {
       x = Math.round(x);
       y = Math.round(y);
       // 不超过边界
@@ -131,11 +125,10 @@ export default {
       // 保存结束后的位置
       this.x = x;
       this.y = y;
-
-      this.scroller.scrollTo(x, y);
+      scrollToByAnimate(this.scroller, x, y, duration);
     },
-    scrollTo (x, y) {
-      this._translate(x, y);
+    scrollTo (x, y, duration = 500) {
+      this._translate(x, y, duration);
     },
     scrollToTop () {
       this.scrollTo(this.x, 0);

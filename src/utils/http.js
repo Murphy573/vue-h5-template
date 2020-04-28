@@ -3,12 +3,9 @@ import axios from 'axios';
 import store from '../store';
 // import {isString} from './common';
 import {
-  SUCCESS_CODE,
-  FORBIDDEN_TOAST_CODES,
-  CODE_401,
-  CODE_402,
-  CODE_502,
-  CODE_501
+  SUCCESS,
+  TOKEN_TIMEOUT,
+  FORBIDDEN_TOAST_CODES
 } from '../configs/http-code';
 // import { CHANNEL_NO_CURRENT } from '@/configs/channel';
 
@@ -17,7 +14,7 @@ axios.defaults.headers.get['Cache-Control'] = 'no-cache';
 axios.defaults.headers.get['Pragma'] = 'no-cache';
 
 const http = axios.create({
-  baseURL: '/wx',
+  baseURL: '/autocloud',
   timeout: 30000
 });
 
@@ -66,9 +63,7 @@ function showErrorMsg (msg = '') {
 
 // 配置自定义头
 function setCustomHeaders (req) {
-  req.headers['Umall-Client-Token'] = `${store.getters.vx_gt_getToken || ''}`;
-  req.headers['Umall-Cdomain-Name'] = `${store.getters.vx_gt_shopIdentifier ||
-    ''}`;
+  req.headers['Custom-Token'] = `${store.getters.vx_gt_getToken || ''}`;
 }
 
 // 请求前进行拦截
@@ -100,32 +95,19 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   res => {
     let _data = res.data,
-      _code = _data.errno;
-    if (_code !== SUCCESS_CODE) {
-      if (!FORBIDDEN_TOAST_CODES.includes(_code)) {
+      _code = _data.code;
+    if (_code !== SUCCESS) {
+      if (_code === TOKEN_TIMEOUT) {
+        store.dispatch('vx_ac_FrontendLogout');
+      }
+      else if (!FORBIDDEN_TOAST_CODES.includes(_code)) {
         // 这里对具体不为成功的响应码进行处理,可以做提示信息操作
-        if (_code === CODE_401) {
-          showErrorMsg('参数不对');
-        }
-        else if (_code === CODE_402) {
-          showErrorMsg('参数值不对');
-        }
-        else if (_code === CODE_502) {
-          showErrorMsg('网站内部错误，请联系网站维护人员');
-        }
-        else if (_code === CODE_501) {
-          store.dispatch('vx_ac_FrontendLogout');
-          store.dispatch('vx_ac_SetShowLoginPanel', true);
-          // showErrorMsg(_data.errmsg);
-        }
-        else {
-          showErrorMsg(_data.errmsg);
-        }
+        showErrorMsg(_data.message);
       }
       return Promise.reject(_data);
     }
     else {
-      return Promise.resolve(_data.data);
+      return Promise.resolve(_data.content);
     }
   },
   error => {
