@@ -62,7 +62,7 @@ export function handleData (el, name, val) {
 }
 
 /**
- *
+ * 获取元素距离最远的定位元素的offset
  * @param {HTMLElement} el
  */
 export function getOffset (el) {
