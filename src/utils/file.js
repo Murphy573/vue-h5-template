@@ -182,3 +182,14 @@ export function fileDownload (content, filename) {
   // 释放掉blob对象
   window.URL.revokeObjectURL(_url);
 }
+
+export function loadImage (src) {
+  return new Promise((resolve, reject) => {
+    let img = new Image();
+    img.setAttribute('crossOrigin', 'anonymous');
+    img.src = src;
+    img.onload = function () {
+      resolve(img);
+    };
+  });
+}
