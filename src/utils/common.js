@@ -42,7 +42,7 @@ export function isBoolean (target) {
 
 // 判断是否是数字：数字字符串也认为是数字
 export function isNumber (target) {
-  return /^\d+(\.\d+)?$/.test(target);
+  return /^(((-[1-9]\d*)|(\d+))(\.\d+)?)$/.test(target);
 }
 
 export function isPlainObj (target) {
@@ -54,20 +54,4 @@ export function isPlainObj (target) {
  */
 export function isDef (value) {
   return !isUndefined(value) && !isNull(value);
-}
-
-/**
- * IM账号格式化用户
- */
-export function imAccountUser (value) {
-  if (!value) return '';
-  return '8' + value;
-}
-
-/**
- * IM账号格式化客服
- */
-export function imAccountService (value) {
-  if (!value) return '';
-  return '9' + value;
 }
