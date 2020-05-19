@@ -1,4 +1,5 @@
 // js动画，参考：https://matthewlein.com/tools/jquery-easing
+/* eslint-disable */
 export default {
   /**
    *
