@@ -42,7 +42,7 @@ export default {
     ...mapActions(['vx_ac_Logout']),
     async pageInit () {
       try {
-        let _res = await this.checkIsLogin();
+        const _res = await this.checkIsLogin();
         if (_res) {
           this.isLogin = true;
         }

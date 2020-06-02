@@ -39,8 +39,8 @@ export const divide = (num1, num2) => {
   const num2Digits = (num2String.split('.')[1] || '').length;
   const baseNum = Math.pow(10, num1Digits + num2Digits);
 
-  let n1 = times(num1, baseNum);
-  let n2 = times(num2, baseNum);
+  const n1 = times(num1, baseNum);
+  const n2 = times(num2, baseNum);
 
   return Number(n1) / Number(n2);
 };

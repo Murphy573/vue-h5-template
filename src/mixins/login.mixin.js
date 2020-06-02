@@ -70,7 +70,7 @@ export default {
         // 存储来源
         this.CacheOriginMixin();
         // token存在即已经登录
-        let ret = await this.checkIsLogin();
+        const ret = await this.checkIsLogin();
 
         if (ret) {
           // 立即执行组件回调
@@ -93,7 +93,7 @@ export default {
         // 存储来源
         this.CacheOriginMixin();
         // token存在即已经登录
-        let ret = await this.checkIsLogin();
+        const ret = await this.checkIsLogin();
         if (ret) {
           // 立即执行组件回调
           this.LoginedCallMixin();
@@ -127,7 +127,7 @@ export default {
         // 存储来源
         this.CacheOriginMixin();
         // token存在即已经登录
-        let ret = await this.checkIsLogin();
+        const ret = await this.checkIsLogin();
         if (ret) return;
         this.vx_ac_immediatelyLogin(this.$route);
       }

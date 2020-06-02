@@ -21,7 +21,7 @@ export function resetBodyPosition (Vue) {
       el.tagName.toUpperCase() !== 'INPUT' &&
       el.tagName.toUpperCase() !== 'TEXTAREA'
     ) {
-      let _input = el.querySelector('input'),
+      const _input = el.querySelector('input'),
         _textarea = el.querySelector('textarea');
 
       el = _input || _textarea;

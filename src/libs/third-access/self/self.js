@@ -11,7 +11,7 @@ window.MALL_SELF = {
   },
   // 立即登录
   immediatelyLogin (routerInfo) {
-    let _params = getUrlParam('params') || routerInfo.query['params'] || '';
+    const _params = getUrlParam('params') || routerInfo.query.params || '';
 
     _params && store.dispatch('vx_ac_handleThirdLogin', _params);
   }

@@ -72,7 +72,7 @@ export default {
 
   computed: {
     cmpt_getStyle () {
-      let { currentLeft, currentTop } = this.elementPosition;
+      const { currentLeft, currentTop } = this.elementPosition;
       return {
         top: currentTop + 'px',
         left: currentLeft + 'px',
@@ -83,7 +83,7 @@ export default {
 
   mounted () {
     this.$nextTick(() => {
-      let { clientWidth, clientHeight } = this.$refs['dragElement'];
+      const { clientWidth, clientHeight } = this.$refs.dragElement;
       this.dragElementRect = {
         width: clientWidth,
         height: clientHeight
@@ -104,7 +104,7 @@ export default {
 
   methods: {
     resetDragElement () {
-      let { clientWidth, clientHeight } = this.$refs['dragElement'];
+      const { clientWidth, clientHeight } = this.$refs.dragElement;
       this.dragElementRect = {
         width: clientWidth,
         height: clientHeight
@@ -134,7 +134,7 @@ export default {
       this.elementPosition.top = this.elementPosition.currentTop;
 
       // 屏幕竖向中线
-      let _bodyMiddle = this.bodyReact.width / 2,
+      const _bodyMiddle = this.bodyReact.width / 2,
         _dragElementMiddle = this.dragElementRect.width / 2;
 
       // 屏幕左侧

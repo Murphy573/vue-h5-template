@@ -6,8 +6,8 @@ import { isPlainObj } from './common';
  * @returns {String} 参数值
  */
 export function getUrlParam (name, url = null) {
-  let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-  let r = url
+  const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+  const r = url
     ? new URL(url).search.substr(1).match(reg)
     : window.location.search.substr(1).match(reg);
   if (r != null) return unescape(r[2]);
@@ -58,8 +58,8 @@ export function appendUrlParams (url, paramObj) {
   if (!url) return '';
   if (!paramObj || !isPlainObj(paramObj)) return url;
 
-  let paramArr = [];
-  for (let key in paramObj) {
+  const paramArr = [];
+  for (const key in paramObj) {
     paramArr.push(`${key}=${paramObj[key]}`);
   }
 
@@ -76,7 +76,7 @@ export function appendUrlParams (url, paramObj) {
 export function deleteUrlParams (url, params) {
   if (!url || !Array.isArray(params)) return url;
   params.forEach(item => {
-    let pattern = '&*' + item + '=([^&]*)';
+    const pattern = '&*' + item + '=([^&]*)';
     if (url.match(pattern)) {
       url = url.replace(url.match(pattern)[0], '');
     }

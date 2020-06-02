@@ -12,7 +12,7 @@ export default {
       state.cachedViews.push(componentName);
     },
     REMOVE_CACHED_VIEW (state, componentName) {
-      let _index = state.cachedViews.indexOf(componentName);
+      const _index = state.cachedViews.indexOf(componentName);
       if (_index >= 0) {
         state.cachedViews.splice(_index, 1);
       }

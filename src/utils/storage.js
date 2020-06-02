@@ -20,9 +20,9 @@ const setItem = (type, args) => {
     args.length === 1 &&
     Object.prototype.toString.call(args[0]) === '[object Object]'
   ) {
-    let data = args[0];
+    const data = args[0];
     Object.keys(data).forEach(key => {
-      let value = data[key];
+      const value = data[key];
       window[type].setItem(key, value);
     });
   }
@@ -46,12 +46,12 @@ const removeItem = (type, args) => {
 
 const getAllItems = type => {
   if (!type) return {};
-  let _storage = window[type];
-  let _len = _storage.length;
+  const _storage = window[type];
+  const _len = _storage.length;
   let i = 0;
-  let _res = {};
+  const _res = {};
   while (i < _len) {
-    let _key = _storage.key(i),
+    const _key = _storage.key(i),
       _value = _storage.getItem(_key);
     _res[_key] = _value;
     i++;

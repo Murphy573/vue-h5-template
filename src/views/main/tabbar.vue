@@ -26,7 +26,7 @@ export default {
 
   computed: {
     tabbar () {
-      let _tabbar = [
+      const _tabbar = [
         {
           name: '主页',
           routerName: 'home',

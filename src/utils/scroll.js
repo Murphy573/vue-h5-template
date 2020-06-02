@@ -82,7 +82,7 @@ export function scrollToByAnimate (el, x, y, duration = 500, easingFn) {
   const animateFn = createAnimate(duration, easingFn);
 
   const animateCallback = easing => {
-    let newPoint = {};
+    const newPoint = {};
     Object.keys(endPoint).forEach(key => {
       const startValue = startPoint[key];
       const endValue = endPoint[key];

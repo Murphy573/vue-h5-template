@@ -80,7 +80,7 @@ export default {
       return this.parent ? this.parent.gutter : 0;
     },
     cmpt_itemStyle () {
-      let paddingLeft = this.gutter / 2 / 75 + 'rem', paddingRight = paddingLeft;
+      const paddingLeft = this.gutter / 2 / 75 + 'rem', paddingRight = paddingLeft;
       return {
         paddingLeft,
         paddingRight
@@ -120,7 +120,7 @@ export default {
       }
     },
     setParentValue (val) {
-      let parent = this.parent;
+      const parent = this.parent;
       const value = parent.value.slice();
 
       if (val) {
@@ -163,7 +163,6 @@ export default {
     padding-left: 0.133333rem /* 10/75 */;
     color: #333333;
     font-size: $--size-28;
-    color: rgba(51, 51, 51, 1);
   }
 }
 </style>

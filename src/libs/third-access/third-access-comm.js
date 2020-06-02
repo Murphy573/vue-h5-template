@@ -49,7 +49,7 @@ window.THIRD_ACCESS_COMM = {
   },
   // 获取第三方渠道接入对象
   ENV: (() => {
-    let _env = window[CHANNEL_NO_ENV[CHANNEL_NO_CURRENT]];
+    const _env = window[CHANNEL_NO_ENV[CHANNEL_NO_CURRENT]];
     if (!_env) throw new Error('third-access-comm：没有找到对应渠道');
     return _env;
   })()

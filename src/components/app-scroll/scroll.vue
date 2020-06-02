@@ -90,7 +90,7 @@ export default {
       }
       this.scroller = this.$refs.scrollWrapper;
       // 获取滚动元素的offset
-      let wrapperOffset = getOffset(this.scroller);
+      const wrapperOffset = getOffset(this.scroller);
       this.scrollerOffset.offsetX = wrapperOffset.left;
       this.scrollerOffset.offsetY = wrapperOffset.top;
       this._refresh();
@@ -148,17 +148,17 @@ export default {
      * 在当前滚动位置基础上，再滚动的距离
      */
     scrollBy (deltaX, deltaY) {
-      let x = this.x + deltaX;
-      let y = this.y + deltaY;
+      const x = this.x + deltaX;
+      const y = this.y + deltaY;
       this.scrollTo(x, y);
     },
     scrollToElement (el, offsetX = 0, offsetY = 0) {
-      let _el = getElement(el);
+      const _el = getElement(el);
       if (!_el) {
         throw new Error('Cannot find elment!');
       }
       this._refresh();
-      let pos = getOffset(_el);
+      const pos = getOffset(_el);
       /* 确定滚动后偏移量 */
       offsetX = getScrollOffset(
         offsetX,

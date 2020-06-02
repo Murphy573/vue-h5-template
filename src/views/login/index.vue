@@ -61,7 +61,7 @@ import { mapActions, mapGetters } from 'vuex';
 import { PHONE_PATTERN } from '@/configs/pattern';
 import { api_send_smsCodeForLogin } from '@/apis/basic';
 import CountdownMixin from '@/mixins/countdown.mixin';
-import AppPopup from '@components/app-popup';
+import AppPopup from '@/components/app-popup';
 import Validator from '@/utils/validator';
 
 export default {

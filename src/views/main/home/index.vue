@@ -7,9 +7,16 @@
       </app-header>
     </template>
     <template #content>
-      <div>
-        主页
+      <div class="home-wrapper full-container">
+        <span>主页</span>
         <van-button @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
+        <ul class="app-grid">
+          <li v-for="i of 3"
+            :key="i"
+            class="app-grid-item">
+
+          </li>
+        </ul>
       </div>
     </template>
   </AppPageContainer>
@@ -42,5 +49,42 @@ export default {
 .home-wrapper {
   overflow-y: auto;
   overflow-x: hidden;
+  font-size: 30px;
+
+  > span {
+    margin-left: 100px;
+    background: $--color-golden;
+  }
+
+  .app-grid {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    > .app-grid-item {
+      width: 33.333333%;
+      height: 100px;
+      background: $--color-golden;
+      margin-bottom: 10px;
+
+      &:nth-child(1) {
+        flex-shrink: 1;
+        flex-grow: 1;
+        width: 50px;
+      }
+      &:nth-child(2) {
+        flex-shrink: 2;
+        flex-grow: 2;
+        width: 100px;
+        background: $--color-red;
+      }
+      &:nth-child(3) {
+        flex-grow: 3;
+        flex-shrink: 3;
+        width: 150px;
+      }
+    }
+  }
 }
 </style>

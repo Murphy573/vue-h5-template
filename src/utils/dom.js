@@ -14,7 +14,7 @@ export function getElement (el) {
  * @param {String} className
  */
 export function hasClass (el, className) {
-  let reg = new RegExp('(^|\\s)' + className + '(\\s|$)');
+  const reg = new RegExp('(^|\\s)' + className + '(\\s|$)');
   return reg.test(el.className);
 }
 
@@ -28,7 +28,7 @@ export function addClass (el, className) {
     return;
   }
 
-  let newClass = el.className.split(' ');
+  const newClass = el.className.split(' ');
   newClass.push(className);
   el.className = newClass.join(' ');
 }
@@ -43,7 +43,7 @@ export function removeClass (el, className) {
     return;
   }
 
-  let reg = new RegExp('(^|\\s)' + className + '(\\s|$)', 'g');
+  const reg = new RegExp('(^|\\s)' + className + '(\\s|$)', 'g');
   el.className = el.className.replace(reg, ' ');
 }
 
@@ -54,7 +54,7 @@ export function removeClass (el, className) {
  * @param {Any} val
  */
 export function handleData (el, name, val) {
-  let prefix = 'data-';
+  const prefix = 'data-';
   if (val) {
     return el.setAttribute(prefix + name, val);
   }
@@ -83,7 +83,7 @@ export function getOffset (el) {
 
 export function getRect (el) {
   if (el instanceof window.SVGElement) {
-    let rect = el.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
     return {
       top: rect.top,
       left: rect.left,

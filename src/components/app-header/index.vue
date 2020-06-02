@@ -1,5 +1,5 @@
 <template>
-  <div class="header-wrapper"
+  <div class="app-header"
     :style="cmpt_getStyle">
     <div class="left text-ellipsis">
       <slot name="left">
@@ -23,21 +23,21 @@
 <script>
 // type对应的样式
 const TYPE_STYLE_MAPPER = {
-  'transparent': {
+  transparent: {
     color: '#ffffff',
     background: 'rgba(255,255,255,0)'
   },
-  'primary': {
+  primary: {
     color: '#333333',
-    background: `rgb(247, 247, 247)`
+    background: 'rgb(247, 247, 247)'
   },
-  'minor': {
+  minor: {
     color: '#333333',
-    background: `transparent`
+    background: 'transparent'
   },
-  'normal': {
+  normal: {
     color: '#333333',
-    background: `#ffffff`
+    background: '#ffffff'
   }
 };
 
@@ -107,7 +107,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header-wrapper {
+.app-header {
   position: relative;
   display: flex;
   font-size: 14px;

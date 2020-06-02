@@ -23,16 +23,7 @@ module.exports = {
   // 是否为 Babel 或 TypeScript 使用 thread-loader
   parallel: require('os').cpus().length > 1,
   chainWebpack: config => {
-    config.resolve.alias
-      .set('@', resolve('src'))
-      .set('vue$', 'vue/dist/vue.esm.js')
-      .set('@views', resolve('src/views'))
-      .set('@assets', resolve('src/assets'))
-      .set('@styles', resolve('src/styles'))
-      .set('@apis', resolve('src/apis'))
-      .set('@components', resolve('src/components'))
-      .set('@utils', resolve('src/utils'))
-      .set('@configs', resolve('src/configs'));
+    config.resolve.alias.set('@', resolve('src'));
 
     // 移除 prefetch 插件
     config.plugins.delete('prefetch');
@@ -43,13 +34,13 @@ module.exports = {
   css: {
     // 是否开启 CSS source map？
     sourceMap: !!IS_PRODUCTION,
-    modules: false,
+    // requireModuleExtension: false,
     extract: !!IS_PRODUCTION,
     loaderOptions: {
       // 给 sass-loader 传递选项
       sass: {
         // 这里只能引入全局变量css文件，其他的通用样式不要引入，不然会产生样式混乱
-        prependData: '@import "@styles/var.scss";'
+        prependData: '@import "@/styles/var.scss";'
       }
     }
   },

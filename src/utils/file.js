@@ -90,16 +90,16 @@ export async function imageCompress (
     ctx = canvas.getContext('2d'),
     _time = 0,
     _fileRaw = fileRaw;
-  let _this = this;
+  const _this = this;
 
-  let _compress = () => {
+  const _compress = () => {
     return new Promise((resolve, reject) => {
       _this.readBlobAsDataURL(_fileRaw, function (dataUrl) {
         let img = new Image();
         img.src = dataUrl;
         img.onload = function () {
           // 获取图片的原始尺寸
-          let originW = this.width,
+          const originW = this.width,
             originH = this.height;
           // 目标尺寸
           let targetWidth = originW,
@@ -107,7 +107,7 @@ export async function imageCompress (
 
           if (WHSize) {
             // 图片尺寸超过w * h的限制
-            let { w: maxWidth, h: maxHeight } = WHSize;
+            const { w: maxWidth, h: maxHeight } = WHSize;
             if (originW > maxWidth || originH > maxHeight) {
               // 更宽，按照宽度限定尺寸
               if (originW / originH > maxWidth / maxHeight) {
@@ -129,7 +129,7 @@ export async function imageCompress (
           // 绘图
           ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
           // 从canvas输出图片
-          let _finalData = _this.canvasToDataUrl(
+          const _finalData = _this.canvasToDataUrl(
             canvas,
             `image/${outputType}`,
             encoder
@@ -172,7 +172,7 @@ export function fileDownload (content, filename) {
   eleLink.style.display = 'none';
   // 字符内容转变成blob地址
   const blob = new Blob([content]);
-  let _url = window.URL.createObjectURL(blob);
+  const _url = window.URL.createObjectURL(blob);
   eleLink.href = _url;
   // 触发点击
   document.body.appendChild(eleLink);
@@ -185,7 +185,7 @@ export function fileDownload (content, filename) {
 
 export function loadImage (src) {
   return new Promise((resolve, reject) => {
-    let img = new Image();
+    const img = new Image();
     img.setAttribute('crossOrigin', 'anonymous');
     img.src = src;
     img.onload = function () {

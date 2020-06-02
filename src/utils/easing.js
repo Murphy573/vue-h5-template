@@ -149,11 +149,11 @@ const easing = {
     );
   },
   easeInBack: function (t) {
-    let s = 1.70158;
+    const s = 1.70158;
     return 1 * (t /= 1) * t * ((s + 1) * t - s);
   },
   easeOutBack: function (t) {
-    let s = 1.70158;
+    const s = 1.70158;
     return 1 * ((t = t / 1 - 1) * t * ((s + 1) * t + s) + 1);
   },
   easeInOutBack: function (t) {

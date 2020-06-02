@@ -66,7 +66,7 @@ export default {
     async vx_ac_Login ({ dispatch }, loginParams) {
       try {
         if (!loginParams) return;
-        let _res = await api_login_byUnified(loginParams);
+        const _res = await api_login_byUnified(loginParams);
         // 设置token
         _res.userInfo.nickName =
           _res.userInfo.nickName || phoneFormatter(loginParams.phone || '');
@@ -81,7 +81,7 @@ export default {
     // 前端退出登录
     vx_ac_FrontendLogout ({ dispatch }) {
       // 清除缓存：主要是为了防止切换用户，以前的缓存造成数据错误
-      let _allSessionStorages = MyStorage.sessionStorage.getAll();
+      const _allSessionStorages = MyStorage.sessionStorage.getAll();
       Object.keys(_allSessionStorages).forEach(key => {
         // 不清除指定的缓存
         if (!DONNOT_SESSION_CLEAR_KEYS.includes(key)) {
@@ -108,7 +108,7 @@ export default {
     // 获取用户信息
     async vx_ac_GetUserInfo ({ dispatch }) {
       try {
-        let _userInfo = JSON.parse(
+        const _userInfo = JSON.parse(
           MyStorage.localStorage.getItem(USERINFO_KEY)
         );
         dispatch('vx_ac_SetUserInfo', _userInfo);

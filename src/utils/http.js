@@ -11,7 +11,7 @@ import {
 
 // 设置http get请求不缓存
 axios.defaults.headers.get['Cache-Control'] = 'no-cache';
-axios.defaults.headers.get['Pragma'] = 'no-cache';
+axios.defaults.headers.get.Pragma = 'no-cache';
 
 const http = axios.create({
   baseURL: '/autocloud',
@@ -94,7 +94,7 @@ http.interceptors.request.use(
  */
 http.interceptors.response.use(
   res => {
-    let _data = res.data,
+    const _data = res.data,
       _code = _data.code;
     if (_code !== SUCCESS) {
       if (_code === TOKEN_TIMEOUT) {

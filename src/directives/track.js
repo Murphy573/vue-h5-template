@@ -13,7 +13,7 @@ import Vue from 'vue';
  */
 const track = {
   bind: function (el, binding) {
-    let _arg = binding.arg || 'click';
+    const _arg = binding.arg || 'click';
 
     el.addEventListener(_arg, () => {
       let category, name, value;

@@ -34,7 +34,7 @@ export function createAnimate (duration, easingFn = Easying.easeInOutQuad) {
 
       now = (now - startTime) / duration;
       // easing动画返回的系数永远小于1
-      let easing = easingFn(now);
+      const easing = easingFn(now);
       callback(easing);
       timer = raf(step);
     };

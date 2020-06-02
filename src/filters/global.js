@@ -6,7 +6,7 @@ export function date (target, format) {
 
 export function number (target) {
   if (!target) return null;
-  let _number = Number(target);
+  const _number = Number(target);
   if (Number.isNaN(_number)) return null;
   return _number;
 }
@@ -19,10 +19,10 @@ export function number (target) {
  */
 export function NumberFormat (target, hold = 0, rounding = true) {
   if (Number.isNaN(Number(target))) return null;
-  let r = /^\+?[1-9][0-9]*$/;
+  const r = /^\+?[1-9][0-9]*$/;
   hold = r.test(hold) ? Number(hold) : 0;
   target = Number(target);
-  let _multiplier = Math.pow(10, hold);
+  const _multiplier = Math.pow(10, hold);
 
   if (rounding) {
     return Math.round(target * _multiplier) / _multiplier;
@@ -34,7 +34,7 @@ export function NumberFormat (target, hold = 0, rounding = true) {
 
 // 手机号格式化
 export function phoneFormatter (phone) {
-  let reg = /^(\d{3})\d{4}(\d{4})$/;
+  const reg = /^(\d{3})\d{4}(\d{4})$/;
   return phone.replace(reg, '$1****$2');
 }
 
@@ -43,7 +43,7 @@ export function price (value, prefix = '¥') {
   if (Number.isNaN(Number(value))) return null;
 
   let _res = NumberFormat(value, 2);
-  let s = _res.toString().split('.');
+  const s = _res.toString().split('.');
   // 判断数组长度确定是否补0
   if (s.length === 1) {
     _res = _res.toString() + '.00';

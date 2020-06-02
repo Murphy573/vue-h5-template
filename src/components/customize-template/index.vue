@@ -13,9 +13,9 @@
 const req = context => context.keys().map(context);
 const templates = req(require.context('./templates', false, /\.vue$/));
 
-let Components = {};
+const Components = {};
 templates.forEach(temp => {
-  let _instance = temp.default;
+  const _instance = temp.default;
   Components[_instance.name] = _instance;
 });
 

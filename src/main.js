@@ -24,7 +24,7 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 // 加入移动端调试工具:生产环境中添加
 if (process.env.VUE_APP_Show_VConsole === 'true') {
-  let VCsl = require('vconsole');
+  const VCsl = require('vconsole');
   new VCsl();
 }
 new Vue({

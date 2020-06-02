@@ -17,7 +17,7 @@ export default {
 
   computed: {
     cmpt_finalData () {
-      let _data = deepClone(this.data);
+      const _data = deepClone(this.data);
       try {
         _data.css = JSON.parse(_data.css);
         _data.sectionItemList = _data.sectionItemList.map(item => {

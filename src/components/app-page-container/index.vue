@@ -1,9 +1,9 @@
 <template>
   <div class="app-page-container">
-    <div class="header">
+    <div class="app-page-header">
       <slot name="header"></slot>
     </div>
-    <div class="content page-container">
+    <div class="app-page-content">
       <slot name="content"></slot>
     </div>
   </div>
@@ -21,12 +21,12 @@ export default {
   height: 100%;
   overflow: hidden;
 
-  > .header {
+  > .app-page-header {
     height: 44px;
     width: 100%;
   }
 
-  > .content {
+  > .app-page-content {
     height: calc(100% - 44px);
     width: 100%;
     position: relative;

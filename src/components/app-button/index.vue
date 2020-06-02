@@ -59,11 +59,11 @@ export default {
   },
   computed: {
     cmpt_getStyle () {
-      let f = this.fontSize / 75 + 'rem';
-      let w = this.width / 75 + 'rem';
-      let h = this.height / 75 + 'rem';
-      let r = this.height / 75 / 2 + 'rem';
-      let styleData = {
+      const f = this.fontSize / 75 + 'rem';
+      const w = this.width / 75 + 'rem';
+      const h = this.height / 75 + 'rem';
+      const r = this.height / 75 / 2 + 'rem';
+      const styleData = {
         fontSize: f,
         width: w,
         height: h,
@@ -71,16 +71,16 @@ export default {
       };
       if (this.plain) {
         if (this.border) {
-          styleData['border'] = `1px solid ${this.borderColor}`;
+          styleData.border = `1px solid ${this.borderColor}`;
         }
-        styleData['color'] = this.color;
-        styleData['background'] = this.background;
+        styleData.color = this.color;
+        styleData.background = this.background;
       }
       return styleData;
     },
     cmpt_getClass () {
       if (!this.plain) {
-        return [this.type, { 'disabled': this.disabled }];
+        return [this.type, { disabled: this.disabled }];
       }
       else {
         return [];

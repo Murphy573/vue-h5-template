@@ -70,13 +70,13 @@ export default {
 
   methods: {
     calcFoldHeight () {
-      let _style = window.getComputedStyle(this.$refs.foldText);
+      const _style = window.getComputedStyle(this.$refs.foldText);
       let { lineHeight, fontSize } = _style;
       fontSize = fontSize || '12px';
-      let _fontSize = Number((fontSize || '12px').match(/\d+/g)[0]);
+      const _fontSize = Number((fontSize || '12px').match(/\d+/g)[0]);
       // 如果是normal，默认为字体大小的1.2倍
       lineHeight = lineHeight === 'normal' ? _fontSize * 1.2 + 'px' : lineHeight;
-      let _lineHeight = Number(lineHeight.match(/\d+/g)[0]);
+      const _lineHeight = Number(lineHeight.match(/\d+/g)[0]);
       // 文本收起状态下最大高度=行高*行数
       this.foldMaxHeight = _lineHeight * this.limitLine;
 
