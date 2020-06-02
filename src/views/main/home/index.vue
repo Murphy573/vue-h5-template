@@ -46,6 +46,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.red {
+  color: red;
+}
 .home-wrapper {
   overflow-y: auto;
   overflow-x: hidden;
@@ -54,6 +57,12 @@ export default {
   > span {
     margin-left: 100px;
     background: $--color-golden;
+  }
+
+  ::v-deep {
+    .van-button {
+      font-size: 20px !important;
+    }
   }
 
   .app-grid {
