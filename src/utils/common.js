@@ -55,3 +55,12 @@ export function isPlainObj (target) {
 export function isDef (value) {
   return !isUndefined(value) && !isNull(value);
 }
+
+// 等待毫秒数
+export function sleep (millisecond = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, millisecond);
+  });
+}

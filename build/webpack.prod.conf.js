@@ -62,7 +62,14 @@ module.exports = {
           test: /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/,
           name: 'vue-vendor',
           chunks: 'all',
-          priority: 20
+          priority: 30
+        },
+        comps: {
+          name: 'chunk-comps',
+          test: resolve('../src/components'),
+          minChunks: 2,
+          priority: 20,
+          reuseExistingChunk: true
         },
         libs: {
           name: 'chunk-libs',
