@@ -1,0 +1,46 @@
+// 主题颜色配置
+
+$themes :(
+  default: (
+    // 全局颜色
+    color-primary: #ea468f,
+    color-secondary: #7bc2b4,
+
+    // 文字颜色
+    color-text-primary: #303133,
+    color-text-regular: #606266,
+    color-text-secondary: #969799,
+    color-text-placeholder:#C0C4CC,
+
+    // 边框颜色
+    color-border-base: #d5d5d5,
+    color-border-light: #E4E7ED,
+    border-color-lighter:#F2F6FC,
+
+    // 背景颜色
+    color-background-white: #ffffff,
+    color-background-black: #000000,
+    color-background-base: rgba($color: #f9f9f9, $alpha: 0.9)
+  ),
+  dark: (
+    // 全局颜色
+    color-primary: #ea468f,
+    color-secondary: #000,
+
+    // 文字颜色
+    color-text-primary: #303133,
+    color-text-regular: #606266,
+    color-text-secondary: #969799,
+    color-text-placeholder:#C0C4CC,
+
+    // 边框颜色
+    color-border-base: #d5d5d5,
+    color-border-light: #E4E7ED,
+    border-color-lighter:#F2F6FC,
+
+    // 背景颜色
+    color-background-white: #ffffff,
+    color-background-black: #000000,
+    color-background-base: rgba($color: #f9f9f9, $alpha: 0.9)
+  )
+);

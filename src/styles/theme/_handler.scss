@@ -1,0 +1,29 @@
+@import './_theme.scss';
+ 
+ 
+@mixin themeify {
+  @each $theme-name, $theme-map in $themes {
+    $theme-map: $theme-map !global;
+    html[data-theme=#{$theme-name}] & {
+      @content;
+    }
+  }
+}
+ 
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+
+
+//获取背景颜色
+@mixin background_color($color) {
+  @include themeify {
+    background-color: themed($color)!important;
+  }
+}
+
+
+:export {
+  colorPrimary: map-get(map-get($themes, 'default'), 'color-primary')
+}

@@ -60,7 +60,10 @@ export default {
 
 <style lang="scss">
 .app-container {
+  // @import '@/styles/theme/_handler.scss';
+
   background-color: rgba($color: #f9f9f9, $alpha: 0.9);
+  // @include background_color('color-secondary');
   overflow: hidden;
 
   .app-container-main {
