@@ -18,12 +18,9 @@
 </template>
 
 <script>
-import AppWaterfall from '@/components/app-waterfall/index';
 
 export default {
   name: 'Waterfall',
-
-  components: { AppWaterfall },
 
   data () {
     return {

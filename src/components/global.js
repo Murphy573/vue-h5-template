@@ -7,6 +7,7 @@ import { AppRadioGroup, AppRadio } from './app-radio/index';
 import { AppCheckboxGroup, AppCheckbox } from './app-checkbox/index';
 import AppImage from './app-image/index';
 import AppIcon from './app-icon/index.js';
+import AppWaterfall from './app-waterfall/index.js';
 
 const components = [
   AppPageContainer,
@@ -17,7 +18,8 @@ const components = [
   AppCheckboxGroup,
   AppCheckbox,
   AppImage,
-  AppIcon
+  AppIcon,
+  AppWaterfall
 ];
 
 components.forEach(component => {
