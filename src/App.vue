@@ -4,7 +4,7 @@
     <!-- 全局登录 -->
     <app-login :visible="vx_gt_showLoginPanel"></app-login>
     <template v-if="loading">
-      <van-loading class="loading"
+      <van-loading class="app-loading"
         size="1rem"
         color="#2c74b9"
         vertical>加载中...</van-loading>
@@ -86,7 +86,7 @@ export default {
     }
   }
 
-  .loading {
+  .app-loading {
     position: absolute;
     top: 50%;
     left: 50%;

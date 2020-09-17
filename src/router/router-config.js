@@ -34,6 +34,14 @@ export default [
       default: () => import('@/views/scroll/index')
     }
   },
+  // scroll
+  {
+    path: '/fall',
+    name: 'fall',
+    components: {
+      default: () => import('@/views/waterfall/index.vue')
+    }
+  },
   {
     path: '*',
     redirect: {

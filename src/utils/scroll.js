@@ -1,5 +1,45 @@
 /* 滚动相关 */
 import { createAnimate } from './animate';
+
+// 可滚动属性正则
+const overflowScrollReg = /scroll|auto/i;
+
+/**
+ * 获取最近的可滚动元素
+ * @param {HTMLElement} el 元素节点
+ * @param {HTMLElement} root 自定义根结点
+ * http://w3help.org/zh-cn/causes/SD9013
+ * http://stackoverflow.com/questions/17016740/onscroll-function-is-not-working-for-chrome
+ */
+export function getScroller (el, root = window) {
+  let node = el;
+
+  while (
+    node &&
+    node.tagName !== 'HTML' &&
+    node.nodeType === 1 &&
+    node !== root
+  ) {
+    const { overflowY } = window.getComputedStyle(node);
+
+    if (overflowScrollReg.test(overflowY)) {
+      if (node.tagName !== 'BODY') {
+        return node;
+      }
+
+      // see: https://github.com/youzan/vant/issues/3823
+      const { overflowY: htmlOverflowY } = window.getComputedStyle(node.parentNode);
+
+      if (overflowScrollReg.test(htmlOverflowY)) {
+        return node;
+      }
+    }
+    node = node.parentNode;
+  }
+
+  return root;
+}
+
 /**
  * 获取垂直滚动距离
  * @param {HTMLElement} el 滚动节点
