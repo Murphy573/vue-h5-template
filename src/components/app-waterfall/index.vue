@@ -12,6 +12,7 @@
       <div class="wrapper">
         <!-- 瀑布流 -->
         <div class="waterfall clearfix"
+          ref="waterfall"
           :style="wrapperStyle">
           <!-- 列 -->
           <div v-for="(col, index) in renderList"
@@ -21,10 +22,11 @@
             :key="'column' + index">
             <!-- 元素 -->
             <div v-for="(item, index) of col"
-              :key="dataKey ? item[dataKey] : index"
+              :key="item[dataKey]"
               :style="itemStyle"
               class="item clearfix">
-              <slot :data="item"></slot>
+              <slot :data="item"
+                :index="index"></slot>
             </div>
           </div>
         </div>
@@ -69,7 +71,7 @@ export default {
     // 距离底部
     offset: {
       type: Number,
-      default: 500
+      default: 300
     },
     // 是否正在渲染
     rendering: Boolean,
@@ -91,8 +93,21 @@ export default {
     },
     // 数据每一项距离下方margin
     itemMarginBottom: [Number, String],
+    // 数据列表
+    data: {
+      type: Array,
+      default () {
+        return [];
+      }
+    },
     // 数据每一项的key
-    dataKey: String,
+    dataKey: {
+      type: [String, Function],
+      required: true,
+      default () {
+        return '';
+      }
+    },
     // 是否按照高度填充，否则将根据索引
     justify: Boolean
   },
@@ -101,10 +116,10 @@ export default {
     return {
       // 渲染的二维数组
       renderList: [],
+      // 是否已经初始化
+      ininted: false,
       // 每列高度
       colsHeight: [],
-      // 渲染第几个item
-      renderIndex: -1,
       // 是否正在渲染
       isRendering: false,
       // 最后一次渲染的索引
@@ -153,29 +168,61 @@ export default {
     }
   },
 
-  created () {
-    // 初始化二维数组
-    for (let i = 0; i < this.cols; i++) {
-      this.renderList.push([]);
-      this.colsHeight.push(0);
+  watch: {
+    data: {
+      immediate: true,
+      handler () {
+        if (!this.ininted) {
+          this.init();
+        }
+        this.append();
+      }
     }
   },
 
   methods: {
-    _appendByIndex (data) {
-      data.forEach((d, i) => {
-        const colIndex = (i + this.lastRenderIndex) % this.cols;
-        this.renderList[colIndex].push(d);
-      });
-      this.lastRenderIndex += data.length;
+    // 初始化二维渲染数组
+    init () {
+      for (let i = 0; i < this.cols; i++) {
+        this.renderList.push([]);
+        this.colsHeight.push(0);
+      }
+      this.ininted = true;
+    },
+    async _appendByIndex () {
+      try {
+        this.isRendering = true;
+
+        let { data, cols, lastRenderIndex: start } = this;
+        let end = data.length;
+
+        for (; start < end; start++) {
+          const colIndex = start % cols;
+          this.renderList[colIndex].push(data[start]);
+          await new Promise((resolve, reject) => {
+            // 强制渲染
+            /* eslint-disable-next-line */
+            this.$refs.waterfall.offsetHeight;
+            this.$nextTick(() => {
+              resolve();
+            });
+          });
+          this.lastRenderIndex++;
+        }
+
+        this.isRendering = false;
+      }
+      catch (error) { }
     },
     async _appendByJustify (data) {
       try {
         this.isRendering = true;
-        const { colsHeight } = this;
 
-        while (data.length) {
-          const first = data.shift();
+        let { data, lastRenderIndex: start, colsHeight } = this;
+        let end = data.length;
+
+        for (; start < end; start++) {
+          const first = data[start];
           const minHeight = Math.min.apply(null, colsHeight);
           const minHeightColIndex = this.getMinhIndex(colsHeight, minHeight);
           // 添加到最小高度列
@@ -192,6 +239,7 @@ export default {
               resolve();
             });
           });
+          this.lastRenderIndex++;
         }
         this.isRendering = false;
       }
@@ -201,13 +249,14 @@ export default {
     getMinhIndex (arr, value) {
       return arr.findIndex(h => h === value);
     },
-    append (data) {
-      if (!Array.isArray(data) || !data.length) return;
+    append () {
+      if (!Array.isArray(this.data) || !this.data.length) return;
+
       if (!this.justify) {
-        this._appendByIndex(data.slice());
+        this._appendByIndex();
       }
       else {
-        this._appendByJustify(data.slice());
+        this._appendByJustify();
       }
     }
   }

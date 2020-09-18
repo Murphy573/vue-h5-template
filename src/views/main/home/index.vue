@@ -10,6 +10,7 @@
       <div class="home-wrapper full-container">
         <span>主页</span>
         <van-button @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
+        <van-button @click="$router.push({name:'fall'})">跳转到waterfall</van-button>
         <ul class="app-grid">
           <li v-for="i of 3"
             :key="i"
