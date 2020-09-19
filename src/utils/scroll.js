@@ -85,6 +85,17 @@ export function setScrollLeft (el, value) {
 }
 
 /**
+ * 获取滚动位置
+ * @param {HTMLElement} el 滚动节点
+ */
+export function getScrollPosition (el) {
+  return {
+    x: getScrollLeft(el),
+    y: getScrollTop(el)
+  };
+}
+
+/**
  * 设置滚动位置
  * @param {HTMLElement} el 滚动节点
  * @param {Number} x 水平位置
@@ -122,7 +133,7 @@ export function scrollToByAnimate (el, x, y, duration = 500, easingFn) {
   const animateFn = createAnimate(duration, easingFn);
 
   const animateCallback = easing => {
-    const newPoint = {};
+    let newPoint = {};
     Object.keys(endPoint).forEach(key => {
       const startValue = startPoint[key];
       const endValue = endPoint[key];

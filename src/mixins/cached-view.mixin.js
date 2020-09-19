@@ -1,6 +1,6 @@
-/* 滚动位置记录 */
-import { mapActions } from 'vuex';
+import { setScrollPosition, getScrollPosition } from '@/utils/scroll';
 
+/* 滚动位置记录 */
 export default {
   data () {
     return {
@@ -20,20 +20,46 @@ export default {
     this.recordSrollTopMixin = this.$refs[this.scrollRefMixin]
       ? this.$refs[this.scrollRefMixin].scrollTop
       : 0;
-  },
-
-  beforeRouteLeave (to, from, next) {
-    // 组件中提供该方法，用来判断是否应该添加到缓存：默认为组件name
-    if (this.canCachedViewMixin && this.canCachedViewMixin(to, from)) {
-      this.vx_ac_AddCachedView(this.$options.name);
-    }
-    else {
-      this.vx_ac_RemoveCachedView(this.$options.name);
-    }
-    next();
-  },
-
-  methods: {
-    ...mapActions(['vx_ac_AddCachedView', 'vx_ac_RemoveCachedView'])
   }
 };
+
+/**
+ * 绑定缓存滚动位置
+ * @param {Function} scrollerFn 返回一个滚动元素(HTMLElement)
+ */
+let cacheUid = 0;
+export function BindCacheScrollMixin (scrollerCaller) {
+  const positionKey = `cacheScrollPositionMixin_${cacheUid++}`;
+
+  function set () {
+    const scoller = scrollerCaller.call(this);
+    if (scoller && this[positionKey]) {
+      const { x = 0, y = 0 } = this[positionKey];
+      setScrollPosition(scoller, x, y);
+    }
+    else {
+      this[positionKey] = { x: 0, y: 0 };
+    }
+  };
+
+  function record () {
+    const scoller = scrollerCaller.call(this);
+    if (scoller && this[positionKey]) {
+      this[positionKey] = Object.freeze(getScrollPosition(scoller));
+    }
+    else {
+      this[positionKey] = { x: 0, y: 0 };
+    }
+  }
+
+  function destory () {
+    this[positionKey] = null;
+  }
+
+  return {
+    mounted: set,
+    activated: set,
+    deactivated: record,
+    beforeDestroy: destory
+  };
+}

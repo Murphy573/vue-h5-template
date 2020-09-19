@@ -6,7 +6,9 @@
       </app-header>
     </template>
     <template #content>
-      <Scroll ref="scroll">
+      <AppScroll ref="scroll"
+        :listenScrollEvent="true"
+        :hideScrollbar="false">
         <van-button @click="scrollto">滚动scrollTo</van-button>
         <van-button @click="scrollToBottom">滚动至底部</van-button>
         <van-button @click="scrollBy">再滚动50</van-button>
@@ -16,17 +18,14 @@
           :style="{background: num===40?'red':null}"
           @click="scrollToElement">{{num}}</p>
         <div>end</div>
-      </Scroll>
+      </AppScroll>
     </template>
   </AppPageContainer>
 </template>
 
 <script>
-import Scroll from '@/components/app-scroll/scroll';
 export default {
-  name: 'AppScroll',
-
-  components: { Scroll },
+  name: 'Scroll',
 
   data () {
     return {
@@ -36,16 +35,16 @@ export default {
     _initScroll () {
     },
     scrollto () {
-      this.$refs.scroll.scrollTo(0, 10);
+      this.$refs.scroll.scrollTo(0, 10, 200);
     },
     scrollToBottom () {
-      this.$refs.scroll.scrollToBottom();
+      this.$refs.scroll.scrollToBottom(1000);
     },
     scrollBy () {
-      this.$refs.scroll.scrollBy(0, 50);
+      this.$refs.scroll.scrollBy(0, 50, 200);
     },
     scrollToElement (e) {
-      this.$refs.scroll.scrollToElement(e.target, true, -10);
+      this.$refs.scroll.scrollToElement(e.target, true, -10, 1000);
     }
   }
 };

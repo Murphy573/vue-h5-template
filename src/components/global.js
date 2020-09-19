@@ -8,6 +8,7 @@ import { AppCheckboxGroup, AppCheckbox } from './app-checkbox/index';
 import AppImage from './app-image/index';
 import AppIcon from './app-icon/index.js';
 import AppWaterfall from './app-waterfall/index.js';
+import AppScroll from './app-scroll/index.js';
 
 const components = [
   AppPageContainer,
@@ -19,7 +20,8 @@ const components = [
   AppCheckbox,
   AppImage,
   AppIcon,
-  AppWaterfall
+  AppWaterfall,
+  AppScroll
 ];
 
 components.forEach(component => {

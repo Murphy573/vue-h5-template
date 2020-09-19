@@ -1,6 +1,7 @@
 <template>
   <div ref="scrollWrapper"
-    class="scroll-wrapper"
+    class="app-scroll"
+    :class="{'hide-scrollbar': hideScrollbar}"
     :style="style">
     <slot></slot>
   </div>
@@ -8,7 +9,9 @@
 
 <script>
 import { getElement, getOffset } from '@/utils/dom';
-import { scrollToByAnimate } from '@/utils/scroll';
+import { scrollToByAnimate, getScroller, getScrollLeft, getScrollTop } from '@/utils/scroll';
+import { BindEventMixin } from '@/mixins/bind-event.mixin.js';
+import { BindCacheScrollMixin } from '@/mixins/cached-view.mixin';
 
 /**
  * 获取滚动后偏移量
@@ -26,15 +29,28 @@ const getScrollOffset = (offset, size, wrapperSize) => {
 
 export default {
   name: 'AppScroll',
+
+  mixins: [
+    BindEventMixin(function (bind) {
+      if (!this.scroller) {
+        this.scroller = getScroller(this.$el);
+      }
+      // 开启监听
+      if (this.listenScrollEvent) {
+        bind(this.scroller, 'scroll', this.scrolling);
+      }
+    }),
+    BindCacheScrollMixin(function () {
+      if (!this.cachePosition) return null;
+
+      if (!this.scroller) {
+        this.scroller = getScroller(this.$el);
+      }
+      return this.scroller;
+    })
+  ],
+
   props: {
-    /**
-     * 1 滚动的时候会派发scroll事件，会截流。
-     * 2 滚动的时候实时派发scroll事件，不会截流。
-     */
-    probeType: {
-      type: Number,
-      default: 1
-    },
     /**
      * 是否开启竖向滚动
      */
@@ -47,24 +63,27 @@ export default {
      */
     scrollX: Boolean,
     /**
-     * 是否派发滚动事件
+     * 是否监听滚动事件
      */
-    listenScroll: Boolean,
+    listenScrollEvent: Boolean,
     /**
-     * 是否派发列表滚动开始的事件
+     * 是否隐藏滚动条
      */
-    scrollStart: Boolean,
+    hideScrollbar: {
+      type: Boolean,
+      default: true
+    },
     /**
-     * 是否派发列表滚动结束的事件
+     * 是否缓存位置
      */
-    scrollEnd: Boolean
+    cachePosition: Boolean
   },
 
   data () {
     return {
       x: 0,
       y: 0,
-      max: 0,
+      maxX: 0,
       maxY: 0,
       scrollerOffset: {
         offsetX: 0,
@@ -83,34 +102,18 @@ export default {
     }
   },
 
+  deactivated () {
+    this.x = getScrollLeft(this.scroller);
+    this.y = getScrollTop(this.scroller);
+  },
+
   methods: {
     _initScroll () {
-      if (!this.$refs.scrollWrapper) {
-        return;
-      }
-      this.scroller = this.$refs.scrollWrapper;
       // 获取滚动元素的offset
       const wrapperOffset = getOffset(this.scroller);
       this.scrollerOffset.offsetX = wrapperOffset.left;
       this.scrollerOffset.offsetY = wrapperOffset.top;
       this._refresh();
-    },
-    // 获取当前滚动的距离:x,y
-    getPostion () {
-      if (!this.scroller) {
-        return {
-          x: 0,
-          y: 0,
-          maxX: 0,
-          maxY: 0
-        };
-      }
-      return {
-        x: this.x,
-        y: this.y,
-        maxX: 0,
-        maxY: 0
-      };
     },
     _refresh () {
       this.maxX = this.scroller.scrollWidth - this.scroller.clientWidth;
@@ -127,32 +130,50 @@ export default {
       this.y = y;
       scrollToByAnimate(this.scroller, x, y, duration);
     },
-    scrollTo (x, y, duration = 500) {
+    // 获取当前滚动的距离:x,y
+    getPostion () {
+      this._refresh();
+      if (!this.scroller) {
+        return {};
+      }
+      return {
+        x: this.x,
+        y: this.y,
+        maxX: this.maxX,
+        maxY: this.maxY
+      };
+    },
+    scrollTo (x, y, duration = 0) {
       this._translate(x, y, duration);
     },
-    scrollToTop () {
-      this.scrollTo(this.x, 0);
+    scrollToTop (duration = 0) {
+      this.scrollTo(this.x, 0, duration);
     },
-    scrollToBottom () {
+    scrollToBottom (duration = 0) {
       this._refresh();
-      this.scrollTo(this.x, this.maxY);
+      this.scrollTo(this.x, this.maxY, duration);
     },
-    scrollToLeft () {
-      this.scrollTo(0, this.y);
+    scrollToLeft (duration = 0) {
+      this.scrollTo(0, this.y, duration);
     },
-    scrollToRight () {
+    scrollToRight (duration = 0) {
       this._refresh();
-      this.scrollTo(this.maxX, this.y);
+      this.scrollTo(this.maxX, this.y, duration);
     },
     /**
      * 在当前滚动位置基础上，再滚动的距离
      */
-    scrollBy (deltaX, deltaY) {
+    scrollBy (deltaX, deltaY, duration = 0) {
       const x = this.x + deltaX;
       const y = this.y + deltaY;
-      this.scrollTo(x, y);
+      this.scrollTo(x, y, duration);
     },
-    scrollToElement (el, offsetX = 0, offsetY = 0) {
+    /**
+     * 滚动到指定元素
+     * @param {Number|Boolean} offsetX 当为数值时，x轴滚动到指定元素后，再偏移指定数值，为true将元素滚动到容器中间
+     * @param {Number|Boolean} offsetY 当为数值时，y轴滚动到指定元素后，再偏移指定数值，为true将元素滚动到容器中间
+     */
+    scrollToElement (el, offsetX = 0, offsetY = 0, duration = 0) {
       const _el = getElement(el);
       if (!_el) {
         throw new Error('Cannot find elment!');
@@ -174,7 +195,16 @@ export default {
       pos.top -= this.scrollerOffset.offsetY;
       pos.left += offsetX || 0;
       pos.top += offsetY || 0;
-      this.scrollTo(pos.left, pos.top);
+      this.scrollTo(pos.left, pos.top, duration);
+    },
+    /**
+     * 正在滚动
+     */
+    scrolling () {
+      this.x = getScrollLeft(this.scroller);
+      this.y = getScrollTop(this.scroller);
+      // 派发滚动事件，外部可以监听
+      this.$emit('on-scrolling', this.getPostion());
     }
   },
 
@@ -188,10 +218,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.scroll-wrapper {
+.app-scroll {
   position: relative;
   width: 100%;
   height: 100%;
   -webkit-overflow-scrolling: touch;
+
+  &.hide-scrollbar::-webkit-scrollbar {
+    display: none !important;
+  }
 }
 </style>
