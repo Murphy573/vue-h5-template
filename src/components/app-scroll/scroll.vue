@@ -4,6 +4,8 @@
     :class="{'hide-scrollbar': hideScrollbar}"
     :style="style">
     <slot></slot>
+    <AppBacktop v-if="showBacktop"
+      :right="10" />
   </div>
 </template>
 
@@ -12,6 +14,7 @@ import { getElement, getOffset } from '@/utils/dom';
 import { scrollToByAnimate, getScroller, getScrollLeft, getScrollTop } from '@/utils/scroll';
 import { BindEventMixin } from '@/mixins/bind-event.mixin.js';
 import { BindCacheScrollMixin } from '@/mixins/cached-view.mixin';
+import AppBacktop from '../app-backtop/backtop';
 
 /**
  * 获取滚动后偏移量
@@ -50,6 +53,8 @@ export default {
     })
   ],
 
+  components: { AppBacktop },
+
   props: {
     /**
      * 是否开启竖向滚动
@@ -76,7 +81,14 @@ export default {
     /**
      * 是否缓存位置
      */
-    cachePosition: Boolean
+    cachePosition: Boolean,
+    /**
+     * 是否展示滚动到顶按钮
+     */
+    showBacktop: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data () {
