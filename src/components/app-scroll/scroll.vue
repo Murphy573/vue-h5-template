@@ -224,7 +224,7 @@ export default {
     // 保证在DOM渲染完毕后初始化
     setTimeout(() => {
       this._initScroll();
-    }, 20);
+    }, 200);
   }
 };
 </script>
