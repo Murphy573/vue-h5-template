@@ -6,3 +6,43 @@
   -webkit-line-clamp: $lines;
   -webkit-box-orient: vertical;
 }
+
+
+/* flex */
+@mixin flex($type: flex, $direction: row, $wrap: nowrap, $justify: flex-start, $align: flex-start) {
+   display: $type;
+   flex-direction: $direction;
+   flex-wrap: $wrap;
+   justify-content: $justify;
+   align-items: $align;
+}
+
+/* flex: row */
+@mixin flex-row-nowrap-center-center(){
+  @include flex(flex, row, nowrap, center, center);
+}
+
+/* flex: column */
+@mixin flex-column-nowrap-center-center(){
+  @include flex(flex, column, nowrap, center, center);
+}
+
+/* 1px border */
+@mixin border-1px($color: #d5d5d5, $style: solid, $top: 0, $right: 0, $bottom: 0, $left: 0) {
+  position: relative;
+  &::after {
+    position: absolute;
+    box-sizing: border-box;
+    content: ' ';
+    pointer-events: none;
+
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    border-style: $style;
+    border-color: $color;
+    border-width:  $top $right $bottom $left;
+    transform: scale(0.5);
+  }
+}

@@ -1,3 +1,5 @@
+@import './mixin.scss';
+
 /* 满屏 */
 .full-container {
   width: 100%;
@@ -6,29 +8,26 @@
 
 /**清除浮动**/
 .clearfix {
-  &::before {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: ' ';
+   &::after {
+    display: table;
     clear: both;
-    height: 0;
-  }
-  &::after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: ' ';
-    clear: both;
-    height: 0;
+    content: '';
   }
 }
 
-//文本超出显示...
+//单行文本超出显示...
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+// 两行文本超出显示...
+.text-ellipsis--l2{
+  @include multi-ellipsis(2);
+}
+// 三行文本超出显示...
+.text-ellipsis--l3{
+  @include multi-ellipsis(3);
 }
 
 .font-bold {
@@ -36,29 +35,29 @@
 }
 
 .card-shadow {
-  box-shadow: 1px 1px 6px rgba($color: #222222, $alpha: 0.2);
+  box-shadow: 1px 1px 6px rgba($color: $--color-text-primary, $alpha: 0.2);
 }
 
 .card-style {
   @extend .card-shadow;
   border-radius: 5px;
-  background-color: #ffffff;
+  background-color: $--color-background-white;
 }
 
 ::-webkit-input-placeholder {
-  color: #999999;
+  color: $--color-999;
 }
 
 :-moz-placeholder {
-  color: #999999;
+  color: $--color-999;
 }
 
 ::-moz-placeholder {
-  color: #999999;
+  color: $--color-999;
 }
 
 :-ms-input-placeholder {
-  color: #999999;
+  color: $--color-999;
 }
 
 input[type='search']::-webkit-search-cancel-button {
