@@ -101,7 +101,8 @@ export default {
         offsetX: 0,
         offsetY: 0
       },
-      scroller: null
+      scroller: null,
+      refreshCount: 0
     };
   },
 
@@ -120,14 +121,13 @@ export default {
   },
 
   methods: {
-    _initScroll () {
-      // 获取滚动元素的offset
+    _refresh () {
+      if (this.refreshCount > 5) return;
+
       const wrapperOffset = getOffset(this.scroller);
       this.scrollerOffset.offsetX = wrapperOffset.left;
       this.scrollerOffset.offsetY = wrapperOffset.top;
-      this._refresh();
-    },
-    _refresh () {
+
       this.maxX = this.scroller.scrollWidth - this.scroller.clientWidth;
       this.maxY = this.scroller.scrollHeight - this.scroller.clientHeight;
     },
@@ -218,13 +218,6 @@ export default {
       // 派发滚动事件，外部可以监听
       this.$emit('on-scrolling', this.getPostion());
     }
-  },
-
-  mounted () {
-    // 保证在DOM渲染完毕后初始化
-    setTimeout(() => {
-      this._initScroll();
-    }, 200);
   }
 };
 </script>
