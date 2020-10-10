@@ -1,31 +1,8 @@
 import { setScrollPosition, getScrollPosition } from '@/utils/scroll';
 
-/* 滚动位置记录 */
-export default {
-  data () {
-    return {
-      // 记录的滚动位置
-      recordSrollTopMixin: 0,
-      // 滚动容器
-      scrollRefMixin: 'scrollRefMixin'
-    };
-  },
-
-  activated () {
-    this.$refs[this.scrollRefMixin] &&
-      (this.$refs[this.scrollRefMixin].scrollTop = this.recordSrollTopMixin);
-  },
-
-  deactivated () {
-    this.recordSrollTopMixin = this.$refs[this.scrollRefMixin]
-      ? this.$refs[this.scrollRefMixin].scrollTop
-      : 0;
-  }
-};
-
 /**
  * 绑定缓存滚动位置
- * @param {Function} scrollerFn 返回一个滚动元素(HTMLElement)
+ * @param {Function} scrollerCaller 返回一个滚动元素(HTMLElement)
  */
 let cacheUid = 0;
 export function BindCacheScrollMixin (scrollerCaller) {

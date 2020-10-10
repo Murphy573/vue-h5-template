@@ -24,24 +24,13 @@
 </template>
 
 <script>
-import CachedViewMixin from '@/mixins/cached-view.mixin';
-
 export default {
   name: 'MainHome',
-
-  mixins: [CachedViewMixin],
 
   data () {
     return {
       title: '主页'
     };
-  },
-
-  methods: {
-    // 提供给cached-view.mixin调用
-    canCachedViewMixin () {
-      return true;
-    }
   }
 };
 </script>
