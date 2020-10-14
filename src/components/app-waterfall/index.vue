@@ -22,7 +22,7 @@
             :key="'column' + index">
             <!-- 元素 -->
             <div v-for="(item, index) of col"
-              :key="item[dataKey]"
+              :key="genKey(item)"
               :style="itemStyle"
               class="item clearfix">
               <slot :data="item"
@@ -188,6 +188,12 @@ export default {
         this.colsHeight.push(0);
       }
       this.ininted = true;
+    },
+    genKey (item) {
+      if (typeof this.dataKey === 'string') {
+        return item[this.dataKey];
+      }
+      return this.dataKey(item);
     },
     async _appendByIndex () {
       try {
