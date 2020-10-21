@@ -1,13 +1,22 @@
+import { isNull, isUndefined } from './common';
+
+const returnValue = (value) => {
+  if (isNull(value)) {
+    return undefined;
+  }
+  return value;
+};
+
 const getItem = (type, args) => {
   if (!args.length || !type) return;
 
   if (args.length === 1) {
-    return window[type].getItem(args[0]);
+    return returnValue(window[type].getItem(args[0]));
   }
   else {
     const storage = {};
     args.forEach(arg => {
-      storage[arg] = window[type].getItem(arg) || undefined;
+      storage[arg] = returnValue(window[type].getItem(arg));
     });
     return storage;
   }
@@ -20,14 +29,18 @@ const setItem = (type, args) => {
     args.length === 1 &&
     Object.prototype.toString.call(args[0]) === '[object Object]'
   ) {
-    const data = args[0];
+    let data = args[0];
     Object.keys(data).forEach(key => {
-      const value = data[key];
-      window[type].setItem(key, value);
+      let value = data[key];
+      if (!isUndefined(value)) {
+        window[type].setItem(key, value);
+      }
     });
   }
   else {
-    window[type].setItem(args[0], args[1]);
+    if (!isUndefined(args[1])) {
+      window[type].setItem(args[0], args[1]);
+    }
   }
 };
 
@@ -46,12 +59,12 @@ const removeItem = (type, args) => {
 
 const getAllItems = type => {
   if (!type) return {};
-  const _storage = window[type];
-  const _len = _storage.length;
+  let _storage = window[type];
+  let _len = _storage.length;
   let i = 0;
-  const _res = {};
+  let _res = {};
   while (i < _len) {
-    const _key = _storage.key(i),
+    let _key = _storage.key(i),
       _value = _storage.getItem(_key);
     _res[_key] = _value;
     i++;
