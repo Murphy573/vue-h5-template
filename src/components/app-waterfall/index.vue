@@ -171,7 +171,10 @@ export default {
   watch: {
     data: {
       immediate: true,
-      handler () {
+      handler (arr) {
+        if (!arr || !arr.length) {
+          this.reset();
+        }
         if (!this.ininted) {
           this.init();
         }
@@ -188,6 +191,12 @@ export default {
         this.colsHeight.push(0);
       }
       this.ininted = true;
+    },
+    reset () {
+      this.renderList.forEach(arr => arr.splice(0));
+      this.colsHeight = this.colsHeight.map(() => 0);
+      this.lastRenderIndex = 0;
+      this.isRendering = false;
     },
     genKey (item) {
       if (typeof this.dataKey === 'string') {

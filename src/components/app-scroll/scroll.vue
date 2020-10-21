@@ -5,7 +5,9 @@
     :style="style">
     <slot></slot>
     <AppBacktop v-if="showBacktop"
-      :right="10" />
+      :visibilityHeight="backtopVisibilityHeight"
+      :bottom="backtopBottom"
+      :right="backtopRight" />
   </div>
 </template>
 
@@ -88,6 +90,18 @@ export default {
     showBacktop: {
       type: Boolean,
       default: false
+    },
+    backtopVisibilityHeight: {
+      type: Number,
+      default: 1200
+    },
+    backtopRight: {
+      type: Number,
+      default: 10
+    },
+    backtopBottom: {
+      type: Number,
+      default: 40
     }
   },
 
