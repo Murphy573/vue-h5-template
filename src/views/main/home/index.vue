@@ -15,17 +15,30 @@
           <li v-for="i of 3"
             :key="i"
             class="app-grid-item">
-
           </li>
         </ul>
+        <AppSwitch />
+        <AppXScroller>
+          <ul class="list">
+            <li v-for="i of 10"
+              :key="i"
+              class="item">
+              item{{i}}
+            </li>
+          </ul>
+        </AppXScroller>
       </div>
     </template>
   </AppPageContainer>
 </template>
 
 <script>
+import AppXScroller from '@/components/app-scroll/x-scroller';
+
 export default {
   name: 'MainHome',
+
+  components: { AppXScroller },
 
   data () {
     return {
@@ -83,6 +96,18 @@ export default {
         flex-shrink: 3;
         width: 150px;
       }
+    }
+  }
+
+  .list {
+    display: flex;
+    height: 200px;
+    background: cornsilk;
+
+    .item {
+      flex: none;
+      width: 200px;
+      height: 100%;
     }
   }
 }
