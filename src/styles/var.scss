@@ -1,16 +1,47 @@
-/* 颜色定义 */
-$--color-main: #ab956d;
-$--color-minor: #dfc287;
+
+// 全局颜色
+$--color-primary: #DD1A21;
+$--color-regular: #FFE5C1;
+$--color-secondary: #dfc287;
+
+// 文字颜色
+$--color-text-primary: #333333;
+$--color-text-minor: #666666;
+$--color-text-regular: #969696;
+$--color-text-secondary: #999999;
+$--color-text-placeholder:#C0C4CC;
+
+// 边框颜色
+$--color-border-base: #d5d5d5;
+$--color-border-light: #E4E7ED;
+$--color-border-lighter:#F2F6FC;
+
+// 背景颜色
+$--color-background-white: #ffffff;
+$--color-background-black: #000000;
+$--color-background-base: rgba($color: #f9f9f9, $alpha: 0.9);
+
 /* 导出变量 */
 :export {
-  mainColor: $--color-main;
-  minorColor: $--color-minor;
+  colorPrimary: $--color-primary;
+  colorRegular: $--color-regular;
+  colorSecondary: $--color-secondary;
+  colorTextPrimary: $--color-text-primary;
+  colorTextMinor: $--color-text-minor;
+  colorTextRegular: $--color-text-regular;
+  colorTextSecondary: $--color-text-regular;
+  colorTextPlaceholder: $--color-text-placeholder;
+  colorBorderBase: $--color-border-base;
+  colorBorderLight: $--color-border-light;
+  colorBorderLighter: $--color-border-lighter;
+  colorBackgroundWhite: $--color-background-white;
+  colorBackgroundBlack: $--color-background-black;
+  colorBackgroundBase: $--color-background-base;
 }
-$--color-primary-blue: #508bef;
+
+$--color-blue: #508bef;
 $--color-red: #e82828;
 $--color-golden: #ee8f0f;
-$--color-222: #222222;
-$--color-333: #333333;
 $--color-666: #666666;
 $--color-999: #999999;
 $--color-ddd: #dddddd;
@@ -20,27 +51,46 @@ $--color-danger: #f56c6c !default;
 /**
 * 常用大小: 8的倍数
 */
-$--size-8: 0.106667rem; /* 8/75 */
-$--size-16: 0.213333rem; /* 16/75 */
-$--size-24: 0.32rem; /* 24/75 */
-$--size-32: 0.426667rem; /* 32/75 */
-$--size-40: 0.533333rem; /* 40/75 */
-$--size-48: 0.64rem; /* 48/75 */
-$--size-56: 0.746667rem; /* 56/75 */
-$--size-64: 0.853333rem; /* 64/75 */
-$--size-72: 0.96rem; /* 72/75 */
-$--size-80: 1.066667rem; /* 80/75 */
-$--size-120: 1.6rem; /* 120/75 */
+$--size-8: 0.106667rem;
+/* 8/75 */
+$--size-16: 0.213333rem;
+/* 16/75 */
+$--size-24: 0.32rem;
+/* 24/75 */
+$--size-32: 0.426667rem;
+/* 32/75 */
+$--size-40: 0.533333rem;
+/* 40/75 */
+$--size-48: 0.64rem;
+/* 48/75 */
+$--size-56: 0.746667rem;
+/* 56/75 */
+$--size-64: 0.853333rem;
+/* 64/75 */
+$--size-72: 0.96rem;
+/* 72/75 */
+$--size-80: 1.066667rem;
+/* 80/75 */
+$--size-120: 1.6rem;
+/* 120/75 */
 
 /**
 * 常用大小: 非8倍
 */
-$--size-10: 0.133333rem /* 10/75 */;
-$--size-20: 0.266667rem; /* 20/75 */
-$--size-28: 0.373333rem; /* 28/75 */
-$--size-30: 0.4rem /* 30/75 */;
-$--size-36: 0.48rem; /* 36/75 */
-$--size-1: 0.013333rem; /* 1/75 */
+$--size-10: 0.133333rem
+/* 10/75 */
+;
+$--size-20: 0.266667rem;
+/* 20/75 */
+$--size-28: 0.373333rem;
+/* 28/75 */
+$--size-30: 0.4rem
+/* 30/75 */
+;
+$--size-36: 0.48rem;
+/* 36/75 */
+$--size-1: 0.013333rem;
+/* 1/75 */
 
 /**
 * 字体变量定义

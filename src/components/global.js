@@ -9,6 +9,7 @@ import AppImage from './app-image/index';
 import AppIcon from './app-icon/index.js';
 import AppWaterfall from './app-waterfall/index.js';
 import AppScroll from './app-scroll/index.js';
+import AppSwitch from './app-switch/index';
 
 const components = [
   AppPageContainer,
@@ -21,7 +22,8 @@ const components = [
   AppImage,
   AppIcon,
   AppWaterfall,
-  AppScroll
+  AppScroll,
+  AppSwitch
 ];
 
 components.forEach(component => {
