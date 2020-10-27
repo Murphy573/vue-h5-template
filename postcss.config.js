@@ -12,11 +12,10 @@ module.exports = {
       // 忽略的样式类名
       selectorBlackList: [
         // 包含app-的类名
-        'app-'
-        // 'app-page-container',
-        // 'app-header',
-        // 'app-container-main',
-        // 'app-container-footer',
+        'app-',
+        'van-',
+        '--ignore',
+        'iconfont'
       ],
       replace: true,
       // 是否转换@mediaQuery
