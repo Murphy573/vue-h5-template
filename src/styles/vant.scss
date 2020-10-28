@@ -13,6 +13,12 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  &.whole-value {
+    .van-cell__value {
+      flex: none;
+    }
+  }
 }
 
 /* stepper input禁用背景色修改 */
