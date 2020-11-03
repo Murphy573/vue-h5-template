@@ -115,8 +115,7 @@ export default {
         offsetX: 0,
         offsetY: 0
       },
-      scroller: null,
-      refreshCount: 0
+      scroller: null
     };
   },
 
@@ -136,8 +135,6 @@ export default {
 
   methods: {
     _refresh () {
-      if (this.refreshCount > 5) return;
-
       const wrapperOffset = getOffset(this.scroller);
       this.scrollerOffset.offsetX = wrapperOffset.left;
       this.scrollerOffset.offsetY = wrapperOffset.top;
@@ -170,20 +167,19 @@ export default {
       };
     },
     scrollTo (x, y, duration = 0) {
+      this._refresh();
       this._translate(x, y, duration);
     },
     scrollToTop (duration = 0) {
       this.scrollTo(this.x, 0, duration);
     },
     scrollToBottom (duration = 0) {
-      this._refresh();
       this.scrollTo(this.x, this.maxY, duration);
     },
     scrollToLeft (duration = 0) {
       this.scrollTo(0, this.y, duration);
     },
     scrollToRight (duration = 0) {
-      this._refresh();
       this.scrollTo(this.maxX, this.y, duration);
     },
     /**
