@@ -3,7 +3,7 @@
     type="button"
     :class="cmpt_getClass"
     :style="cmpt_getStyle"
-    @click.stop="click()">
+    @click="click()">
     <slot></slot>
   </button>
 </template>
@@ -29,7 +29,7 @@ export default {
       type: String,
       default: 'primary',
       validator (v) {
-        return ['primary', 'danger', 'normal', 'cancel', 'disabled'].indexOf(v) > -1;
+        return ['primary', 'normal', 'disabled'].indexOf(v) > -1;
       }
     },
     disabled: {
@@ -42,39 +42,35 @@ export default {
     },
     color: {
       type: String,
-      default: '#969696'
+      default: ''
     },
     borderColor: {
       type: String,
-      default: '#969696'
+      default: ''
     },
     background: {
       type: String,
-      default: 'transparent'
-    },
-    border: {
-      type: Boolean,
-      default: true
+      default: ''
     }
   },
   computed: {
     cmpt_getStyle () {
-      const f = this.fontSize / 75 + 'rem';
-      const w = this.width / 75 + 'rem';
-      const h = this.height / 75 + 'rem';
-      const r = this.height / 75 / 2 + 'rem';
-      const styleData = {
+      let f = this.fontSize / 75 + 'rem';
+      let w = this.width / 75 + 'rem';
+      let h = this.height / 75 + 'rem';
+      let r = this.height / 75 / 2 + 'rem';
+      let styleData = {
         fontSize: f,
         width: w,
         height: h,
-        borderRadius: r
+        borderRadius: r,
+        color: this.color,
+        background: this.background
       };
       if (this.plain) {
-        if (this.border) {
-          styleData.border = `1px solid ${this.borderColor}`;
-        }
+        styleData.border = `1px solid ${this.borderColor || this.color}`;
         styleData.color = this.color;
-        styleData.background = this.background;
+        styleData.background = this.background || 'transparent';
       }
       return styleData;
     },
@@ -98,21 +94,16 @@ export default {
 
 <style lang="scss" scoped>
 .app-btn {
-  font-family: "PingFangSC Regular";
+  font-family: 'PingFangSC Regular';
   line-height: initial;
   text-align: center;
   border: none;
 
   max-width: 100% !important;
 
-  &.danger {
-    color: #ffffff;
-    background: rgba(212, 70, 65, 1);
-  }
-
   &.primary {
     color: #ffffff;
-    background: #2c74b9;
+    background: $--color-primary;
   }
 
   &.normal {
@@ -121,15 +112,9 @@ export default {
     border: none;
   }
 
-  &.cancel {
-    background-color: #fff;
-    border: 1px solid #999;
-    color: #999;
-  }
-
   &.disabled {
-    background: #e3e3e3 !important;
     color: #969696 !important;
+    background: #f0f0f0;
   }
 }
 </style>

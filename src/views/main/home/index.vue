@@ -9,7 +9,8 @@
     <template #content>
       <div class="home-wrapper full-container">
         <span>主页</span>
-        <van-button @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
+        <van-button :color="$_sassVars.colorPrimary"
+          @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
         <van-button @click="$router.push({name:'fall'})">跳转到waterfall</van-button>
         <ul class="app-grid">
           <li v-for="i of 3"
@@ -34,11 +35,12 @@
 
 <script>
 import AppXScroller from '@/components/app-scroll/x-scroller';
+import AppSwitch from '@/components/app-switch/index';
 
 export default {
   name: 'MainHome',
 
-  components: { AppXScroller },
+  components: { AppXScroller, AppSwitch },
 
   data () {
     return {

@@ -1,39 +1,35 @@
 /**
  * 用户登录
  */
-import { api_logout, api_login_byUnified } from '../../apis/basic';
+import { api_logout, api_login_byUnified, api_query_userInfo } from '../../apis/basic';
 import MyStorage from '../../utils/storage';
 import { phoneFormatter } from '../../filters/global';
+import { getToken, setToken, removeToken } from '@/utils/auth';
 
-const TOKEN_KEY = 'SESSION_TOKEN';
-const USERINFO_KEY = 'SESSION_USERINFO';
 // 会话中不清除的session
 const DONNOT_SESSION_CLEAR_KEYS = ['WX_APPID', 'WX_OPENID'];
 
 export default {
   state: {
-    token: MyStorage.localStorage.getItem(TOKEN_KEY) || '',
+    token: getToken() || '',
     userInfo: null,
     // 是否展示登录面板
-    showLoginPanel: false
+    showLoginPanel: false,
+    permissions: []
   },
   mutations: {
     SET_TOKEN (state, token = '') {
       if (!token) {
-        MyStorage.localStorage.removeItem(TOKEN_KEY);
+        removeToken();
       }
       else {
-        MyStorage.localStorage.setItem(TOKEN_KEY, token);
+        setToken(token);
       }
       state.token = token;
     },
     SET_USERINFO (state, userInfo = null) {
       if (!userInfo) {
-        MyStorage.localStorage.removeItem(TOKEN_KEY);
-        MyStorage.localStorage.removeItem(USERINFO_KEY);
-      }
-      else {
-        MyStorage.localStorage.setItem(USERINFO_KEY, JSON.stringify(userInfo));
+        removeToken();
       }
       state.userInfo = userInfo;
     },
@@ -50,6 +46,9 @@ export default {
     },
     vx_gt_showLoginPanel (state) {
       return state.showLoginPanel;
+    },
+    vx_gt_GetPermissions (state) {
+      return state.permissions;
     }
   },
   actions: {
@@ -65,13 +64,14 @@ export default {
     // 统一登录
     async vx_ac_Login ({ dispatch }, loginParams) {
       try {
-        if (!loginParams) return;
+        if (!loginParams) {
+          return Promise.reject(new Error('login params missing'));
+        }
         const _res = await api_login_byUnified(loginParams);
         // 设置token
-        _res.userInfo.nickName =
-          _res.userInfo.nickName || phoneFormatter(loginParams.phone || '');
-        dispatch('vx_ac_SetToken', _res.token);
-        dispatch('vx_ac_SetUserInfo', _res.userInfo);
+        dispatch('vx_ac_SetToken', _res);
+        // 获取用户信息
+        await dispatch('vx_ac_GetUserInfo');
         return _res;
       }
       catch (error) {
@@ -96,8 +96,8 @@ export default {
     // 退出登录
     async vx_ac_Logout ({ dispatch }) {
       try {
-        await api_logout();
         dispatch('vx_ac_FrontendLogout');
+        api_logout();
         return true;
       }
       catch (error) {
@@ -108,10 +108,16 @@ export default {
     // 获取用户信息
     async vx_ac_GetUserInfo ({ dispatch }) {
       try {
-        const _userInfo = JSON.parse(
-          MyStorage.localStorage.getItem(USERINFO_KEY)
-        );
+        let _userInfo = await api_query_userInfo();
+        if (!_userInfo) {
+          dispatch('vx_ac_FrontendLogout');
+          return Promise.reject(new Error('getUserInfo error, then clear storage!'));
+        }
+        _userInfo.nickName =
+          _userInfo.nickName || phoneFormatter(_userInfo.mobile || '');
+
         dispatch('vx_ac_SetUserInfo', _userInfo);
+
         return _userInfo;
       }
       catch (error) {

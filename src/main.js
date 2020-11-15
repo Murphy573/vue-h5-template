@@ -6,6 +6,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router/index';
 import store from './store';
+import './router/router-event';
 // 指令
 import './directives';
 // 引入全局filter
@@ -18,8 +19,12 @@ import './libs/vant';
 import './libs/third-access/third-access-comm.js';
 // 引入全局css
 import './styles/index.scss';
+// 从scss变量中引入定义的样式变量
+import styles from './styles/var.scss';
 
 Vue.config.productionTip = false;
+// 注册到vue原型上
+Vue.prototype.$_sassVars = styles;
 
 // 设置样式关键字
 // window.document.documentElement.setAttribute('data-theme', 'default');

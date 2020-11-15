@@ -11,14 +11,27 @@ export function api_login_byUnified (params) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
-        token: 'token',
-        userInfo: {
-          nickName: 'xxx'
-        }
+        token: 'token'
       });
     }, 1000);
   });
   // return http.post('/auth/unifiedLogin', params);
+}
+
+/**
+ * 获取用户信息
+ */
+export function api_query_userInfo () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // reject('');
+      resolve({
+        nickname: 'xxx',
+        mobile: '13333333333'
+      });
+    }, 1000);
+  });
+  // return http.get('/user/info');
 }
 
 /**
