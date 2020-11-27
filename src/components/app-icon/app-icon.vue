@@ -63,7 +63,7 @@ export default {
     font-family: -apple-system-font, Helvetica Neue, Arial, sans-serif;
     line-height: 1.2;
     text-align: center;
-    background-color: #ee0a24;
+    background-color: $--color-primary;
     border: 1px solid #fff;
     border-radius: 16px;
     transform: translate(50%, -50%);
