@@ -179,7 +179,6 @@ export default {
 
       > h3 {
         font-size: $--size-36;
-        font-family: $--family-bold;
         color: #333333;
         font-weight: bold;
         margin-bottom: 0.56rem /* 42/75 */;

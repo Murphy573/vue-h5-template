@@ -91,7 +91,7 @@ export default {
         flex-shrink: 2;
         flex-grow: 2;
         width: 100px;
-        background: $--color-red;
+        background: $--color-primary;
       }
       &:nth-child(3) {
         flex-grow: 3;

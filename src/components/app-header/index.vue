@@ -126,7 +126,6 @@ export default {
   > .title {
     flex: 0 0 64%;
     font-size: 17px;
-    font-family: $--family-heavy;
     font-weight: bold;
   }
 

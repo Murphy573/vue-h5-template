@@ -31,6 +31,7 @@ export default {
         this.scroller = this.$refs.contentRef;
       }
       bind(this.scroller, 'scroll', this.scrolling);
+      // bind(window, 'resize', this.resize, true);
     })
   ],
 
@@ -82,17 +83,22 @@ export default {
   },
 
   mounted () {
-    this.pageInit();
+    this.initialize();
   },
 
   methods: {
-    pageInit () {
-      const { scrollerRef, indicatorRef, contentRef } = this.$refs;
+    initialize () {
+      this.$nextTick(() => {
+        const { scrollerRef, indicatorRef, contentRef } = this.$refs;
 
-      const contentLeftWidth = contentRef.scrollWidth - contentRef.offsetWidth;
-      const scrollerLeftWidth = scrollerRef.offsetWidth - indicatorRef.offsetWidth;
+        const contentLeftWidth = contentRef.scrollWidth - contentRef.offsetWidth;
+        const scrollerLeftWidth = scrollerRef.offsetWidth - indicatorRef.offsetWidth;
 
-      this.ratio = scrollerLeftWidth / contentLeftWidth;
+        this.ratio = scrollerLeftWidth / contentLeftWidth;
+      });
+    },
+    resize () {
+      this.initialize();
     },
     scrolling () {
       this.x = getScrollLeft(this.scroller) * this.ratio;

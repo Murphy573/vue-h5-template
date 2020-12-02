@@ -233,7 +233,7 @@ export default {
 <style lang="scss" scoped>
 .app-drag-elm {
   position: fixed;
-
+  z-index: 99;
   .close {
     display: flex;
     align-items: center;

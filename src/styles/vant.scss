@@ -25,7 +25,28 @@
 .van-stepper {
   .van-stepper__input[disabled] {
     background-color: #f2f3f5;
-    color: #333333;
-    -webkit-text-fill-color: #333333;
+    color: $--color-text-primary;
+    -webkit-text-fill-color: $--color-text-primary;
+  }
+}
+
+.van-tab {
+  color: $--color-text-primary;
+  font-size: 16px;
+}
+
+.van-dialog {
+  .van-dialog__header{
+    padding-top: 12px;
+  }
+}
+
+.van-info{
+  background-color: $--color-primary;
+}
+
+.van-dialog {
+  .van-dialog__confirm, .van-dialog__confirm:active{
+    color: $--color-primary;
   }
 }
