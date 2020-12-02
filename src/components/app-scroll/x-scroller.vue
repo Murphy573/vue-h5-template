@@ -4,7 +4,8 @@
       class="content hide-native-scrollbar">
       <slot></slot>
     </div>
-    <div class="scroller-container"
+    <div v-if="showScroller"
+      class="scroller-container"
       :style="scrollerContainerStyle">
       <div ref="scrollerRef"
         class="scroller"
@@ -36,17 +37,22 @@ export default {
   ],
 
   props: {
+    // 是否展示滚动条
+    showScroller: {
+      type: Boolean,
+      default: true
+    },
     // 滚动条容器高度
     scrollerContainerHeight: [Number, String],
     // 滚动条总宽度
     scrollerWidth: [Number, String],
-    // 滚动条总宽度
+    // 滚动条总高度
     scrollerHeight: [Number, String],
     // 滚动条颜色
     scrollerColor: String,
     // 滚动指示器宽度
     indicatorWidth: [Number, String],
-    // 滚动条颜色
+    // 滚动条指示器颜色
     indicatorColor: String
   },
 
@@ -72,7 +78,8 @@ export default {
     },
     indicatorStyle () {
       return {
-        width: addUnit(this.indicatorWidth)
+        width: addUnit(this.indicatorWidth),
+        backgroundColor: this.indicatorColor
       };
     },
     indicatorTransformStyle () {
@@ -90,6 +97,8 @@ export default {
     initialize () {
       this.$nextTick(() => {
         const { scrollerRef, indicatorRef, contentRef } = this.$refs;
+
+        if (!scrollerRef || !indicatorRef) return;
 
         const contentLeftWidth = contentRef.scrollWidth - contentRef.offsetWidth;
         const scrollerLeftWidth = scrollerRef.offsetWidth - indicatorRef.offsetWidth;
@@ -125,7 +134,7 @@ export default {
 
     .scroller {
       width: 50px;
-      height: 3px;
+      height: 4px;
       border-radius: 4px;
       background-color: #d5d5d5;
       overflow: hidden;
@@ -133,7 +142,8 @@ export default {
       .indicator {
         width: 20px;
         height: 100%;
-        background-color: #dd1a21;
+        border-radius: 4px;
+        background-color: $--color-primary;
         will-change: transform;
       }
     }

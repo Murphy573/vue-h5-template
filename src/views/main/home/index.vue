@@ -19,7 +19,11 @@
           </li>
         </ul>
         <AppSwitch />
-        <AppXScroller>
+        <AppXScroller :showScroller="true"
+          scrollerContainerHeight="20"
+          scrollerWidth="100"
+          scrollerHeight="8"
+          indicatorWidth="20">
           <ul class="list">
             <li v-for="i of 10"
               :key="i"
