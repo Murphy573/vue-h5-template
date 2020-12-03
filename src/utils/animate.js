@@ -44,3 +44,41 @@ export function createAnimate (duration, easingFn = Easying.easeInOutQuad) {
   };
   return fn;
 }
+
+/**
+ * 动画方法， 将动画css加入到元素上，返回promise提供执行后续操作（将动画重置）
+ * @param {HTMLElement} el 当前被执行动画的元素
+ * @param {Array} animationList 动画列表
+ * @param {Function} callback 动画执行完后的回调函数
+ */
+export default async function runAnimation (el, animationList = [], callback) {
+  if (!el || !Array.isArray(animationList) || !animationList.length) return;
+
+  let playFn = function (animation) {
+    return new Promise(resolve => {
+      const { name, duration, infinite, interationCount, delay } = animation;
+
+      el.style.animationName = name;
+      el.style.animationDuration = `${duration}s`;
+      // 如果是循环播放就将循环次数置为1，这样有效避免编辑时因为预览循环播放组件播放动画无法触发animationend来暂停组件动画
+      el.style.animationIterationCount = infinite ? 'infinite' : interationCount;
+      el.style.animationDelay = `${delay}s`;
+      el.style.animationFillMode = 'both';
+
+      let resolveFn = function () {
+        el.removeEventListener('animationend', resolveFn, false);
+        el.addEventListener('animationcancel', resolveFn, false);
+        resolve();
+      };
+      el.addEventListener('animationend', resolveFn, false);
+      el.addEventListener('animationcancel', resolveFn, false);
+    });
+  };
+
+  for (let i = 0, len = animationList.length; i < len; i++) {
+    await playFn(animationList[i]);
+  }
+  if (callback) {
+    callback();
+  }
+}
