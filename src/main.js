@@ -19,6 +19,7 @@ import './libs/vant';
 import './libs/third-access/third-access-comm.js';
 // 引入全局css
 import './styles/index.scss';
+import './assets/svg/index.js';
 // 从scss变量中引入定义的样式变量
 import styles from './styles/var.scss';
 

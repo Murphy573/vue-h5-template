@@ -18,6 +18,10 @@
             class="app-grid-item">
           </li>
         </ul>
+        <AppIcon type="svg"
+          name="realname"
+          size="50"
+          badge="20" />
         <AppSwitch />
         <AppXScroller :showScroller="true"
           scrollerContainerHeight="20"

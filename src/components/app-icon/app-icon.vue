@@ -1,13 +1,23 @@
 <template>
-  <i class="app-icon"
-    :class="cmpt_class"
-    :style="cmpt_style"
-    @click="$emit('click');">
+  <span class="app-icon"
+    v-on="$listeners">
+    <template v-if="!cmpt_isSvg">
+      <i :class="cmpt_name"
+        :style="cmpt_style">
+      </i>
+    </template>
+    <template v-else>
+      <svg class="svg-icon"
+        :style="cmpt_style"
+        aria-hidden="true">
+        <use :href="cmpt_name" />
+      </svg>
+    </template>
     <span v-if="badge"
       class="badge">
       {{badge}}
     </span>
-  </i>
+  </span>
 </template>
 
 <script>
@@ -18,6 +28,13 @@ export default {
   name: 'AppIcon',
 
   props: {
+    type: {
+      type: String,
+      default: 'icon',
+      validator (v) {
+        return ['icon', 'svg'].includes(v);
+      }
+    },
     name: String,
     size: [Number, String],
     color: String,
@@ -29,7 +46,13 @@ export default {
   },
 
   computed: {
-    cmpt_class () {
+    cmpt_isSvg () {
+      return this.type === 'svg';
+    },
+    cmpt_name () {
+      if (this.cmpt_isSvg) {
+        return `#icon-${this.name}`;
+      }
       return this.classPrefix + ' ' + this.name;
     },
     cmpt_style () {
@@ -68,6 +91,14 @@ export default {
     border-radius: 16px;
     transform: translate(50%, -50%);
     transform-origin: 100%;
+  }
+
+  .svg-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
   }
 }
 </style>

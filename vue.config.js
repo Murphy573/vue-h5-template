@@ -29,6 +29,33 @@ module.exports = {
     config.plugins.delete('prefetch');
     // 移除 preload 插件
     config.plugins.delete('preload');
+
+    config.module
+      .rule('images')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap(options => {
+        // 修改base64限定值
+        options.limit = 10000;
+        return options;
+      });
+
+    // set svg-sprite-loader
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/assets/svg/icons'))
+      .end();
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/assets/svg/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end();
   },
   // https://cli.vuejs.org/zh/config/#css-modules
   css: {
