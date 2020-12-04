@@ -74,8 +74,7 @@ module.exports = {
           name: 'chunk-vendors',
           test: /[\\/]node_modules[\\/]/,
           minChunks: 1,
-          priority: 25,
-          chunks: 'all'
+          priority: 25
         },
         comps: {
           name: 'chunk-comps',
