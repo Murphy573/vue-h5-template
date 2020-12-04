@@ -51,7 +51,7 @@ module.exports = {
       name: entrypoint => `runtime~${entrypoint.name}`
     },
     splitChunks: {
-      chunks: 'all',
+      chunks: 'async',
       // minChunks: 2,
       // minSize: 20000,
       // maxAsyncRequests: 20,
@@ -60,22 +60,53 @@ module.exports = {
       cacheGroups: {
         vue: {
           test: /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/,
-          name: 'vue-vendor',
+          name: 'chunk-vue',
           chunks: 'all',
-          priority: 30
+          priority: 40
+        },
+        vant: {
+          name: 'chunk-vant',
+          priority: 30,
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/]vant[\\/]/
+        },
+        vendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          minChunks: 1,
+          priority: 25,
+          chunks: 'all'
         },
         comps: {
           name: 'chunk-comps',
           test: resolve('../src/components'),
-          minChunks: 2,
-          priority: 20,
-          reuseExistingChunk: true
+          minChunks: 1,
+          priority: 21
         },
         libs: {
           name: 'chunk-libs',
-          test: /[\\/]node_modules[\\/]/,
-          priority: 10,
-          chunks: 'initial' // only package third parties that are initially dependent
+          test: resolve('../src/libs'),
+          chunks: 'all',
+          minChunks: 1,
+          priority: 20
+        },
+        utils: {
+          name: 'chunk-utils',
+          test: resolve('../src/utils'),
+          minChunks: 1,
+          priority: 19
+        },
+        apis: {
+          name: 'chunk-apis',
+          test: resolve('../src/apis'),
+          minChunks: 1,
+          priority: 18
+        },
+        configs: {
+          name: 'chunk-configs',
+          test: resolve('../src/configs'),
+          minChunks: 1,
+          priority: 17
         }
       }
     }
