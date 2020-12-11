@@ -14,6 +14,7 @@
       </svg>
     </template>
     <span v-if="badge"
+      :style="cmpt_badgeStyle"
       class="badge">
       {{badge}}
     </span>
@@ -42,7 +43,10 @@ export default {
       type: String,
       default: 'iconfont'
     },
-    badge: [Number, String]
+    badge: [Number, String],
+    badgeColor: String,
+    badgeBackgroundColor: String,
+    badgeBorderColor: String
   },
 
   computed: {
@@ -59,6 +63,13 @@ export default {
       return {
         fontSize: isDef(this.size) ? addUnit(this.size) : '',
         color: this.color
+      };
+    },
+    cmpt_badgeStyle () {
+      return {
+        color: this.badgeColor,
+        backgroundColor: this.badgeBackgroundColor,
+        borderColor: this.badgeBorderColor
       };
     }
   }

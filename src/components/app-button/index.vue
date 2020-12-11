@@ -3,7 +3,7 @@
     type="button"
     :class="cmpt_getClass"
     :style="cmpt_getStyle"
-    @click="click()">
+    @click="click">
     <slot></slot>
   </button>
 </template>
@@ -84,9 +84,12 @@ export default {
     }
   },
   methods: {
-    click () {
-      if (this.disabled) return;
-      this.$emit('click');
+    click (e) {
+      if (this.disabled) {
+        e.stopPropagation();
+        return;
+      }
+      this.$emit('click', e);
     }
   }
 };
@@ -94,10 +97,12 @@ export default {
 
 <style lang="scss" scoped>
 .app-btn {
-  font-family: 'PingFangSC Regular';
+  position: relative;
+  display: inline-block;
   line-height: initial;
   text-align: center;
   border: none;
+  transition: opacity 0.2s;
 
   max-width: 100% !important;
 
@@ -115,6 +120,25 @@ export default {
   &.disabled {
     color: #969696 !important;
     background: #f0f0f0;
+  }
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: inherit;
+    border-color: #000;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    content: ' ';
+  }
+
+  &:not(.disabled):active::before {
+    opacity: 0.1;
   }
 }
 </style>
