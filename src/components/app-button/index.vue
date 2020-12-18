@@ -1,5 +1,5 @@
 <template>
-  <button class="app-btn"
+  <button class="app-button"
     type="button"
     :class="cmpt_getClass"
     :style="cmpt_getStyle"
@@ -15,15 +15,15 @@ export default {
   props: {
     width: {
       type: Number,
-      default: 630
+      default: 80
     },
     fontSize: {
       type: Number,
-      default: 36
+      default: 12
     },
     height: {
       type: Number,
-      default: 88
+      default: 40
     },
     type: {
       type: String,
@@ -31,6 +31,10 @@ export default {
       validator (v) {
         return ['primary', 'normal', 'disabled'].indexOf(v) > -1;
       }
+    },
+    rem: {
+      type: Boolean,
+      default: true
     },
     disabled: {
       type: Boolean,
@@ -55,32 +59,43 @@ export default {
   },
   computed: {
     cmpt_getStyle () {
-      let f = this.fontSize / 75 + 'rem';
-      let w = this.width / 75 + 'rem';
-      let h = this.height / 75 + 'rem';
-      let r = this.height / 75 / 2 + 'rem';
+      let { fontSize, width, height } = this;
+
+      let radius = null;
+      if (this.rem) {
+        radius = height / 75 / 2 + 'rem';
+        fontSize = fontSize / 75 + 'rem';
+        width = width / 75 + 'rem';
+        height = height / 75 + 'rem';
+      }
+      else {
+        radius = height / 2 + 'px';
+        fontSize += 'px';
+        width += 'px';
+        height += 'px';
+      }
+
       let styleData = {
-        fontSize: f,
-        width: w,
-        height: h,
-        borderRadius: r,
+        fontSize: fontSize,
+        width: width,
+        height: height,
+        borderRadius: radius,
         color: this.color,
         background: this.background
       };
+
       if (this.plain) {
         styleData.border = `1px solid ${this.borderColor || this.color}`;
-        styleData.color = this.color;
         styleData.background = this.background || 'transparent';
       }
+
       return styleData;
     },
     cmpt_getClass () {
       if (!this.plain) {
         return [this.type, { disabled: this.disabled }];
       }
-      else {
-        return [];
-      }
+      return [this.type, 'plain'];
     }
   },
   methods: {
@@ -96,10 +111,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-btn {
+.app-button {
   position: relative;
   display: inline-block;
-  line-height: initial;
+  line-height: 1.2;
   text-align: center;
   border: none;
   transition: opacity 0.2s;
@@ -118,8 +133,8 @@ export default {
   }
 
   &.disabled {
-    color: #969696 !important;
-    background: #f0f0f0;
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   &::before {
@@ -134,6 +149,7 @@ export default {
     border-radius: inherit;
     transform: translate(-50%, -50%);
     opacity: 0;
+    pointer-events: none;
     content: ' ';
   }
 
