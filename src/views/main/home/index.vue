@@ -12,6 +12,7 @@
         <van-button :color="$_sassVars.colorPrimary"
           @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
         <van-button @click="$router.push({name:'fall'})">跳转到waterfall</van-button>
+        <van-button @click="$router.push({name:'wheel'})">跳转到wheel</van-button>
         <ul class="app-grid">
           <li v-for="i of 3"
             :key="i"

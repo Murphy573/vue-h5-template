@@ -183,13 +183,20 @@ export function fileDownload (content, filename) {
   window.URL.revokeObjectURL(_url);
 }
 
-export function loadImage (src) {
+/**
+ * 加载图片
+ * @param {String} url
+ */
+export function loadImg (url) {
   return new Promise((resolve, reject) => {
-    const img = new Image();
+    let img = new Image();
     img.setAttribute('crossOrigin', 'anonymous');
-    img.src = src;
+    img.src = url;
     img.onload = function () {
       resolve(img);
+    };
+    img.onerror = function (error) {
+      reject(error);
     };
   });
 }

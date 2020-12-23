@@ -14,5 +14,13 @@ export default [
     components: {
       default: () => import('@/views/waterfall/index.vue')
     }
+  },
+  // wheel
+  {
+    path: '/wheel',
+    name: 'wheel',
+    components: {
+      default: () => import('@/views/wheel/index.vue')
+    }
   }
 ];
