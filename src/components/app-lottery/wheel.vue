@@ -15,6 +15,7 @@ import {
   // transformRadian2Deg
 } from '@/utils/canvas.js';
 import { loadImg } from '@/utils/file.js';
+import { createAnimate } from '@/utils/animate.js';
 
 export default {
   name: 'AppLotteryWheel',
@@ -37,7 +38,7 @@ export default {
     },
     padding: {
       type: Number,
-      default: 10
+      default: 20
     },
     // 抽奖次数
     times: {
@@ -56,7 +57,7 @@ export default {
           'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg26zS-QUoz9zb2QQwlgE4lgE.png.webp',
           'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg3qzS-QUo0eLTxQIwlgE4lgE.png.webp'
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg4azS-QUolevRogYwlgE4lgE.png.webp',
-          // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg5KzS-QUojLbsjAUwlgE4lgE.png.webp',
+          // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg5KzS-QUojLbsjAUwlgE4lgE.png.webp'
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg5qzS-QUoo5aKgAMwlgE4lgE.png.webp'
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg6azS-QUoqIKbpAcwlgE4lgE.png.webp',
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg_oHT-QUoyNemrgEw2gQ42gQ.png.webp'
@@ -164,17 +165,22 @@ export default {
     },
     // 开始绘制
     _draw () {
-      const { ctx, radius, ratio, padding, blocks } = this;
+      const { ctx, radius, ratio, padding, blocks, cachedBackgroundImg } = this;
       // 清空画布
       ctx.clearRect(0, 0, radius * 2, radius * 2);
       // 计算起始弧度
       let perDeg = 360 / this.prizes.length;
       let perRadian = transformDeg2Radian(perDeg);
       let start = transformDeg2Radian(-90 + this.rotateDeg);
-      // 绘制背景图片
-      ctx.drawImage(this.cachedBackgroundImg, 0, 0, radius * 2, radius * 2);
+      // 绘制背景图片: 增加背景图旋转
       ctx.save();
+      ctx.translate(radius, radius);
+      const { width: bgW, height: bgH } = cachedBackgroundImg;
+      ctx.rotate(start);
+      ctx.drawImage(this.cachedBackgroundImg, -bgW / 2, -bgH / 2, radius * 2, radius * 2);
+      ctx.restore();
 
+      ctx.save();
       // 绘制奖品
       this.prizes.forEach((prize, index) => {
         let _startRadian = start + index * perRadian;
@@ -224,6 +230,32 @@ export default {
         ctx.restore();
       });
       ctx.restore();
+    },
+    startLottery () {
+      if (this.rotateDeg !== 0) {
+        this.rotateDeg = 0;
+        this._draw();
+      }
+
+      let { prizeIndex, prizes, rotateDeg } = this;
+      let self = this;
+
+      const perDeg = 360 / prizes.length;
+      const startDeg = rotateDeg;
+      const endDeg = startDeg + 360 * 10 - (prizeIndex * perDeg + perDeg / 2);
+
+      const animateFn = createAnimate(3000);
+
+      const callback = easing => {
+        self.rotateDeg = (endDeg - startDeg) * easing + startDeg;
+        self._draw();
+        if (easing === 1) {
+          /* eslint-disable-next-line */
+          console.log('中奖索引:' + prizeIndex);
+        }
+      };
+
+      animateFn(callback);
     }
   }
 };

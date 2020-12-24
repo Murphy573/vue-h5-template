@@ -2,7 +2,13 @@
   <div>
     <h2>转盘抽奖</h2>
     <div class="section--ignore">
-      <AppLotteryWheel />
+      <AppLotteryWheel ref="wheel"
+        :prizeIndex="2" />
+    </div>
+    <div>
+      <van-button @click="start">
+        开始抽奖
+      </van-button>
     </div>
   </div>
 </template>
@@ -31,7 +37,11 @@ export default {
 
   created () { },
 
-  methods: {}
+  methods: {
+    start () {
+      this.$refs.wheel.startLottery();
+    }
+  }
 };
 </script>
 
