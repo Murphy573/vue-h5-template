@@ -175,9 +175,8 @@ export default {
       // 绘制背景图片: 增加背景图旋转
       ctx.save();
       ctx.translate(radius, radius);
-      const { width: bgW, height: bgH } = cachedBackgroundImg;
       ctx.rotate(start);
-      ctx.drawImage(this.cachedBackgroundImg, -bgW / 2, -bgH / 2, radius * 2, radius * 2);
+      ctx.drawImage(cachedBackgroundImg, -radius, -radius, radius * 2, radius * 2);
       ctx.restore();
 
       ctx.save();
@@ -207,8 +206,8 @@ export default {
         ctx.save();
 
         const a = Math.sqrt(2 * radius / (radius - padding * ratio));
-        let x = radius + Math.cos(_startRadian + perRadian / 2) * (radius / a - padding * ratio);
-        let y = radius + Math.sin(_startRadian + perRadian / 2) * (radius / a - padding * ratio);
+        let x = radius + Math.cos(_startRadian + perRadian / 2) * (radius / a);
+        let y = radius + Math.sin(_startRadian + perRadian / 2) * (radius / a);
         // debugger;
         ctx.translate(x, y);
         ctx.rotate(_startRadian + perRadian / 2 + Math.PI / 2);
@@ -217,6 +216,14 @@ export default {
         // const _realHeight = Math.sqrt(radius * Math.sin(perRadian / 2) / (1 + Math.pow(k, 2)));
         // const _realWidth = _realHeight * k;
         // debugger;
+
+        ctx.fillStyle = 'green';
+        ctx.fillRect(
+          -width / 2,
+          -height / 2,
+          width,
+          height);
+
         ctx.drawImage(
           prizeImg,
           -width / 2,
