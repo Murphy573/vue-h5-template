@@ -57,7 +57,7 @@ export default {
           'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg26zS-QUoz9zb2QQwlgE4lgE.png.webp',
           'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg3qzS-QUo0eLTxQIwlgE4lgE.png.webp'
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg4azS-QUolevRogYwlgE4lgE.png.webp',
-          // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg5KzS-QUojLbsjAUwlgE4lgE.png.webp'
+          // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg5KzS-QUojLbsjAUwlgE4lgE.png.webp',
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg5qzS-QUoo5aKgAMwlgE4lgE.png.webp'
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg6azS-QUoqIKbpAcwlgE4lgE.png.webp',
           // 'https://25169966.h40.faiusr.com/4/242/ACgIABAEGAAg_oHT-QUoyNemrgEw2gQ42gQ.png.webp'
@@ -165,7 +165,7 @@ export default {
     },
     // 开始绘制
     _draw () {
-      const { ctx, radius, ratio, padding, blocks, cachedBackgroundImg } = this;
+      const { ctx, radius, ratio, padding, blocks, cachedBackgroundImg, rectSize } = this;
       // 清空画布
       ctx.clearRect(0, 0, radius * 2, radius * 2);
       // 计算起始弧度
@@ -191,7 +191,7 @@ export default {
           ctx,
           radius,
           radius,
-          radius - padding * ratio,
+          radius - (rectSize.width / 300) * padding * ratio,
           _startRadian,
           _endRadian,
           (!Array.isArray(blocks) || !blocks.length) ? '' : blocks[index % blocks.length]
@@ -205,7 +205,16 @@ export default {
 
         ctx.save();
 
-        const a = Math.sqrt(2 * radius / (radius - padding * ratio));
+        const _k = width / height;
+
+        const _magicNumber = 1.35;
+        const a = Math.sqrt((1 + Math.sin(perRadian / 2) / (Math.sin(perRadian / 2))) * _magicNumber);
+
+        const _r = (radius - padding) * ((Math.sin(perRadian / 2)) / (1 + Math.sin(perRadian / 2)));
+
+        const _widthToDraw = (2 * _r) / (Math.sqrt(1 + Math.pow(_k, 2)));
+        const _heightToDraw = _widthToDraw * _k;
+
         let x = radius + Math.cos(_startRadian + perRadian / 2) * (radius / a);
         let y = radius + Math.sin(_startRadian + perRadian / 2) * (radius / a);
         // debugger;
@@ -217,19 +226,19 @@ export default {
         // const _realWidth = _realHeight * k;
         // debugger;
 
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = 'white';
         ctx.fillRect(
-          -width / 2,
-          -height / 2,
-          width,
-          height);
+          -_widthToDraw / 2,
+          -_heightToDraw / 2,
+          _widthToDraw,
+          _heightToDraw);
 
         ctx.drawImage(
           prizeImg,
-          -width / 2,
-          -height / 2,
-          width,
-          height
+          -_widthToDraw / 2,
+          -_heightToDraw / 2,
+          _widthToDraw,
+          _heightToDraw
         );
         // 修正旋转角度和原点坐标
         // ctx.rotate(transformDeg2Radian(360) - _startRadian - transformDeg2Radian(90));
