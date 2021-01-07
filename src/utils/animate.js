@@ -51,12 +51,12 @@ export function createAnimate (duration, easingFn = Easying.easeInOutQuad) {
  * @param {Array} animationList 动画列表
  * @param {Function} callback 动画执行完后的回调函数
  */
-export default async function runAnimation (el, animationList = [], callback) {
+export async function runAnimation (el, animationList = [], callback) {
   if (!el || !Array.isArray(animationList) || !animationList.length) return;
 
   let playFn = function (animation) {
     return new Promise(resolve => {
-      const { name, duration, infinite, interationCount, delay } = animation;
+      const { name, duration, infinite, interationCount = 1, delay } = animation;
 
       el.style.animationName = name;
       el.style.animationDuration = `${duration}s`;
@@ -65,13 +65,13 @@ export default async function runAnimation (el, animationList = [], callback) {
       el.style.animationDelay = `${delay}s`;
       el.style.animationFillMode = 'both';
 
-      let resolveFn = function () {
-        el.removeEventListener('animationend', resolveFn, false);
-        el.addEventListener('animationcancel', resolveFn, false);
+      let handleAnimationEnd = function (event) {
+        event.stopPropagation();
+        el.removeEventListener('animationend', handleAnimationEnd, false);
         resolve();
       };
-      el.addEventListener('animationend', resolveFn, false);
-      el.addEventListener('animationcancel', resolveFn, false);
+
+      el.addEventListener('animationend', handleAnimationEnd, false);
     });
   };
 
