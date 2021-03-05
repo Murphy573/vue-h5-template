@@ -80,11 +80,11 @@ export function deleteUrlParams (url, params) {
     return url;
   }
 
-  let searchParams = url.substring(paramIndex);
+  let searchParams = '&' + url.substring(paramIndex + 1);
   url = url.substring(0, paramIndex);
 
   params.forEach((item) => {
-    let pattern = '[&?]' + item + '=([^&]*)';
+    let pattern = '&' + item + '=([^&]*)';
     if (searchParams.match(pattern)) {
       searchParams = searchParams.replace(
         searchParams.match(pattern)[0],
@@ -97,7 +97,7 @@ export function deleteUrlParams (url, params) {
             ? searchParams.substring(1)
             : searchParams;
   if (searchParams.length) {
-    url += (searchParams[0] === '?' ? '' : '?') + searchParams;
+    url += '?' + searchParams;
   }
   return url;
 }
