@@ -1,3 +1,5 @@
+export const oneDayMilliseconds = 24 * 60 * 60 * 1000;
+
 /**
  * 将任意时间格式转换为Date对象
  * @param {Number|Date|String} time 时间
@@ -12,6 +14,7 @@ export function toDate (time) {
   }
   return new Date(time);
 }
+
 /**
  * 日期转换
  * @param {Number|Date|String} time 时间
@@ -27,7 +30,7 @@ export function toDate (time) {
 export function formatDate (time, fmt = 'YYYY-MM-DD') {
   if (!time) return '';
 
-  let _time = toDate(time);
+  const _time = toDate(time);
 
   let o = {
     'M+': _time.getMonth() + 1, // 月份

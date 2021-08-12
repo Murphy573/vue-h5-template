@@ -6,10 +6,14 @@
         <van-icon v-if="showLeft"
           name="arrow-left"
           size="20"
-          @click="$router.history.go(-1)" />
+          @click="$router.back()" />
       </slot>
     </div>
-    <div class="title text-ellipsis">{{title}}</div>
+    <div class="title text-ellipsis">
+      <slot>
+        {{title}}
+      </slot>
+    </div>
     <div class="right">
       <slot name="right">
         <van-icon v-if="showRight"
@@ -121,6 +125,7 @@ export default {
   > .left {
     text-align: left;
     flex: 0 0 18%;
+    min-height: 20px;
   }
 
   > .title {

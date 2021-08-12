@@ -1,35 +1,36 @@
-
 // 全局颜色
-$--color-primary: #DD1A21;
-$--color-regular: #FFE5C1;
+$--color-primary: #dd1a21;
+$--color-regular: #ffe5c1;
 $--color-secondary: #dfc287;
+$--color-green: #009b63;
 
 // 文字颜色
 $--color-text-primary: #333333;
 $--color-text-minor: #666666;
 $--color-text-regular: #969696;
 $--color-text-secondary: #999999;
-$--color-text-placeholder:#C0C4CC;
+$--color-text-placeholder: #c0c4cc;
 
 // 边框颜色
 $--color-border-base: #d5d5d5;
-$--color-border-light: #E4E7ED;
-$--color-border-lighter:#F2F6FC;
+$--color-border-light: #e4e7ed;
+$--color-border-lighter: #f2f6fc;
 
 // 背景颜色
 $--color-background-white: #ffffff;
 $--color-background-black: #000000;
-$--color-background-base: rgba($color: #f9f9f9, $alpha: 0.9);
+$--color-background-base: #f9f9f9;
 
 /* 导出变量 */
 :export {
   colorPrimary: $--color-primary;
   colorRegular: $--color-regular;
   colorSecondary: $--color-secondary;
+  colorGreen: $--color-green;
   colorTextPrimary: $--color-text-primary;
   colorTextMinor: $--color-text-minor;
   colorTextRegular: $--color-text-regular;
-  colorTextSecondary: $--color-text-regular;
+  colorTextSecondary: $--color-text-secondary;
   colorTextPlaceholder: $--color-text-placeholder;
   colorBorderBase: $--color-border-base;
   colorBorderLight: $--color-border-light;
@@ -39,14 +40,9 @@ $--color-background-base: rgba($color: #f9f9f9, $alpha: 0.9);
   colorBackgroundBase: $--color-background-base;
 }
 
-$--color-blue: #508bef;
-$--color-red: #e82828;
-$--color-golden: #ee8f0f;
 $--color-666: #666666;
 $--color-999: #999999;
 $--color-ddd: #dddddd;
-$--color-fff: #ffffff;
-$--color-danger: #f56c6c !default;
 
 /**
 * 常用大小: 8的倍数
@@ -77,16 +73,12 @@ $--size-120: 1.6rem;
 /**
 * 常用大小: 非8倍
 */
-$--size-10: 0.133333rem
-/* 10/75 */
-;
+$--size-10: 0.133333rem /* 10/75 */;
 $--size-20: 0.266667rem;
 /* 20/75 */
 $--size-28: 0.373333rem;
 /* 28/75 */
-$--size-30: 0.4rem
-/* 30/75 */
-;
+$--size-30: 0.4rem /* 30/75 */;
 $--size-36: 0.48rem;
 /* 36/75 */
 $--size-1: 0.013333rem;

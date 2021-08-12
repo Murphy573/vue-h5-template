@@ -19,8 +19,7 @@ body {
 
 html {
   -webkit-text-size-adjust: 100%;
-  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', Helvetica,
-    STHeiTi, sans-serif;
+  font-family: -apple-system, Helvetica, sans-serif;
   // 文字抗锯齿
   -webkit-font-smoothing: antialiased;
 }
@@ -29,7 +28,7 @@ body {
   min-width: 320px;
   max-width: 1080px;
   margin: 0 auto;
-  color: #333333;
+  color: $--color-text-primary;
 }
 
 table {

@@ -21,7 +21,7 @@
 <script>
 import { addUnit } from '@/utils/dom';
 import { BindEventMixin } from '@/mixins/bind-event.mixin.js';
-import { getScrollLeft } from '@/utils/scroll';
+import { setScrollLeft, getScrollLeft } from '@/utils/scroll';
 
 export default {
   name: 'AppXScroller',
@@ -31,8 +31,10 @@ export default {
       if (!this.scroller) {
         this.scroller = this.$refs.contentRef;
       }
-      bind(this.scroller, 'scroll', this.scrolling);
-      // bind(window, 'resize', this.resize, true);
+      if (this.showScroller) {
+        bind(this.scroller, 'scroll', this.scrolling);
+        bind(window, 'resize', this.resize, true);
+      }
     })
   ],
 
@@ -59,7 +61,8 @@ export default {
   data () {
     return {
       x: 0,
-      ratio: 0
+      ratio: 0,
+      observer: {}
     };
   },
 
@@ -90,11 +93,38 @@ export default {
   },
 
   mounted () {
+    if (!this.showScroller) return;
+
+    this.createObserver();
+    this.observe();
     this.initialize();
   },
 
+  activated () {
+    this.observe();
+  },
+
+  deactivated () {
+    this.observer.disconnect && this.observer.disconnect();
+  },
+
   methods: {
+    createObserver () {
+      if (window.MutationObserver) {
+        this.observer = new MutationObserver((mutation) => {
+          this.initialize();
+        });
+      }
+    },
+    observe () {
+      const { contentRef } = this.$refs;
+      if (!contentRef) return;
+
+      this.observer.observe && this.observer.observe(contentRef, { childList: true, subtree: true });
+    },
     initialize () {
+      if (!this.showScroller) return;
+
       this.$nextTick(() => {
         const { scrollerRef, indicatorRef, contentRef } = this.$refs;
 
@@ -107,7 +137,11 @@ export default {
       });
     },
     resize () {
-      this.initialize();
+      this.$nextTick(() => {
+        this.initialize();
+        this.x = 0;
+        setScrollLeft(this.scroller, 0);
+      });
     },
     scrolling () {
       this.x = getScrollLeft(this.scroller) * this.ratio;

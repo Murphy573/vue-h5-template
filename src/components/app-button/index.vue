@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { isDef } from '@/utils/common.js';
 
 export default {
   name: 'AppButton',
@@ -52,6 +53,10 @@ export default {
       type: String,
       default: ''
     },
+    borderRadius: {
+      type: Number,
+      default: null
+    },
     background: {
       type: String,
       default: ''
@@ -59,17 +64,18 @@ export default {
   },
   computed: {
     cmpt_getStyle () {
-      let { fontSize, width, height } = this;
+      let { fontSize, width, height, borderRadius } = this;
 
-      let radius = null;
+      let radius = isDef(borderRadius) ? borderRadius : height / 2;
+
       if (this.rem) {
-        radius = height / 75 / 2 + 'rem';
+        radius = radius / 75 + 'rem';
         fontSize = fontSize / 75 + 'rem';
         width = width / 75 + 'rem';
         height = height / 75 + 'rem';
       }
       else {
-        radius = height / 2 + 'px';
+        radius = radius + 'px';
         fontSize += 'px';
         width += 'px';
         height += 'px';
@@ -149,8 +155,8 @@ export default {
     border-radius: inherit;
     transform: translate(-50%, -50%);
     opacity: 0;
-    pointer-events: none;
     content: ' ';
+    pointer-events: none;
   }
 
   &:not(.disabled):active::before {

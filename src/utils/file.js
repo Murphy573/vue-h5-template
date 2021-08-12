@@ -196,7 +196,29 @@ export function loadImg (url) {
       resolve(img);
     };
     img.onerror = function (error) {
+      reject(new Error(`该url的图片加载失败：${url}`));
+    };
+  });
+}
+
+/**
+ * 根据AJAX加载图片
+ * @param {String} url
+ */
+export function loadImgByXHR (url) {
+  return new Promise((resolve, reject) => {
+    let xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function (error) {
       reject(error);
     };
+    xhr.onabort = function (error) {
+      reject(error);
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
   });
 }

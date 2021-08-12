@@ -70,7 +70,7 @@ export default {
 
   > span {
     margin-left: 100px;
-    background: $--color-golden;
+    background: $--color-secondary;
   }
 
   ::v-deep {
@@ -88,7 +88,7 @@ export default {
     > .app-grid-item {
       width: 33.333333%;
       height: 100px;
-      background: $--color-golden;
+      background: $--color-secondary;
       margin-bottom: 10px;
 
       &:nth-child(1) {

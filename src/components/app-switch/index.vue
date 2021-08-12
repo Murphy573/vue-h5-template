@@ -58,7 +58,7 @@ export default {
 .app-switch {
   width: 100px;
   height: 100px;
-  background: $--color-golden;
+  background: $--color-secondary;
   overflow: hidden;
   display: flex;
   align-items: center;

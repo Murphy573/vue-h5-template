@@ -8,6 +8,8 @@
 /* 修改cell 内容:增加省略号 */
 .van-cell {
   padding: 10px;
+  color: $--color-text-primary;
+
   .van-cell__value {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -18,6 +20,18 @@
     .van-cell__value {
       flex: none;
     }
+  }
+}
+
+/* cell订单样式 */
+.van-cell--order {
+  &.van-cell,
+  .van-cell {
+    padding: 10px 12px;
+  }
+
+  .van-cell__right-icon {
+    color: #666666;
   }
 }
 
@@ -36,17 +50,18 @@
 }
 
 .van-dialog {
-  .van-dialog__header{
+  .van-dialog__header {
     padding-top: 12px;
   }
 }
 
-.van-info{
+.van-info {
   background-color: $--color-primary;
 }
 
 .van-dialog {
-  .van-dialog__confirm, .van-dialog__confirm:active{
+  .van-dialog__confirm,
+  .van-dialog__confirm:active {
     color: $--color-primary;
   }
 }

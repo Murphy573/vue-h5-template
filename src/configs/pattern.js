@@ -59,4 +59,4 @@ export const MONEY_PATTERN = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-
 export const USERNAME_PATTERN = /^[\u4e00-\u9fa5_a-zA-Z]+$/;
 
 // 网址校验
-export const URL_PATTERN = /^(http|https):\/\/([\w.]+\/?)\S*$/;
+export const URL_PATTERN = /^((https|http)?:\/\/)[^\s]+/;

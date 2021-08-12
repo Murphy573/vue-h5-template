@@ -49,7 +49,7 @@ export default {
 .section--ignore {
   width: 300px;
   height: 300px;
-  // background: $--color-golden;
+  // background:  $--color-secondary
   margin: 0 auto;
 }
 </style>

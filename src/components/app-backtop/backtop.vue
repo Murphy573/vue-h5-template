@@ -2,7 +2,7 @@
   <div>
     <transition name="van-fade">
       <div v-if="visible"
-        class="app-backtop"
+        class="app-backtop card-shadow"
         :style="cmpt_style"
         @click.stop="handleClick">
         <van-icon name="back-top"

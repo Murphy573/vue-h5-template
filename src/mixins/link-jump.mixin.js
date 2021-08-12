@@ -1,6 +1,6 @@
 /* 配置的链接跳转方法 */
 
-const URL_PATTERN = /^(http|https):\/\/([\w.]+\/?)\S*$/;
+import { URL_PATTERN } from '@/configs/pattern';
 // 内部链接前缀
 const INTERNAL_LINK_PREFIX =
   process.env.VUE_APP_Router_Mode === 'history' ? '' : '#';

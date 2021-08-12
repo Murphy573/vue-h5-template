@@ -22,6 +22,8 @@ export default {
   overflow: hidden;
 
   > .app-page-header {
+    position: relative;
+    z-index: 999;
     height: 44px;
     width: 100%;
   }
