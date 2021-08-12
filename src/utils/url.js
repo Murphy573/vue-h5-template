@@ -24,15 +24,18 @@ export function convertUrlParam2Obj (url) {
   if (!search) {
     return {};
   }
-  return JSON.parse(
-    '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
-  );
+  const paramPairs = search.split('&');
+  const finalObj = {};
+
+  for (let pair of paramPairs) {
+    // 因为存在base64参数（带有=号），所以获取第一个等号
+    let equalFlagIndex = pair.indexOf('=');
+    if (equalFlagIndex < 0) continue;
+    const attr = pair.substring(0, equalFlagIndex);
+    const value = pair.substring(equalFlagIndex + 1);
+    finalObj[attr] = value;
+  }
+  return finalObj;
 }
 
 /**
