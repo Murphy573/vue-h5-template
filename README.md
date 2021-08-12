@@ -2,6 +2,11 @@
 
 **C 端模板**
 
+仓库地址：
+
+- [github](https://github.com/Murphy573/vue-h5-template)
+- [gitee](https://gitee.com/murphy573/vue-h5-template)
+
 ## Project setup
 
 ```
