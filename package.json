@@ -10,7 +10,7 @@
     "build": "npm run lint && vue-cli-service build --mode production"
   },
   "dependencies": {
-    "async-validator": "^1.11.0",
+    "async-validator": "^4.0.2",
     "axios": "^0.18.0",
     "clipboard": "^2.0.4",
     "core-js": "^3.6.5",

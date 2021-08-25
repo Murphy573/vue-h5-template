@@ -10,6 +10,8 @@
       <div class="home-wrapper full-container">
         <span>主页</span>
         <van-button :color="$_sassVars.colorPrimary"
+          @click="validate">数据校验</van-button>
+        <van-button :color="$_sassVars.colorPrimary"
           @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
         <van-button @click="$router.push({name:'fall'})">跳转到waterfall</van-button>
         <van-button @click="$router.push({name:'wheel'})">跳转到wheel</van-button>
@@ -45,6 +47,8 @@
 <script>
 import AppXScroller from '@/components/app-scroll/x-scroller';
 import AppSwitch from '@/components/app-switch/index';
+import { PHONE_PATTERN, TRADE_PASSWORD_PATTERN } from '../../../configs/pattern';
+import Validator from '@/utils/validator.js';
 
 export default {
   name: 'MainHome',
@@ -53,8 +57,45 @@ export default {
 
   data () {
     return {
-      title: '主页'
+      title: '主页',
+      loginInfo: {
+        phone: '1357217101',
+        smsCode: '1',
+        readme: false
+      },
+      rules: {
+        phone: [
+          { required: true, message: '请输入您的手机号码' },
+          { pattern: PHONE_PATTERN, message: '您输入的手机号码格式有误' }
+        ],
+        smsCode: [
+          { required: true, message: '请输入短信验证码' },
+          { pattern: TRADE_PASSWORD_PATTERN, message: '验证码只能为6位数字' }
+        ]
+        // readme: [
+        //   {
+        //     required: true,
+        //     message: '请阅读并同意《用户协议》!',
+        //     transform(value) {
+        //       return value ? '1' : '';
+        //     },
+        //   },
+        // ],
+      }
     };
+  },
+
+  methods: {
+    async validate () {
+      try {
+        await Validator(this.rules, this.loginInfo);
+        return true;
+      }
+      catch (errors) {
+        // this.setData({ canSubmit: false });
+        // return Promise.reject(errors);
+      }
+    }
   }
 };
 </script>
