@@ -1,23 +1,23 @@
 <template>
   <div class="app-progress-bar">
-    <div v-if="!textInside &&showText"
+    <div
+      v-if="!textInside && showText"
       class="outer-text font-weight--medium"
       :style="cmpt_textStyle">
-      {{cmpt_text}}
+      {{ cmpt_text }}
     </div>
-    <div class="bar"
-      :class="{'is-outer-text': !textInside&&showText}">
-      <div class="outer"
-        :style="cmpt_outerStyle">
-        <div class="inner"
-          :style="cmpt_innerStyle">
-          <div class="inner-text font-weight--medium"
-            v-if="textInside &&showText"
+    <div class="bar" :class="{ 'is-outer-text': !textInside && showText }">
+      <div class="outer" :style="cmpt_outerStyle">
+        <div class="inner" :style="cmpt_innerStyle">
+          <div
+            class="inner-text font-weight--medium"
+            v-if="textInside && showText"
             :style="cmpt_textStyle">
-            {{cmpt_text}}
+            {{ cmpt_text }}
           </div>
         </div>
-        <div v-if="showBorder"
+        <div
+          v-if="showBorder"
           class="outer-border"
           :style="cmpt_borderStyle"></div>
       </div>
@@ -37,77 +37,75 @@ export default {
       type: Number,
       default: 0,
       required: true,
-      validator: val => val >= 0 && val <= 100
+      validator: (val) => val >= 0 && val <= 100,
     },
     strokeWidth: {
       type: [Number, String],
-      default: 4
+      default: 4,
     },
     textInside: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showText: {
       type: Boolean,
-      default: true
+      default: true,
     },
     color: {
       type: [String, Function],
-      default: ''
+      default: '',
     },
     showBorder: Boolean,
     borderColor: String,
     textColor: {
       type: String,
-      default: colorTextSecondary
+      default: colorTextSecondary,
     },
     formatText: Function,
-    background: String
+    background: String,
   },
 
   computed: {
-    cmpt_textStyle () {
+    cmpt_textStyle() {
       return {
-        color: this.textColor
+        color: this.textColor,
       };
     },
-    cmpt_borderStyle () {
+    cmpt_borderStyle() {
       return {
-        borderColor: this.borderColor
+        borderColor: this.borderColor,
       };
     },
-    cmpt_outerStyle () {
+    cmpt_outerStyle() {
       return {
         height: addUnit(this.strokeWidth),
-        backgroundColor: this.background
+        backgroundColor: this.background,
       };
     },
-    cmpt_innerStyle () {
+    cmpt_innerStyle() {
       const style = {};
       style.width = this.percentage + '%';
       style.background = this.getCurrentColor(this.percentage);
       return style;
     },
-    cmpt_text () {
+    cmpt_text() {
       if (typeof this.formatText === 'function') {
         return this.formatText(this.percentage) || '';
-      }
-      else {
+      } else {
         return `${this.percentage}%`;
       }
-    }
+    },
   },
 
   methods: {
-    getCurrentColor (percentage) {
+    getCurrentColor(percentage) {
       if (typeof this.color === 'function') {
         return this.color(percentage);
-      }
-      else {
+      } else {
         return this.color;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

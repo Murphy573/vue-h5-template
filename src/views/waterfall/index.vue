@@ -1,6 +1,7 @@
 <template>
   <div class="waterfall full-container hide-native-scrollbar">
-    <AppWaterfall ref="aw"
+    <AppWaterfall
+      ref="aw"
       v-model="loading"
       :data="list"
       dataKey="id"
@@ -10,9 +11,9 @@
       justify
       item-margin-bottom="10"
       @load="load">
-      <template #default="{data}">
+      <template #default="{ data }">
         <div :style="data.style">
-          <span style="background:red;color:white">{{data.text}}</span>
+          <span style="background: red; color: white">{{ data.text }}</span>
         </div>
       </template>
     </AppWaterfall>
@@ -20,25 +21,24 @@
 </template>
 
 <script>
-
 export default {
   name: 'Waterfall',
 
-  data () {
+  data() {
     return {
       loading: false,
       finished: false,
       count: 0,
-      list: []
+      list: [],
     };
   },
 
-  mounted () {
+  mounted() {
     this.load();
   },
 
   methods: {
-    load () {
+    load() {
       this.count++;
       this.loading = true;
 
@@ -51,17 +51,17 @@ export default {
           id: hexColor,
           style: {
             background: hexColor,
-            height: height + 'px'
+            height: height + 'px',
           },
-          text: (this.count - 1) * 14 + index
+          text: (this.count - 1) * 14 + index,
         });
       }
 
       this.list.push(...arr);
       this.finished = this.count >= 4;
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

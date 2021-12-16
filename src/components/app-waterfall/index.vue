@@ -1,5 +1,6 @@
 <template>
-  <van-list v-model="myLoading"
+  <van-list
+    v-model="myLoading"
     :error.sync="error"
     :finished="finished"
     :offset="offset"
@@ -8,11 +9,9 @@
     :error-text="errorText"
     :immediate-check="immediateCheck"
     @load="$emit('load', $event)">
-    <AppWaterfallWrapper v-bind="$attrs"
-      @rendering="handleRendering">
-      <template #default="{data, index}">
-        <slot :data="data"
-          :index="index"></slot>
+    <AppWaterfallWrapper v-bind="$attrs" @rendering="handleRendering">
+      <template #default="{ data, index }">
+        <slot :data="data" :index="index"></slot>
       </template>
     </AppWaterfallWrapper>
   </van-list>
@@ -25,7 +24,7 @@ export default {
   name: 'AppWaterfall',
 
   model: {
-    prop: 'loading'
+    prop: 'loading',
   },
 
   components: { AppWaterfallWrapper },
@@ -36,49 +35,49 @@ export default {
     finished: Boolean,
     errorText: {
       type: String,
-      default: '哦豁，加载失败了呢，点我试试～'
+      default: '哦豁，加载失败了呢，点我试试～',
     },
     loadingText: {
       type: String,
-      default: '加载中...'
+      default: '加载中...',
     },
     finishedText: {
       type: String,
-      default: '没有更多了~'
+      default: '没有更多了~',
     },
     // 是否立即检查
     immediateCheck: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 距离底部
     offset: {
       type: Number,
-      default: 300
-    }
+      default: 300,
+    },
   },
 
-  data () {
+  data() {
     return {
-      isRendering: false
+      isRendering: false,
     };
   },
 
   computed: {
     myLoading: {
-      set (v) {
+      set(v) {
         this.$emit('input', v);
       },
-      get () {
+      get() {
         return this.loading || this.isRendering;
-      }
-    }
+      },
+    },
   },
 
   methods: {
-    handleRendering (r) {
+    handleRendering(r) {
       this.isRendering = r;
-    }
-  }
+    },
+  },
 };
 </script>

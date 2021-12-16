@@ -20,11 +20,10 @@ export default function (rules, formData) {
   const validator = new AsyncValidator(rules);
   // 返回promise
   return new Promise((resolve, reject) => {
-    validator.validate(formData, { firstFields: true }, errors => {
+    validator.validate(formData, { firstFields: true }, (errors) => {
       if (errors) {
         reject(errors);
-      }
-      else {
+      } else {
         resolve();
       }
     });

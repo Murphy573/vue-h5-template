@@ -1,9 +1,9 @@
 <template>
-  <div class="app-header"
-    :style="cmpt_getStyle">
+  <div class="app-header" :style="cmpt_getStyle">
     <div class="left text-ellipsis">
       <slot name="left">
-        <van-icon v-if="showLeft"
+        <van-icon
+          v-if="showLeft"
           name="arrow-left"
           size="20"
           @click="$router.back()" />
@@ -11,12 +11,13 @@
     </div>
     <div class="title text-ellipsis">
       <slot>
-        {{title}}
+        {{ title }}
       </slot>
     </div>
     <div class="right">
       <slot name="right">
-        <van-icon v-if="showRight"
+        <van-icon
+          v-if="showRight"
           name="wap-home-o"
           @click="jumpHomeForRightIcon" />
       </slot>
@@ -29,20 +30,20 @@
 const TYPE_STYLE_MAPPER = {
   transparent: {
     color: '#ffffff',
-    background: 'rgba(255,255,255,0)'
+    background: 'rgba(255,255,255,0)',
   },
   primary: {
     color: '#333333',
-    background: 'rgb(247, 247, 247)'
+    background: 'rgb(247, 247, 247)',
   },
   minor: {
     color: '#333333',
-    background: 'transparent'
+    background: 'transparent',
   },
   normal: {
     color: '#333333',
-    background: '#ffffff'
-  }
+    background: '#ffffff',
+  },
 };
 
 export default {
@@ -51,62 +52,65 @@ export default {
   props: {
     leftIconClass: {
       type: String,
-      default: 'iconfanhui'
+      default: 'iconfanhui',
     },
     showLeft: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showRight: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 是否使用replace跳转
     replace: Boolean,
     type: {
       type: String,
       default: 'normal',
-      validator (v) {
+      validator(v) {
         return ['transparent', 'primary', 'minor', 'normal'].indexOf(v) > -1;
-      }
+      },
     },
     changeTitle: {
       type: Boolean,
-      default: true
+      default: true,
     },
     title: String,
     setStyle: {
       type: Object,
-      default () {
+      default() {
         return null;
-      }
-    }
+      },
+    },
   },
 
   computed: {
-    cmpt_getStyle () {
+    cmpt_getStyle() {
       return Object.assign({}, TYPE_STYLE_MAPPER[this.type], this.setStyle);
-    }
+    },
   },
 
-  activated () {
+  activated() {
     if (!this.changeTitle) return;
     document.title = this.title;
   },
 
-  created () {
+  created() {
     if (!this.changeTitle) return;
     document.title = this.title;
   },
 
   methods: {
-    jumpHome () {
-      this.$router[this.replace ? 'replace' : 'push']({ name: 'home', query: { tab: 'home' } });
+    jumpHome() {
+      this.$router[this.replace ? 'replace' : 'push']({
+        name: 'home',
+        query: { tab: 'home' },
+      });
     },
-    jumpHomeForRightIcon () {
+    jumpHomeForRightIcon() {
       this.$router.push({ name: 'home' });
-    }
-  }
+    },
+  },
 };
 </script>
 

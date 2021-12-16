@@ -1,19 +1,19 @@
 export default {
-  data () {
+  data() {
     return {
       directionMixin: '',
-      MIN_DISTANCE_MIXIN: 10
+      MIN_DISTANCE_MIXIN: 10,
     };
   },
 
   methods: {
-    touchStartMixin (event) {
+    touchStartMixin(event) {
       this.resetTouchStatusMixin();
       this.startXMixin = event.touches[0].clientX;
       this.startYMixin = event.touches[0].clientY;
     },
 
-    touchMoveMixin (event) {
+    touchMoveMixin(event) {
       const touch = event.touches[0];
       this.deltaXMixin = touch.clientX - this.startXMixin;
       this.deltaYMixin = touch.clientY - this.startYMixin;
@@ -24,7 +24,7 @@ export default {
         this.getDirectionMixin(this.offsetXMixin, this.offsetYMixin);
     },
 
-    resetTouchStatusMixin () {
+    resetTouchStatusMixin() {
       this.directionMixin = '';
       this.deltaXMixin = 0;
       this.deltaYMixin = 0;
@@ -32,7 +32,7 @@ export default {
       this.offsetYMixin = 0;
     },
 
-    getDirectionMixin (x, y) {
+    getDirectionMixin(x, y) {
       if (x > y && x > this.MIN_DISTANCE_MIXIN) {
         return 'horizontal';
       }
@@ -40,6 +40,6 @@ export default {
         return 'vertical';
       }
       return '';
-    }
-  }
+    },
+  },
 };

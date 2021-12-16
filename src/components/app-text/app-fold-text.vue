@@ -1,16 +1,15 @@
 <template>
-  <div ref="foldText"
-    :class="[textClass]"
-    class="fold-text">
-    <span ref="realText"
+  <div ref="foldText" :class="[textClass]" class="fold-text">
+    <span
+      ref="realText"
       class="real-text"
-      :class="{folded: isFold}"
+      :class="{ folded: isFold }"
       :style="cmpt_style">
       <slot></slot>
     </span>
-    <div v-if="cmpt_canFold"
-      class="expand-text"
-      @click="isFold = !isFold">{{isFold? '展开':'收起'}}</div>
+    <div v-if="cmpt_canFold" class="expand-text" @click="isFold = !isFold">
+      {{ isFold ? '展开' : '收起' }}
+    </div>
   </div>
 </template>
 
@@ -30,52 +29,53 @@ export default {
     // 最大显示行数
     limitLine: {
       type: Number,
-      default: 3
-    }
+      default: 3,
+    },
   },
 
-  data () {
+  data() {
     return {
       // 收起状态下的最大高度
       foldMaxHeight: 0,
       // 文本实际高度
       realHeight: 0,
       // 是否收缩
-      isFold: true
+      isFold: true,
     };
   },
 
   computed: {
-    cmpt_style () {
+    cmpt_style() {
       if (this.isFold) {
         return {
           maxHeight: this.foldMaxHeight + 'px',
-          '-webkit-line-clamp': this.limitLine
+          '-webkit-line-clamp': this.limitLine,
         };
       }
       return {
-        maxHeight: this.realHeight + 20 + 'px'
+        maxHeight: this.realHeight + 20 + 'px',
       };
     },
-    cmpt_canFold () {
+    cmpt_canFold() {
       return this.realHeight > this.foldMaxHeight;
-    }
+    },
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       this.calcFoldHeight();
     });
   },
 
   methods: {
-    calcFoldHeight () {
+    calcFoldHeight() {
       const _style = window.getComputedStyle(this.$refs.foldText);
       let { lineHeight, fontSize } = _style;
       fontSize = fontSize || '12px';
       const _fontSize = Number((fontSize || '12px').match(/\d+/g)[0]);
       // 如果是normal，默认为字体大小的1.2倍
-      lineHeight = lineHeight === 'normal' ? _fontSize * 1.2 + 'px' : lineHeight;
+      lineHeight =
+        lineHeight === 'normal' ? _fontSize * 1.2 + 'px' : lineHeight;
       const _lineHeight = Number(lineHeight.match(/\d+/g)[0]);
       // 文本收起状态下最大高度=行高*行数
       this.foldMaxHeight = _lineHeight * this.limitLine;
@@ -84,10 +84,10 @@ export default {
         this.calcRealHeight();
       }, 0);
     },
-    calcRealHeight () {
+    calcRealHeight() {
       this.realHeight = this.$refs.realText.scrollHeight;
-    }
-  }
+    },
+  },
 };
 </script>
 

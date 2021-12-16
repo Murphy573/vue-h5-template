@@ -11,7 +11,7 @@ const overflowScrollReg = /scroll|auto/i;
  * http://w3help.org/zh-cn/causes/SD9013
  * http://stackoverflow.com/questions/17016740/onscroll-function-is-not-working-for-chrome
  */
-export function getScroller (el, root = window) {
+export function getScroller(el, root = window) {
   let node = el;
 
   while (
@@ -28,7 +28,9 @@ export function getScroller (el, root = window) {
       }
 
       // see: https://github.com/youzan/vant/issues/3823
-      const { overflowY: htmlOverflowY } = window.getComputedStyle(node.parentNode);
+      const { overflowY: htmlOverflowY } = window.getComputedStyle(
+        node.parentNode
+      );
 
       if (overflowScrollReg.test(htmlOverflowY)) {
         return node;
@@ -44,7 +46,7 @@ export function getScroller (el, root = window) {
  * 获取垂直滚动距离
  * @param {HTMLElement} el 滚动节点
  */
-export function getScrollTop (el) {
+export function getScrollTop(el) {
   return 'scrollTop' in el ? el.scrollTop : el.pageYOffset;
 }
 
@@ -53,11 +55,10 @@ export function getScrollTop (el) {
  * @param {HTMLElement} el 滚动节点
  * @param {Number} value 滚动位置
  */
-export function setScrollTop (el, value) {
+export function setScrollTop(el, value) {
   if ('scrollTop' in el) {
     el.scrollTop = value;
-  }
-  else {
+  } else {
     el.scrollTo(el.scrollX, value);
   }
 }
@@ -66,7 +67,7 @@ export function setScrollTop (el, value) {
  * 获取水平滚动距离
  * @param {HTMLElement} el 滚动节点
  */
-export function getScrollLeft (el) {
+export function getScrollLeft(el) {
   return 'scrollLeft' in el ? el.scrollLeft : el.pageXOffset;
 }
 
@@ -75,11 +76,10 @@ export function getScrollLeft (el) {
  * @param {HTMLElement} el 滚动节点
  * @param {Number} value 滚动位置
  */
-export function setScrollLeft (el, value) {
+export function setScrollLeft(el, value) {
   if ('scrollLeft' in el) {
     el.scrollLeft = value;
-  }
-  else {
+  } else {
     el.scrollTo(value, el.scrollY);
   }
 }
@@ -88,10 +88,10 @@ export function setScrollLeft (el, value) {
  * 获取滚动位置
  * @param {HTMLElement} el 滚动节点
  */
-export function getScrollPosition (el) {
+export function getScrollPosition(el) {
   return {
     x: getScrollLeft(el),
-    y: getScrollTop(el)
+    y: getScrollTop(el),
   };
 }
 
@@ -101,12 +101,11 @@ export function getScrollPosition (el) {
  * @param {Number} x 水平位置
  * @param {Number} y 垂直位置
  */
-export function setScrollPosition (el, x, y) {
+export function setScrollPosition(el, x, y) {
   if ('scrollLeft' in el && 'scrollTop' in el) {
     el.scrollTop = y;
     el.scrollLeft = x;
-  }
-  else {
+  } else {
     el.scrollTo(x, y);
   }
 }
@@ -115,7 +114,7 @@ export function setScrollPosition (el, x, y) {
  * 获取滚动容器可视区域高度
  * @param {HTMLElement} el 滚动节点
  */
-export function getVisibleHeight (el) {
+export function getVisibleHeight(el) {
   return el.getBoundingClientRect().height;
 }
 
@@ -127,14 +126,14 @@ export function getVisibleHeight (el) {
  * @param {Number} duration 动画毫秒数
  * @param {Function} easingFn easing动画函数，引入easing.js中的动画函数
  */
-export function scrollToByAnimate (el, x, y, duration = 500, easingFn) {
+export function scrollToByAnimate(el, x, y, duration = 500, easingFn) {
   const startPoint = { x: getScrollLeft(el), y: getScrollTop(el) };
   const endPoint = { x, y };
   const animateFn = createAnimate(duration, easingFn);
 
-  const animateCallback = easing => {
+  const animateCallback = (easing) => {
     let newPoint = {};
-    Object.keys(endPoint).forEach(key => {
+    Object.keys(endPoint).forEach((key) => {
       const startValue = startPoint[key];
       const endValue = endPoint[key];
       newPoint[key] = (endValue - startValue) * easing + startValue;

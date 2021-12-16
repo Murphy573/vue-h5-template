@@ -1,6 +1,7 @@
 <template>
-  <van-popup class="popup"
-    :class="{card: position ==='bottom'}"
+  <van-popup
+    class="popup"
+    :class="{ card: position === 'bottom' }"
     v-model="myVisible"
     :position="position"
     :overlay="overlay"
@@ -28,79 +29,79 @@ export default {
   name: 'AppPopup',
   model: {
     prop: 'visible',
-    event: 'visibleChange'
+    event: 'visibleChange',
   },
   props: {
     visible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     closeOnClickOverlay: {
       type: Boolean,
-      default: true
+      default: true,
     },
     lazyRender: {
       type: Boolean,
-      default: true
+      default: true,
     },
     lockScroll: {
       type: Boolean,
-      default: true
+      default: true,
     },
     overlay: {
       type: Boolean,
-      default: true
+      default: true,
     },
     position: {
       type: String,
       default: 'bottom',
-      validator (v) {
+      validator(v) {
         return ['top', 'right', 'bottom', 'left', 'center'].indexOf(v) > -1;
-      }
+      },
     },
     getContainer: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data () {
+  data() {
     return {
-      myVisible: false
+      myVisible: false,
     };
   },
   watch: {
     visible: {
-      handler () {
+      handler() {
         this.myVisible = !!this.visible;
       },
-      immediate: true
+      immediate: true,
     },
-    myVisible () {
+    myVisible() {
       this.$emit('visibleChange', this.myVisible);
-    }
+    },
   },
   methods: {
     // 打开弹出层时触发
-    onOpen () {
+    onOpen() {
       this.$emit('onOpen');
     },
     // 打开弹出层且动画结束后触发
-    onOpened () {
+    onOpened() {
       this.$emit('onOpened');
     },
     // 关闭弹出层时触发
-    onClose () {
+    onClose() {
       this.$emit('onClose');
     },
     // 关闭弹出层且动画结束后触发
-    onClosed () {
+    onClosed() {
       this.$emit('onClosed');
     },
     // 点击蒙层时触发
-    onClickOverlay () {
+    onClickOverlay() {
       this.$emit('onClickOverlay');
-    }
-  }
+    },
+  },
 };
 </script>
 

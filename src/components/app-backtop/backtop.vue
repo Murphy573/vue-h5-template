@@ -1,12 +1,12 @@
 <template>
   <div>
     <transition name="van-fade">
-      <div v-if="visible"
+      <div
+        v-if="visible"
         class="app-backtop card-shadow"
         :style="cmpt_style"
         @click.stop="handleClick">
-        <van-icon name="back-top"
-          size="16" />
+        <van-icon name="back-top" size="16" />
       </div>
     </transition>
   </div>
@@ -14,7 +14,12 @@
 
 <script>
 import { BindEventMixin } from '@/mixins/bind-event.mixin.js';
-import { scrollToByAnimate, getScroller, getScrollLeft, getScrollTop } from '@/utils/scroll';
+import {
+  scrollToByAnimate,
+  getScroller,
+  getScrollLeft,
+  getScrollTop,
+} from '@/utils/scroll';
 import { throttle } from '@/utils/debounce-throttle.js';
 
 export default {
@@ -27,54 +32,54 @@ export default {
         this.scroller = getScroller(this.$el);
       }
       bind(this.scroller, 'scroll', this.throttledScrollHandler);
-    })
+    }),
   ],
 
   props: {
     visibilityHeight: {
       type: Number,
-      default: 1200
+      default: 1200,
     },
     right: {
       type: Number,
-      default: 8
+      default: 8,
     },
     bottom: {
       type: Number,
-      default: 80
-    }
+      default: 80,
+    },
   },
 
-  data () {
+  data() {
     return {
-      visible: false
+      visible: false,
     };
   },
 
   computed: {
-    cmpt_style () {
+    cmpt_style() {
       return {
         right: `${this.right}px`,
-        bottom: `${this.bottom}px`
+        bottom: `${this.bottom}px`,
       };
-    }
+    },
   },
 
-  created () {
+  created() {
     this.throttledScrollHandler = throttle(this.onScroll, 150);
   },
 
   methods: {
-    onScroll () {
+    onScroll() {
       const scrollTop = getScrollTop(this.scroller);
       this.visible = scrollTop >= this.visibilityHeight;
     },
-    handleClick (e) {
+    handleClick(e) {
       const x = getScrollLeft(this.scroller);
       scrollToByAnimate(this.scroller, x, 0, 150);
       this.$emit('click', e);
-    }
-  }
+    },
+  },
 };
 </script>
 

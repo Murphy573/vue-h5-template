@@ -1,11 +1,11 @@
 export const Cookie = {
-  setCookie (cname, cvalue, exdays) {
+  setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
     const expires = 'expires=' + d.toUTCString();
     document.cookie = cname + '=' + cvalue + '; ' + expires;
   },
-  getCookie (cname) {
+  getCookie(cname) {
     const name = cname + '=';
     const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
@@ -16,7 +16,7 @@ export const Cookie = {
     return '';
   },
   // 清除cookie
-  clearCookie (name) {
+  clearCookie(name) {
     this.setCookie(name, '', -1);
-  }
+  },
 };

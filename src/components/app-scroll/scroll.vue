@@ -1,10 +1,12 @@
 <template>
-  <div ref="scrollWrapper"
+  <div
+    ref="scrollWrapper"
     class="app-scroll"
-    :class="{'hide-scrollbar': hideScrollbar}"
+    :class="{ 'hide-scrollbar': hideScrollbar }"
     :style="style">
     <slot></slot>
-    <AppBacktop v-if="showBacktop"
+    <AppBacktop
+      v-if="showBacktop"
       :visibilityHeight="backtopVisibilityHeight"
       :bottom="backtopBottom"
       :right="backtopRight" />
@@ -13,7 +15,12 @@
 
 <script>
 import { getElement, getOffset } from '@/utils/dom';
-import { scrollToByAnimate, getScroller, getScrollLeft, getScrollTop } from '@/utils/scroll';
+import {
+  scrollToByAnimate,
+  getScroller,
+  getScrollLeft,
+  getScrollTop,
+} from '@/utils/scroll';
 import { BindEventMixin } from '@/mixins/bind-event.mixin.js';
 import { BindCacheScrollMixin } from '@/mixins/cached-view.mixin';
 import AppBacktop from '../app-backtop/backtop';
@@ -52,7 +59,7 @@ export default {
         this.scroller = getScroller(this.$el);
       }
       return this.scroller;
-    })
+    }),
   ],
 
   components: { AppBacktop },
@@ -63,7 +70,7 @@ export default {
      */
     scrollY: {
       type: Boolean,
-      default: true
+      default: true,
     },
     /**
      * 是否开启横向滚动
@@ -78,7 +85,7 @@ export default {
      */
     hideScrollbar: {
       type: Boolean,
-      default: true
+      default: true,
     },
     /**
      * 是否缓存位置
@@ -89,23 +96,23 @@ export default {
      */
     showBacktop: {
       type: Boolean,
-      default: false
+      default: false,
     },
     backtopVisibilityHeight: {
       type: Number,
-      default: 1200
+      default: 1200,
     },
     backtopRight: {
       type: Number,
-      default: 10
+      default: 10,
     },
     backtopBottom: {
       type: Number,
-      default: 40
-    }
+      default: 40,
+    },
   },
 
-  data () {
+  data() {
     return {
       x: 0,
       y: 0,
@@ -113,28 +120,28 @@ export default {
       maxY: 0,
       scrollerOffset: {
         offsetX: 0,
-        offsetY: 0
+        offsetY: 0,
       },
-      scroller: null
+      scroller: null,
     };
   },
 
   computed: {
-    style () {
+    style() {
       return {
         overflowY: this.scrollY ? 'auto' : 'hidden',
-        overflowX: this.scrollX ? 'auto' : 'hidden'
+        overflowX: this.scrollX ? 'auto' : 'hidden',
       };
-    }
+    },
   },
 
-  deactivated () {
+  deactivated() {
     this.x = getScrollLeft(this.scroller);
     this.y = getScrollTop(this.scroller);
   },
 
   methods: {
-    _refresh () {
+    _refresh() {
       const wrapperOffset = getOffset(this.scroller);
       this.scrollerOffset.offsetX = wrapperOffset.left;
       this.scrollerOffset.offsetY = wrapperOffset.top;
@@ -142,7 +149,7 @@ export default {
       this.maxX = this.scroller.scrollWidth - this.scroller.clientWidth;
       this.maxY = this.scroller.scrollHeight - this.scroller.clientHeight;
     },
-    _translate (x, y, duration) {
+    _translate(x, y, duration) {
       x = Math.round(x);
       y = Math.round(y);
       // 不超过边界
@@ -154,7 +161,7 @@ export default {
       scrollToByAnimate(this.scroller, x, y, duration);
     },
     // 获取当前滚动的距离:x,y
-    getPostion () {
+    getPostion() {
       this._refresh();
       if (!this.scroller) {
         return {};
@@ -163,29 +170,29 @@ export default {
         x: this.x,
         y: this.y,
         maxX: this.maxX,
-        maxY: this.maxY
+        maxY: this.maxY,
       };
     },
-    scrollTo (x, y, duration = 0) {
+    scrollTo(x, y, duration = 0) {
       this._refresh();
       this._translate(x, y, duration);
     },
-    scrollToTop (duration = 0) {
+    scrollToTop(duration = 0) {
       this.scrollTo(this.x, 0, duration);
     },
-    scrollToBottom (duration = 0) {
+    scrollToBottom(duration = 0) {
       this.scrollTo(this.x, this.maxY, duration);
     },
-    scrollToLeft (duration = 0) {
+    scrollToLeft(duration = 0) {
       this.scrollTo(0, this.y, duration);
     },
-    scrollToRight (duration = 0) {
+    scrollToRight(duration = 0) {
       this.scrollTo(this.maxX, this.y, duration);
     },
     /**
      * 在当前滚动位置基础上，再滚动的距离
      */
-    scrollBy (deltaX, deltaY, duration = 0) {
+    scrollBy(deltaX, deltaY, duration = 0) {
       const x = this.x + deltaX;
       const y = this.y + deltaY;
       this.scrollTo(x, y, duration);
@@ -195,7 +202,7 @@ export default {
      * @param {Number|Boolean} offsetX 当为数值时，x轴滚动到指定元素后，再偏移指定数值，为true将元素滚动到容器中间
      * @param {Number|Boolean} offsetY 当为数值时，y轴滚动到指定元素后，再偏移指定数值，为true将元素滚动到容器中间
      */
-    scrollToElement (el, offsetX = 0, offsetY = 0, duration = 0) {
+    scrollToElement(el, offsetX = 0, offsetY = 0, duration = 0) {
       const _el = getElement(el);
       if (!_el) {
         throw new Error('Cannot find elment!');
@@ -222,13 +229,13 @@ export default {
     /**
      * 正在滚动
      */
-    scrolling () {
+    scrolling() {
       this.x = getScrollLeft(this.scroller);
       this.y = getScrollTop(this.scroller);
       // 派发滚动事件，外部可以监听
       this.$emit('on-scrolling', this.getPostion());
-    }
-  }
+    },
+  },
 };
 </script>
 

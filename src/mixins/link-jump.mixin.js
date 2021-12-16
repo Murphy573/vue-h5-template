@@ -7,15 +7,14 @@ const INTERNAL_LINK_PREFIX =
 
 export const LinkJumpMixin = {
   methods: {
-    linkJumpMixin (link) {
+    linkJumpMixin(link) {
       if (!link) return;
 
       let url = link.replace(window.location.origin, '');
       // 外部链接
       if (URL_PATTERN.test(url)) {
         window.location.href = url;
-      }
-      else {
+      } else {
         let firstChar = url.charAt(0);
         url = firstChar === '/' ? url : `/${url}`;
 
@@ -28,6 +27,6 @@ export const LinkJumpMixin = {
         }
         this.$router.push(`${INTERNAL_LINK_PREFIX}${url}`);
       }
-    }
-  }
+    },
+  },
 };

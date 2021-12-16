@@ -1,22 +1,15 @@
 <template>
-  <span class="app-icon"
-    v-on="$listeners">
+  <span class="app-icon" v-on="$listeners">
     <template v-if="!cmpt_isSvg">
-      <i :class="cmpt_name"
-        :style="cmpt_style">
-      </i>
+      <i :class="cmpt_name" :style="cmpt_style"> </i>
     </template>
     <template v-else>
-      <svg class="svg-icon"
-        :style="cmpt_style"
-        aria-hidden="true">
+      <svg class="svg-icon" :style="cmpt_style" aria-hidden="true">
         <use :href="cmpt_name" />
       </svg>
     </template>
-    <span v-if="badge"
-      :style="cmpt_badgeStyle"
-      class="badge">
-      {{badge}}
+    <span v-if="badge" :style="cmpt_badgeStyle" class="badge">
+      {{ badge }}
     </span>
   </span>
 </template>
@@ -32,47 +25,47 @@ export default {
     type: {
       type: String,
       default: 'icon',
-      validator (v) {
+      validator(v) {
         return ['icon', 'svg'].includes(v);
-      }
+      },
     },
     name: String,
     size: [Number, String],
     color: String,
     classPrefix: {
       type: String,
-      default: 'iconfont'
+      default: 'iconfont',
     },
     badge: [Number, String],
     badgeColor: String,
     badgeBackgroundColor: String,
-    badgeBorderColor: String
+    badgeBorderColor: String,
   },
 
   computed: {
-    cmpt_isSvg () {
+    cmpt_isSvg() {
       return this.type === 'svg';
     },
-    cmpt_name () {
+    cmpt_name() {
       if (this.cmpt_isSvg) {
         return `#icon-${this.name}`;
       }
       return this.classPrefix + ' ' + this.name;
     },
-    cmpt_style () {
+    cmpt_style() {
       return {
         fontSize: isDef(this.size) ? addUnit(this.size) : '',
-        color: this.color
+        color: this.color,
       };
     },
-    cmpt_badgeStyle () {
+    cmpt_badgeStyle() {
       return {
         color: this.badgeColor,
         backgroundColor: this.badgeBackgroundColor,
-        borderColor: this.badgeBorderColor
+        borderColor: this.badgeBorderColor,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -22,8 +22,8 @@ export default {
   components: { Tabbar },
 
   computed: {
-    ...mapGetters(['vx_gt_GetCachedViews'])
-  }
+    ...mapGetters(['vx_gt_GetCachedViews']),
+  },
 };
 </script>
 

@@ -1,31 +1,28 @@
 <template>
-  <div class="app-container full-container"
-    :class="{'hasTabbar': $route.meta.hasTabbar}">
+  <div
+    class="app-container full-container"
+    :class="{ hasTabbar: $route.meta.hasTabbar }">
     <!-- 全局登录 -->
     <app-login :visible="vx_gt_showLoginPanel"></app-login>
     <template v-if="loading">
-      <van-loading class="app-loading"
-        size="1rem"
-        color="#2c74b9"
-        vertical>加载中...</van-loading>
+      <van-loading class="app-loading" size="1rem" color="#2c74b9" vertical
+        >加载中...</van-loading
+      >
     </template>
     <template v-else>
       <div class="app-container-main">
-        <transition name="fade"
-          mode="out-in">
+        <transition name="fade" mode="out-in">
           <keep-alive :include="vx_gt_GetCachedViews">
             <router-view />
           </keep-alive>
         </transition>
       </div>
       <div class="app-container-footer">
-        <transition name="fade"
-          mode="out-in">
+        <transition name="fade" mode="out-in">
           <router-view name="tabbar"></router-view>
         </transition>
       </div>
     </template>
-
   </div>
 </template>
 
@@ -37,24 +34,24 @@ export default {
   components: { AppLogin },
 
   computed: {
-    ...mapGetters(['vx_gt_GetCachedViews', 'vx_gt_showLoginPanel'])
+    ...mapGetters(['vx_gt_GetCachedViews', 'vx_gt_showLoginPanel']),
   },
 
-  data () {
+  data() {
     return {
-      loading: true
+      loading: true,
     };
   },
 
-  created () {
+  created() {
     this.appInit();
   },
 
   methods: {
-    async appInit () {
+    async appInit() {
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

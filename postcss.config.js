@@ -15,7 +15,7 @@ module.exports = {
         'app-',
         'van-',
         '--ignore',
-        'iconfont'
+        'iconfont',
       ],
       replace: true,
       // 是否转换@mediaQuery
@@ -23,7 +23,7 @@ module.exports = {
       // 最小像素值
       minPixelValue: 0,
       // 忽略的路径：vant
-      exclude: /node_modules/i
-    }
-  }
+      exclude: /node_modules/i,
+    },
+  },
 };

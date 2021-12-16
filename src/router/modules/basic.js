@@ -7,11 +7,11 @@ export default [
     name: 'home',
     components: {
       default: () => import('@/views/main/home/index.vue'),
-      tabbar: Tabbar
+      tabbar: Tabbar,
     },
     meta: {
-      hasTabbar: true
-    }
+      hasTabbar: true,
+    },
   },
   // 我的
   {
@@ -19,10 +19,10 @@ export default [
     name: 'my',
     components: {
       default: () => import('@/views/main/my/index.vue'),
-      tabbar: Tabbar
+      tabbar: Tabbar,
     },
     meta: {
-      hasTabbar: true
-    }
-  }
+      hasTabbar: true,
+    },
+  },
 ];

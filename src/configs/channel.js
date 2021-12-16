@@ -4,7 +4,7 @@
 
 export const CHANNEL_NO = {
   CHINALIFE: 1,
-  MALL_SELF: -1
+  MALL_SELF: -1,
 };
 
 /**
@@ -12,7 +12,7 @@ export const CHANNEL_NO = {
  */
 export const CHANNEL_NO_ENV = {
   [CHANNEL_NO.CHINALIFE]: 'CHINALIFE_API',
-  [CHANNEL_NO.MALL_SELF]: 'MALL_SELF'
+  [CHANNEL_NO.MALL_SELF]: 'MALL_SELF',
 };
 
 // 当前渠道号

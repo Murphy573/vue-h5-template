@@ -1,18 +1,16 @@
 <template>
-  <div class="app-image"
-    :class="{round: round}"
+  <div
+    class="app-image"
+    :class="{ round: round }"
     :style="style"
     @click="onClick">
-    <img v-if="lazyload"
+    <img
+      v-if="lazyload"
       v-lazy="src"
       :alt="alt"
       :style="cmpt_imgStyle"
       class="img" />
-    <img v-else
-      :src="src"
-      :alt="alt"
-      :style="cmpt_imgStyle"
-      class="img" />
+    <img v-else :src="src" :alt="alt" :style="cmpt_imgStyle" class="img" />
   </div>
 </template>
 
@@ -35,12 +33,12 @@ export default {
     // 默认固定长宽比
     fixedRadio: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
 
   computed: {
-    cmpt_imgStyle () {
+    cmpt_imgStyle() {
       const imgStyle = {};
       if (!this.fixedRadio) {
         imgStyle.width = '100%';
@@ -50,7 +48,7 @@ export default {
 
       return imgStyle;
     },
-    style () {
+    style() {
       const style = {};
 
       if (isDef(this.width)) {
@@ -66,14 +64,14 @@ export default {
       }
 
       return style;
-    }
+    },
   },
 
   methods: {
-    onClick (event) {
+    onClick(event) {
       this.$emit('click', event);
-    }
-  }
+    },
+  },
 };
 </script>
 

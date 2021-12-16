@@ -5,7 +5,7 @@
  * @param {Number} encoder 0-1,图片的质量
  * @returns base64
  */
-export function canvasToDataUrl (canvas, type, encoder = 1) {
+export function canvasToDataUrl(canvas, type, encoder = 1) {
   return canvas.toDataURL(type, encoder);
 }
 
@@ -15,7 +15,7 @@ export function canvasToDataUrl (canvas, type, encoder = 1) {
  * @param {Function} callBack 回调函数
  * @returns base64
  */
-export function readBlobAsDataURL (blob, callBack = () => {}) {
+export function readBlobAsDataURL(blob, callBack = () => {}) {
   let fileReader = new FileReader();
   fileReader.onload = function (e) {
     const data =
@@ -33,7 +33,7 @@ export function readBlobAsDataURL (blob, callBack = () => {}) {
  * @param {Base64} dataUrl
  * @returns Blob
  */
-export function dataURLtoBlob (dataUrl) {
+export function dataURLtoBlob(dataUrl) {
   let arr = dataUrl.split(','),
     mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]),
@@ -51,7 +51,7 @@ export function dataURLtoBlob (dataUrl) {
  * @param {String} filename 文件名称
  * @description 兼容性：Edge(IE)浏览器不支持File对象构造函数，也就是Edge(IE)里不能new File()。
  */
-export function dataURLtoFile (dataUrl, filename) {
+export function dataURLtoFile(dataUrl, filename) {
   let arr = dataUrl.split(','),
     mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]),
@@ -72,7 +72,7 @@ export function dataURLtoFile (dataUrl, filename) {
  * @param {String} outputType 输出类型 png jpeg...
  * @param {Number} encoder 0-1 压缩质量
  */
-export async function imageCompress (
+export async function imageCompress(
   fileRaw,
   maxTimes = 5,
   maxSize = null,
@@ -93,7 +93,7 @@ export async function imageCompress (
   const _this = this;
 
   const _compress = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       _this.readBlobAsDataURL(_fileRaw, function (dataUrl) {
         let img = new Image();
         img.src = dataUrl;
@@ -113,8 +113,7 @@ export async function imageCompress (
               if (originW / originH > maxWidth / maxHeight) {
                 targetWidth = maxWidth;
                 targetHeight = Math.round(maxWidth * (originH / originW));
-              }
-              else {
+              } else {
                 targetHeight = maxHeight;
                 targetWidth = Math.round(maxHeight * (originW / originH));
               }
@@ -156,8 +155,7 @@ export async function imageCompress (
     ctx = null;
     canvas = null;
     return _fileRaw;
-  }
-  catch (error) {}
+  } catch (error) {}
 }
 
 /**
@@ -165,7 +163,7 @@ export async function imageCompress (
  * @param {ArrayBuffer} content
  * @param {String} filename
  */
-export function fileDownload (content, filename) {
+export function fileDownload(content, filename) {
   // 创建隐藏的可下载链接
   const eleLink = document.createElement('a');
   eleLink.download = filename;
@@ -187,7 +185,7 @@ export function fileDownload (content, filename) {
  * 加载图片
  * @param {String} url
  */
-export function loadImg (url) {
+export function loadImg(url) {
   return new Promise((resolve, reject) => {
     let img = new Image();
     img.setAttribute('crossOrigin', 'anonymous');
@@ -195,7 +193,7 @@ export function loadImg (url) {
     img.onload = function () {
       resolve(img);
     };
-    img.onerror = function (error) {
+    img.onerror = function () {
       reject(new Error(`该url的图片加载失败：${url}`));
     };
   });
@@ -205,7 +203,7 @@ export function loadImg (url) {
  * 根据AJAX加载图片
  * @param {String} url
  */
-export function loadImgByXHR (url) {
+export function loadImgByXHR(url) {
   return new Promise((resolve, reject) => {
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';

@@ -10,8 +10,8 @@ const context = '_clickoutsideContext_';
  * v-clickoutside:click="function"
  */
 const clickoutside = {
-  bind (el, binding) {
-    const handler = event => {
+  bind(el, binding) {
+    const handler = (event) => {
       if (!el.contains(event.target)) {
         isFunction(el[context].callback) && el[context].callback();
       }
@@ -20,19 +20,19 @@ const clickoutside = {
     el[context] = {
       handler,
       callback: binding.value,
-      arg: binding.arg || 'click'
+      arg: binding.arg || 'click',
     };
 
     on(document, el[context].arg, handler);
   },
 
-  update (el, binding) {
+  update(el, binding) {
     el[context].callback = binding.value;
   },
 
-  unbind (el) {
+  unbind(el) {
     off(document, el[context].arg, el[context].handler);
-  }
+  },
 };
 
 export default function (Vue) {

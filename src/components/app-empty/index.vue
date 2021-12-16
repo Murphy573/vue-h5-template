@@ -1,24 +1,17 @@
 <template>
-  <div class="app-empty full-container"
-    :style="{'padding-top': paddingtop}">
+  <div class="app-empty full-container" :style="{ 'padding-top': paddingtop }">
     <slot name="image">
-      <img class="image"
-        :src="image" />
+      <img class="image" :src="image" />
     </slot>
 
-    <p class="text"
-      :style="textStyle">
-      <slot>
-        数据为空
-      </slot>
+    <p class="text" :style="textStyle">
+      <slot> 数据为空 </slot>
     </p>
-    <slot name="extra">
-    </slot>
+    <slot name="extra"> </slot>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'AppEmpty',
 
@@ -26,25 +19,25 @@ export default {
     image: String,
     color: {
       type: String,
-      default () {
+      default() {
         return this.$_sassVars.colorPrimary;
-      }
+      },
     },
     fontsize: {
       type: String,
-      default: '14px'
+      default: '14px',
     },
-    paddingtop: String
+    paddingtop: String,
   },
 
   computed: {
-    textStyle () {
+    textStyle() {
       return {
         color: this.color,
-        'font-size': this.fontsize
+        'font-size': this.fontsize,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

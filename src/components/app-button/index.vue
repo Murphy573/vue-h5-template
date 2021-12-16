@@ -1,5 +1,6 @@
 <template>
-  <button class="app-button"
+  <button
+    class="app-button"
     type="button"
     :class="cmpt_getClass"
     :style="cmpt_getStyle"
@@ -16,54 +17,54 @@ export default {
   props: {
     width: {
       type: Number,
-      default: 80
+      default: 80,
     },
     fontSize: {
       type: Number,
-      default: 12
+      default: 12,
     },
     height: {
       type: Number,
-      default: 40
+      default: 40,
     },
     type: {
       type: String,
       default: 'primary',
-      validator (v) {
+      validator(v) {
         return ['primary', 'normal', 'disabled'].indexOf(v) > -1;
-      }
+      },
     },
     rem: {
       type: Boolean,
-      default: true
+      default: true,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     plain: {
       type: Boolean,
-      default: false
+      default: false,
     },
     color: {
       type: String,
-      default: ''
+      default: '',
     },
     borderColor: {
       type: String,
-      default: ''
+      default: '',
     },
     borderRadius: {
       type: Number,
-      default: null
+      default: null,
     },
     background: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   computed: {
-    cmpt_getStyle () {
+    cmpt_getStyle() {
       let { fontSize, width, height, borderRadius } = this;
 
       let radius = isDef(borderRadius) ? borderRadius : height / 2;
@@ -73,8 +74,7 @@ export default {
         fontSize = fontSize / 75 + 'rem';
         width = width / 75 + 'rem';
         height = height / 75 + 'rem';
-      }
-      else {
+      } else {
         radius = radius + 'px';
         fontSize += 'px';
         width += 'px';
@@ -87,7 +87,7 @@ export default {
         height: height,
         borderRadius: radius,
         color: this.color,
-        background: this.background
+        background: this.background,
       };
 
       if (this.plain) {
@@ -97,22 +97,22 @@ export default {
 
       return styleData;
     },
-    cmpt_getClass () {
+    cmpt_getClass() {
       if (!this.plain) {
         return [this.type, { disabled: this.disabled }];
       }
       return [this.type, 'plain'];
-    }
+    },
   },
   methods: {
-    click (e) {
+    click(e) {
       if (this.disabled) {
         e.stopPropagation();
         return;
       }
       this.$emit('click', e);
-    }
-  }
+    },
+  },
 };
 </script>
 

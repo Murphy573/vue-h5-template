@@ -1,15 +1,17 @@
 <template>
-  <van-tabbar v-model="active"
+  <van-tabbar
+    v-model="active"
     inactive-color="#666"
     :fixed="false"
-    style="z-index: 99;"
+    style="z-index: 99"
     @change="handleChange">
-    <van-tabbar-item v-for="(tab, index) in tabbar"
+    <van-tabbar-item
+      v-for="(tab, index) in tabbar"
       :icon="tab.icon"
       :dot="tab.dot"
       :info="tab.info"
       :key="index">
-      {{tab.name}}
+      {{ tab.name }}
     </van-tabbar-item>
   </van-tabbar>
 </template>
@@ -18,14 +20,14 @@
 export default {
   name: 'MainTabbar',
 
-  data () {
+  data() {
     return {
-      active: 0
+      active: 0,
     };
   },
 
   computed: {
-    tabbar () {
+    tabbar() {
       const _tabbar = [
         {
           name: '主页',
@@ -33,7 +35,7 @@ export default {
           icon: 'wap-home-o',
           dot: false,
           info: '',
-          show: true
+          show: true,
         },
         {
           name: '我的',
@@ -41,49 +43,49 @@ export default {
           icon: 'user-circle-o',
           dot: false,
           info: '',
-          show: true
-        }
+          show: true,
+        },
       ];
 
-      return _tabbar.filter(bar => bar.show);
-    }
+      return _tabbar.filter((bar) => bar.show);
+    },
   },
 
   watch: {
     $route: {
-      handler ({ name }) {
+      handler({ name }) {
         this.setActive(name);
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
-  mounted () {
+  mounted() {
     const toName = this.$route.name;
     this.setActive(toName);
   },
 
-  activated () {
+  activated() {
     const toName = this.$route.name;
     this.setActive(toName);
   },
 
   methods: {
-    handleChange (active) {
+    handleChange(active) {
       this.$router.push({ name: this.tabbar[active].routerName });
     },
-    changeActive ({ name }) {
+    changeActive({ name }) {
       this.setActive(name);
     },
-    setActive (name) {
+    setActive(name) {
       this.tabbar.forEach((tab, i) => {
         if (tab.routerName === name) {
           this.active = i;
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

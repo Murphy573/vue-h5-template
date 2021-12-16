@@ -1,10 +1,10 @@
 import { formatDate } from '../utils/date';
 
-export function date (target, format) {
+export function date(target, format) {
   return formatDate(target, format);
 }
 
-export function number (target) {
+export function number(target) {
   if (!target) return null;
   const _number = Number(target);
   if (Number.isNaN(_number)) return null;
@@ -17,7 +17,7 @@ export function number (target) {
  * @param {Number} hold 保留几位小数
  * @param {Boolean} rounding 是否四舍五入
  */
-export function NumberFormat (target, hold = 0, rounding = true) {
+export function NumberFormat(target, hold = 0, rounding = true) {
   if (Number.isNaN(Number(target))) return null;
   const r = /^\+?[1-9][0-9]*$/;
   hold = r.test(hold) ? Number(hold) : 0;
@@ -26,20 +26,19 @@ export function NumberFormat (target, hold = 0, rounding = true) {
 
   if (rounding) {
     return Math.round(target * _multiplier) / _multiplier;
-  }
-  else {
+  } else {
     return Math.floor(target * _multiplier) / _multiplier;
   }
 }
 
 // 手机号格式化
-export function phoneFormatter (phone) {
+export function phoneFormatter(phone) {
   const reg = /^(\d{3})\d{4}(\d{4})$/;
   return phone.replace(reg, '$1****$2');
 }
 
 // 金额格式化
-export function price (value, prefix = '¥') {
+export function price(value, prefix = '¥') {
   if (Number.isNaN(Number(value))) return null;
 
   let _res = NumberFormat(value, 2);
@@ -47,8 +46,7 @@ export function price (value, prefix = '¥') {
   // 判断数组长度确定是否补0
   if (s.length === 1) {
     _res = _res.toString() + '.00';
-  }
-  else if (s.length > 1) {
+  } else if (s.length > 1) {
     if (s[1].length < 2) {
       _res = _res.toString() + '0';
     }

@@ -1,42 +1,39 @@
 <template>
   <AppPageContainer v-title="title">
     <template #header>
-      <app-header :title="title"
-        :show-right="false"
-        :show-left="false">
+      <app-header :title="title" :show-right="false" :show-left="false">
       </app-header>
     </template>
     <template #content>
       <div class="home-wrapper full-container">
         <span>主页</span>
-        <van-button :color="$_sassVars.colorPrimary"
-          @click="validate">数据校验</van-button>
-        <van-button :color="$_sassVars.colorPrimary"
-          @click="$router.push({name:'scroll'})">跳转到scroll</van-button>
-        <van-button @click="$router.push({name:'fall'})">跳转到waterfall</van-button>
-        <van-button @click="$router.push({name:'wheel'})">跳转到wheel</van-button>
+        <van-button :color="$_sassVars.colorPrimary" @click="validate">
+          数据校验
+        </van-button>
+        <van-button
+          :color="$_sassVars.colorPrimary"
+          @click="$router.push({ name: 'scroll' })">
+          跳转到scroll
+        </van-button>
+        <van-button @click="$router.push({ name: 'fall' })">
+          跳转到waterfall
+        </van-button>
+        <van-button @click="$router.push({ name: 'wheel' })">
+          跳转到wheel
+        </van-button>
         <ul class="app-grid">
-          <li v-for="i of 3"
-            :key="i"
-            class="app-grid-item">
-          </li>
+          <li v-for="i of 3" :key="i" class="app-grid-item"></li>
         </ul>
-        <AppIcon type="svg"
-          name="realname"
-          size="50"
-          badge="20" />
+        <AppIcon type="svg" name="realname" size="50" badge="20" />
         <AppSwitch />
-        <AppXScroller :showScroller="true"
+        <AppXScroller
+          :showScroller="true"
           scrollerContainerHeight="20"
           scrollerWidth="100"
           scrollerHeight="8"
           indicatorWidth="20">
           <ul class="list">
-            <li v-for="i of 10"
-              :key="i"
-              class="item">
-              item{{i}}
-            </li>
+            <li v-for="i of 10" :key="i" class="item">item{{ i }}</li>
           </ul>
         </AppXScroller>
       </div>
@@ -47,7 +44,10 @@
 <script>
 import AppXScroller from '@/components/app-scroll/x-scroller';
 import AppSwitch from '@/components/app-switch/index';
-import { PHONE_PATTERN, TRADE_PASSWORD_PATTERN } from '../../../configs/pattern';
+import {
+  PHONE_PATTERN,
+  TRADE_PASSWORD_PATTERN,
+} from '../../../configs/pattern';
 import Validator from '@/utils/validator.js';
 
 export default {
@@ -55,23 +55,23 @@ export default {
 
   components: { AppXScroller, AppSwitch },
 
-  data () {
+  data() {
     return {
       title: '主页',
       loginInfo: {
         phone: '1357217101',
         smsCode: '1',
-        readme: false
+        readme: false,
       },
       rules: {
         phone: [
           { required: true, message: '请输入您的手机号码' },
-          { pattern: PHONE_PATTERN, message: '您输入的手机号码格式有误' }
+          { pattern: PHONE_PATTERN, message: '您输入的手机号码格式有误' },
         ],
         smsCode: [
           { required: true, message: '请输入短信验证码' },
-          { pattern: TRADE_PASSWORD_PATTERN, message: '验证码只能为6位数字' }
-        ]
+          { pattern: TRADE_PASSWORD_PATTERN, message: '验证码只能为6位数字' },
+        ],
         // readme: [
         //   {
         //     required: true,
@@ -81,22 +81,21 @@ export default {
         //     },
         //   },
         // ],
-      }
+      },
     };
   },
 
   methods: {
-    async validate () {
+    async validate() {
       try {
         await Validator(this.rules, this.loginInfo);
         return true;
-      }
-      catch (errors) {
+      } catch (errors) {
         // this.setData({ canSubmit: false });
         // return Promise.reject(errors);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

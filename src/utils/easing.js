@@ -90,8 +90,7 @@ const easing = {
     if (a < Math.abs(1)) {
       a = 1;
       s = p / 4;
-    }
-    else {
+    } else {
       s = (p / (2 * Math.PI)) * Math.asin(1 / a);
     }
     return -(
@@ -110,8 +109,7 @@ const easing = {
     if (a < Math.abs(1)) {
       a = 1;
       s = p / 4;
-    }
-    else {
+    } else {
       s = (p / (2 * Math.PI)) * Math.asin(1 / a);
     }
     return (
@@ -128,8 +126,7 @@ const easing = {
     if (a < Math.abs(1)) {
       a = 1;
       s = p / 4;
-    }
-    else {
+    } else {
       s = (p / (2 * Math.PI)) * Math.asin(1 / a);
     }
     if (t < 1) {
@@ -169,21 +166,18 @@ const easing = {
   easeOutBounce: function (t) {
     if ((t /= 1) < 1 / 2.75) {
       return 1 * (7.5625 * t * t);
-    }
-    else if (t < 2 / 2.75) {
+    } else if (t < 2 / 2.75) {
       return 1 * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75);
-    }
-    else if (t < 2.5 / 2.75) {
+    } else if (t < 2.5 / 2.75) {
       return 1 * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375);
-    }
-    else {
+    } else {
       return 1 * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375);
     }
   },
   easeInOutBounce: function (t) {
     if (t < 1 / 2) return easing.easeInBounce(t * 2) * 0.5;
     return easing.easeOutBounce(t * 2 - 1) * 0.5 + 1 * 0.5;
-  }
+  },
 };
 
 export default easing;

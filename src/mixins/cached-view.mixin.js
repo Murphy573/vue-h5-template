@@ -5,31 +5,29 @@ import { setScrollPosition, getScrollPosition } from '@/utils/scroll';
  * @param {Function} scrollerCaller 返回一个滚动元素(HTMLElement)
  */
 let cacheUid = 0;
-export function BindCacheScrollMixin (scrollerCaller) {
+export function BindCacheScrollMixin(scrollerCaller) {
   const positionKey = `cacheScrollPositionMixin_${cacheUid++}`;
 
-  function set () {
+  function set() {
     const scoller = scrollerCaller.call(this);
     if (scoller && this[positionKey]) {
       const { x = 0, y = 0 } = this[positionKey];
       setScrollPosition(scoller, x, y);
-    }
-    else {
-      this[positionKey] = { x: 0, y: 0 };
-    }
-  };
-
-  function record () {
-    const scoller = scrollerCaller.call(this);
-    if (scoller && this[positionKey]) {
-      this[positionKey] = Object.freeze(getScrollPosition(scoller));
-    }
-    else {
+    } else {
       this[positionKey] = { x: 0, y: 0 };
     }
   }
 
-  function destory () {
+  function record() {
+    const scoller = scrollerCaller.call(this);
+    if (scoller && this[positionKey]) {
+      this[positionKey] = Object.freeze(getScrollPosition(scoller));
+    } else {
+      this[positionKey] = { x: 0, y: 0 };
+    }
+  }
+
+  function destory() {
     this[positionKey] = null;
   }
 
@@ -37,6 +35,6 @@ export function BindCacheScrollMixin (scrollerCaller) {
     mounted: set,
     activated: set,
     deactivated: record,
-    beforeDestroy: destory
+    beforeDestroy: destory,
   };
 }

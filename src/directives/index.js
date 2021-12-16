@@ -8,6 +8,6 @@ import Clipboard from './clipboard';
 import { resetBodyPosition, title } from './dom';
 import permission from './permission.js';
 
-[Clickoutside, Clipboard, resetBodyPosition, title, permission].forEach(d =>
+[Clickoutside, Clipboard, resetBodyPosition, title, permission].forEach((d) =>
   Vue.use(d)
 );

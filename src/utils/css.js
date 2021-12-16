@@ -8,7 +8,7 @@ const BASE = 75;
  * @param {String} value 样式值
  * @param {Number} base 基准值
  */
-export function formatPx2Rem (value, base = BASE) {
+export function formatPx2Rem(value, base = BASE) {
   if (!value) return value;
 
   base = isNumber(base) ? Number(base) : 1;

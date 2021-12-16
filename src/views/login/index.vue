@@ -1,5 +1,6 @@
 <template>
-  <app-popup v-model="myVisible"
+  <app-popup
+    v-model="myVisible"
     :close-on-click-overlay="false"
     position="right"
     class="login-panel full-container"
@@ -7,13 +8,15 @@
     @onClosed="onClosed">
     <app-page-container v-if="showPage">
       <template #header>
-        <app-header title="登录"
-          :set-style="{color: '#333333'}"
+        <app-header
+          title="登录"
+          :set-style="{ color: '#333333' }"
           :changeTitle="false"
           :showRight="false"
           :msgShow="false">
           <template #left>
-            <van-icon name="arrow-left"
+            <van-icon
+              name="arrow-left"
               size="20"
               @click="vx_ac_SetShowLoginPanel(false)" />
           </template>
@@ -24,31 +27,39 @@
           <form class="form">
             <h3>欢迎登录</h3>
             <div class="form-item">
-              <input v-model="loginInfo.phone"
+              <input
+                v-model="loginInfo.phone"
                 v-reset-body-position
                 class="phone input"
                 placeholder="请输入手机号"
                 pattern="[0-9]*"
-                maxlength="11">
+                maxlength="11" />
               <i class="icon-phone iconfont iconshouji"></i>
             </div>
             <div class="form-item">
-              <input v-model="loginInfo.smsCode"
+              <input
+                v-model="loginInfo.smsCode"
                 v-reset-body-position
                 class="verfy input"
                 placeholder="请输入短信验证码"
                 maxlength="6"
-                pattern="[0-9]*">
-              <span class="verfy-btn"
-                :class="{disabled: !canRestartIntervalMixin}"
-                @click="sendVerfyCode">{{cmpt_resendDescMixin}}</span>
+                pattern="[0-9]*" />
+              <span
+                class="verfy-btn"
+                :class="{ disabled: !canRestartIntervalMixin }"
+                @click="sendVerfyCode"
+                >{{ cmpt_resendDescMixin }}</span
+              >
             </div>
 
-            <app-button :width="630"
+            <app-button
+              :width="630"
               :height="88"
               :font-size="36"
               class="submit"
-              @click="login">登录</app-button>
+              @click="login"
+              >登录</app-button
+            >
           </form>
         </div>
       </template>
@@ -74,49 +85,49 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
-  data () {
+  data() {
     return {
       myVisible: false,
       showPage: false,
       readme: true,
       loginInfo: {
         phone: '',
-        smsCode: ''
+        smsCode: '',
       },
       rules: {
         phone: [
           { required: true, message: '请输入您的手机号码' },
-          { pattern: PHONE_PATTERN, message: '输入的手机号码格式有误' }
+          { pattern: PHONE_PATTERN, message: '输入的手机号码格式有误' },
         ],
         smsCode: [
           { required: true, message: '请输入短信验证码' },
-          { pattern: /^\d{6}$/, message: '验证码只能为6位数字' }
-        ]
-      }
+          { pattern: /^\d{6}$/, message: '验证码只能为6位数字' },
+        ],
+      },
     };
   },
 
   computed: {
-    ...mapGetters(['vx_gt_showLoginPanel'])
+    ...mapGetters(['vx_gt_showLoginPanel']),
   },
 
   watch: {
     visible: {
-      handler (v) {
+      handler(v) {
         this.myVisible = v;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   methods: {
     ...mapActions(['vx_ac_Login', 'vx_ac_SetShowLoginPanel']),
     // 发送验证码
-    async sendVerfyCode () {
+    async sendVerfyCode() {
       if (!this.canRestartIntervalMixin) return;
       if (!PHONE_PATTERN.test(this.loginInfo.phone)) {
         this.$toast('手机号码输入有误，请检查后再获取验证码');
@@ -126,40 +137,37 @@ export default {
         await api_send_smsCodeForLogin(this.loginInfo.phone);
         this.$toast('验证码已发送，请注意查收');
         this.startIntervalMixin();
-      }
-      catch (error) { }
+      } catch (error) {}
     },
     // 校验表单
-    async validateForm () {
+    async validateForm() {
       try {
         await Validator(this.rules, this.loginInfo);
         return true;
-      }
-      catch (errors) {
+      } catch (errors) {
         this.$toast(errors[0].message);
         return Promise.reject(errors);
       }
     },
-    async login () {
+    async login() {
       try {
         await this.validateForm();
         // 执行验证码登录
         await this.vx_ac_Login({
           ...this.loginInfo,
-          loginMethod: 2
+          loginMethod: 2,
         });
         this.vx_ac_SetShowLoginPanel(false);
-      }
-      catch (error) { }
+      } catch (error) {}
     },
-    onOpen () {
+    onOpen() {
       this.showPage = true;
     },
-    onClosed () {
+    onClosed() {
       this.showPage = false;
       this.clearIntervalMixin();
-    }
-  }
+    },
+  },
 };
 </script>
 

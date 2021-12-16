@@ -1,18 +1,17 @@
 <template>
   <div class="x-scroller-wrapper--ignore">
-    <div ref="contentRef"
-      class="content hide-native-scrollbar">
+    <div ref="contentRef" class="content hide-native-scrollbar">
       <slot></slot>
     </div>
-    <div v-if="showScroller"
+    <div
+      v-if="showScroller"
       class="scroller-container"
       :style="scrollerContainerStyle">
-      <div ref="scrollerRef"
-        class="scroller"
-        :style="scrollerStyle">
-        <div ref="indicatorRef"
+      <div ref="scrollerRef" class="scroller" :style="scrollerStyle">
+        <div
+          ref="indicatorRef"
           class="indicator"
-          :style="[indicatorStyle,indicatorTransformStyle]"></div>
+          :style="[indicatorStyle, indicatorTransformStyle]"></div>
       </div>
     </div>
   </div>
@@ -35,14 +34,14 @@ export default {
         bind(this.scroller, 'scroll', this.scrolling);
         bind(window, 'resize', this.resize, true);
       }
-    })
+    }),
   ],
 
   props: {
     // 是否展示滚动条
     showScroller: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 滚动条容器高度
     scrollerContainerHeight: [Number, String],
@@ -55,44 +54,44 @@ export default {
     // 滚动指示器宽度
     indicatorWidth: [Number, String],
     // 滚动条指示器颜色
-    indicatorColor: String
+    indicatorColor: String,
   },
 
-  data () {
+  data() {
     return {
       x: 0,
       ratio: 0,
-      observer: {}
+      observer: {},
     };
   },
 
   computed: {
-    scrollerContainerStyle () {
+    scrollerContainerStyle() {
       return {
-        height: addUnit(this.scrollerContainerHeight)
+        height: addUnit(this.scrollerContainerHeight),
       };
     },
-    scrollerStyle () {
+    scrollerStyle() {
       return {
         width: addUnit(this.scrollerWidth),
         height: addUnit(this.scrollerHeight),
-        backgroundColor: this.scrollerColor
+        backgroundColor: this.scrollerColor,
       };
     },
-    indicatorStyle () {
+    indicatorStyle() {
       return {
         width: addUnit(this.indicatorWidth),
-        backgroundColor: this.indicatorColor
+        backgroundColor: this.indicatorColor,
       };
     },
-    indicatorTransformStyle () {
+    indicatorTransformStyle() {
       return {
-        transform: `translate3d(${addUnit(this.x)}, 0, 0)`
+        transform: `translate3d(${addUnit(this.x)}, 0, 0)`,
       };
-    }
+    },
   },
 
-  mounted () {
+  mounted() {
     if (!this.showScroller) return;
 
     this.createObserver();
@@ -100,29 +99,30 @@ export default {
     this.initialize();
   },
 
-  activated () {
+  activated() {
     this.observe();
   },
 
-  deactivated () {
+  deactivated() {
     this.observer.disconnect && this.observer.disconnect();
   },
 
   methods: {
-    createObserver () {
+    createObserver() {
       if (window.MutationObserver) {
-        this.observer = new MutationObserver((mutation) => {
+        this.observer = new MutationObserver(() => {
           this.initialize();
         });
       }
     },
-    observe () {
+    observe() {
       const { contentRef } = this.$refs;
       if (!contentRef) return;
 
-      this.observer.observe && this.observer.observe(contentRef, { childList: true, subtree: true });
+      this.observer.observe &&
+        this.observer.observe(contentRef, { childList: true, subtree: true });
     },
-    initialize () {
+    initialize() {
       if (!this.showScroller) return;
 
       this.$nextTick(() => {
@@ -130,23 +130,25 @@ export default {
 
         if (!scrollerRef || !indicatorRef) return;
 
-        const contentLeftWidth = contentRef.scrollWidth - contentRef.offsetWidth;
-        const scrollerLeftWidth = scrollerRef.offsetWidth - indicatorRef.offsetWidth;
+        const contentLeftWidth =
+          contentRef.scrollWidth - contentRef.offsetWidth;
+        const scrollerLeftWidth =
+          scrollerRef.offsetWidth - indicatorRef.offsetWidth;
 
         this.ratio = scrollerLeftWidth / contentLeftWidth;
       });
     },
-    resize () {
+    resize() {
       this.$nextTick(() => {
         this.initialize();
         this.x = 0;
         setScrollLeft(this.scroller, 0);
       });
     },
-    scrolling () {
+    scrolling() {
       this.x = getScrollLeft(this.scroller) * this.ratio;
-    }
-  }
+    },
+  },
 };
 </script>
 

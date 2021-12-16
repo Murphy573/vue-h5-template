@@ -7,7 +7,7 @@ import CheckPermission from '@/utils/permission';
  * @param {*} from
  * @param {*} next
  */
-export function setGlobalPanelClosed (to, from, next) {
+export function setGlobalPanelClosed(to, from, next) {
   store.dispatch('vx_ac_SetShowLoginPanel', false);
   next();
 }
@@ -18,14 +18,13 @@ export function setGlobalPanelClosed (to, from, next) {
  * @param {*} from
  * @param {*} next
  */
-export function jump (to, from, next) {
+export function jump(to, from, next) {
   if (CheckPermission(to.meta.permissions) && to.matched.length) {
     next();
-  }
-  else {
+  } else {
     next({
       name: 'home',
-      replace: true
+      replace: true,
     });
   }
 }

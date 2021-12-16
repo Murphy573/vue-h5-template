@@ -5,17 +5,17 @@ import { on, off } from '@/utils/dom';
 
 let uid = 0;
 
-export function BindEventMixin (handler) {
+export function BindEventMixin(handler) {
   const key = `binded_${uid++}`;
 
-  function bind () {
+  function bind() {
     if (!this[key]) {
       handler.call(this, on, true);
       this[key] = true;
     }
   }
 
-  function unbind () {
+  function unbind() {
     if (this[key]) {
       handler.call(this, off, false);
       this[key] = false;
@@ -26,6 +26,6 @@ export function BindEventMixin (handler) {
     mounted: bind,
     activated: bind,
     deactivated: unbind,
-    beforeDestroy: unbind
+    beforeDestroy: unbind,
   };
 }

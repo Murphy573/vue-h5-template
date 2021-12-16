@@ -8,7 +8,7 @@ export default [
     path: '*',
     redirect: {
       name: 'home',
-      replace: true
-    }
-  }
+      replace: true,
+    },
+  },
 ];

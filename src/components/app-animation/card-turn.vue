@@ -1,5 +1,6 @@
 <template>
-  <div class="app-card-turn"
+  <div
+    class="app-card-turn"
     ref="appCardTurn"
     :style="cmpt_cardStyle"
     :class="cmpt_cardClass">
@@ -13,7 +14,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'AppCardTurn',
 
@@ -22,40 +22,43 @@ export default {
     direction: {
       type: String,
       default: 'horizontal',
-      validate (v) {
+      validate(v) {
         return ['horizontal', 'vertical'].includes(v);
-      }
+      },
     },
     // 翻转动画持续时间：单位ms
-    duration: Number
+    duration: Number,
   },
 
-  data () {
+  data() {
     return {
-      turned: false
+      turned: false,
     };
   },
 
   computed: {
-    cmpt_cardStyle () {
+    cmpt_cardStyle() {
       const style = {
-        '--init-totate': this.direction === 'horizontal' ? 'rotateY(180deg)' : 'rotateX(180deg)',
-        '--duration': `${this.duration || 500}ms`
+        '--init-totate':
+          this.direction === 'horizontal'
+            ? 'rotateY(180deg)'
+            : 'rotateX(180deg)',
+        '--duration': `${this.duration || 500}ms`,
       };
       return style;
     },
-    cmpt_cardClass () {
+    cmpt_cardClass() {
       return this.turned ? 'turned' : '';
-    }
+    },
   },
   methods: {
-    turn () {
+    turn() {
       this.turned = !this.turned;
     },
-    reset (flag = false) {
+    reset(flag = false) {
       this.turned = flag;
-    }
-  }
+    },
+  },
 };
 </script>
 

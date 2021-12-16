@@ -2,13 +2,10 @@
   <div>
     <h2>转盘抽奖</h2>
     <div class="section--ignore">
-      <AppLotteryWheel ref="wheel"
-        :prizeIndex="2" />
+      <AppLotteryWheel ref="wheel" :prizeIndex="2" />
     </div>
     <div>
-      <van-button @click="start">
-        开始抽奖
-      </van-button>
+      <van-button @click="start"> 开始抽奖 </van-button>
     </div>
   </div>
 </template>
@@ -25,23 +22,21 @@ export default {
 
   props: {},
 
-  data () {
-    return {
-
-    };
+  data() {
+    return {};
   },
 
   computed: {},
 
   watch: {},
 
-  created () { },
+  created() {},
 
   methods: {
-    start () {
+    start() {
       this.$refs.wheel.startLottery();
-    }
-  }
+    },
+  },
 };
 </script>
 

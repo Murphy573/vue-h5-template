@@ -10,8 +10,8 @@ const store = new Vuex.Store({
   modules: {
     User,
     CachedView,
-    ThirdAccess
-  }
+    ThirdAccess,
+  },
 });
 
 export default store;

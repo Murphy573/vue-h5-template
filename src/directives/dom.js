@@ -1,7 +1,7 @@
 import { on, off } from '../utils/dom';
 
 /* 重置微信浏览器下：input获得焦点页面不回弹 */
-export function resetBodyPosition (Vue) {
+export function resetBodyPosition(Vue) {
   let timer = null;
   const blurHandler = () => {
     timer = setTimeout(() => {
@@ -14,7 +14,7 @@ export function resetBodyPosition (Vue) {
       timer = null;
     }
   };
-  const findTarget = el => {
+  const findTarget = (el) => {
     // 如果不是微信浏览器，直接返回
     if (!/MicroMessenger/gi.test(navigator.userAgent)) return;
     if (
@@ -36,25 +36,25 @@ export function resetBodyPosition (Vue) {
       on(el, 'blur', blurHandler);
       on(el, 'focus', focusHandler);
     },
-    unbind (el) {
+    unbind(el) {
       el = findTarget(el);
       if (!el) return;
       off(el, 'blur', blurHandler);
       off(el, 'focus', focusHandler);
-    }
+    },
   });
 }
 
 // 设置浏览器标题
-export function title (Vue) {
-  const _setTile = title => (document.title = title || '');
+export function title(Vue) {
+  const _setTile = (title) => (document.title = title || '');
 
   Vue.directive('title', {
-    inserted (el, binding) {
+    inserted(el, binding) {
       _setTile(binding.value);
     },
-    update (el, binding) {
+    update(el, binding) {
       _setTile(binding.value);
-    }
+    },
   });
 }

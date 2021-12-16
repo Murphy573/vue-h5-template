@@ -40,16 +40,16 @@ import {
   Switch,
   SwipeCell,
   CountDown,
-  Overlay
+  Overlay,
 } from 'vant';
 
 /* toast默认选项设置 */
 Toast.allowMultiple();
 Toast.setDefaultOptions({
-  duration: 2000
+  duration: 2000,
 });
 Toast.setDefaultOptions('loading', {
-  forbidClick: true
+  forbidClick: true,
 });
 
 Vue.use(Toast)
@@ -58,7 +58,7 @@ Vue.use(Toast)
     attempt: 1,
     listenEvents: ['scroll'],
     lazyComponent: true,
-    observer: true
+    observer: true,
   })
   .use(Icon)
   .use(Popup)

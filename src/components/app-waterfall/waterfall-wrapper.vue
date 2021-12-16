@@ -2,22 +2,21 @@
   <div class="app-waterfall-wrapper">
     <div class="wrapper">
       <!-- 瀑布流 -->
-      <div class="waterfall clearfix"
-        ref="waterfall"
-        :style="wrapperStyle">
+      <div class="waterfall clearfix" ref="waterfall" :style="wrapperStyle">
         <!-- 列 -->
-        <div v-for="(col, index) in renderList"
+        <div
+          v-for="(col, index) in renderList"
           class="column"
           :style="colStyle"
           :ref="'column' + index"
           :key="'column' + index">
           <!-- 元素 -->
-          <div v-for="(item, index) of col"
+          <div
+            v-for="(item, index) of col"
             :key="genKey(item)"
             :style="itemStyle"
             class="item clearfix">
-            <slot :data="item"
-              :index="index"></slot>
+            <slot :data="item" :index="index"></slot>
           </div>
         </div>
       </div>
@@ -37,40 +36,40 @@ export default {
     cols: {
       type: Number,
       default: 2,
-      validator (v) {
+      validator(v) {
         return v >= 2;
-      }
+      },
     },
     // 列与列之间的间隔
     gutter: {
       type: Number,
       default: 0,
-      validator (v) {
+      validator(v) {
         return v >= 0;
-      }
+      },
     },
     // 数据每一项距离下方margin
     itemMarginBottom: [Number, String],
     // 数据列表
     data: {
       type: Array,
-      default () {
+      default() {
         return [];
-      }
+      },
     },
     // 数据每一项的key
     dataKey: {
       type: [String, Function],
       required: true,
-      default () {
+      default() {
         return '';
-      }
+      },
     },
     // 是否按照高度填充，否则将根据索引
-    justify: Boolean
+    justify: Boolean,
   },
 
-  data () {
+  data() {
     return {
       // 渲染的二维数组
       renderList: [],
@@ -81,12 +80,12 @@ export default {
       // 是否正在渲染
       isRendering: false,
       // 最后一次渲染的索引
-      lastRenderIndex: 0
+      lastRenderIndex: 0,
     };
   },
 
   computed: {
-    wrapperStyle () {
+    wrapperStyle() {
       const ret = {};
 
       if (this.gutter) {
@@ -96,7 +95,7 @@ export default {
 
       return ret;
     },
-    colStyle () {
+    colStyle() {
       let style = {};
 
       if (this.gutter) {
@@ -108,20 +107,20 @@ export default {
 
       return style;
     },
-    itemStyle () {
+    itemStyle() {
       let style = {};
 
       if (isDef(this.itemMarginBottom)) {
         style.marginBottom = addUnit(this.itemMarginBottom);
       }
       return style;
-    }
+    },
   },
 
   watch: {
     data: {
       immediate: true,
-      handler (arr) {
+      handler(arr) {
         if (!arr || !arr.length) {
           this.reset();
         }
@@ -129,38 +128,38 @@ export default {
           this.init();
         }
         this.append();
-      }
+      },
     },
     isRendering: {
       immediate: true,
-      handler (v) {
+      handler(v) {
         this.$emit('rendering', v);
-      }
-    }
+      },
+    },
   },
 
   methods: {
     // 初始化二维渲染数组
-    init () {
+    init() {
       for (let i = 0; i < this.cols; i++) {
         this.renderList.push([]);
         this.colsHeight.push(0);
       }
       this.ininted = true;
     },
-    reset () {
-      this.renderList.forEach(arr => arr.splice(0));
+    reset() {
+      this.renderList.forEach((arr) => arr.splice(0));
       this.colsHeight = this.colsHeight.map(() => 0);
       this.lastRenderIndex = 0;
       this.isRendering = false;
     },
-    genKey (item) {
+    genKey(item) {
       if (typeof this.dataKey === 'string') {
         return item[this.dataKey];
       }
       return this.dataKey(item);
     },
-    async _appendByIndex () {
+    async _appendByIndex() {
       try {
         this.isRendering = true;
 
@@ -170,7 +169,7 @@ export default {
         for (; start < end; start++) {
           const colIndex = start % cols;
           this.renderList[colIndex].push(data[start]);
-          await new Promise((resolve, reject) => {
+          await new Promise((resolve) => {
             // 强制渲染
             /* eslint-disable-next-line */
             this.$refs.waterfall.offsetHeight;
@@ -182,10 +181,9 @@ export default {
         }
 
         this.isRendering = false;
-      }
-      catch (error) { }
+      } catch (error) {}
     },
-    async _appendByJustify (data) {
+    async _appendByJustify() {
       try {
         this.isRendering = true;
 
@@ -201,7 +199,7 @@ export default {
 
           const targetCol = this.$refs['column' + minHeightColIndex][0];
 
-          await new Promise((resolve, reject) => {
+          await new Promise((resolve) => {
             // 强制渲染
             /* eslint-disable-next-line */
             targetCol.offsetHeight;
@@ -213,24 +211,22 @@ export default {
           this.lastRenderIndex++;
         }
         this.isRendering = false;
-      }
-      catch (error) { }
+      } catch (error) {}
     },
     // 获取高度最小索引函数
-    getMinhIndex (arr, value) {
-      return arr.findIndex(h => h === value);
+    getMinhIndex(arr, value) {
+      return arr.findIndex((h) => h === value);
     },
-    append () {
+    append() {
       if (!Array.isArray(this.data) || !this.data.length) return;
 
       if (!this.justify) {
         this._appendByIndex();
-      }
-      else {
+      } else {
         this._appendByJustify();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -3,19 +3,18 @@
     <div class="lucky-wheel">
       <div class="lucky-title"></div>
       <div class="wheel-main">
-        <div class="wheel-pointer"
-          @click="beginRotate()"></div>
-        <div class="wheel-bg"
-          :style="rotateStyle">
+        <div class="wheel-pointer" @click="beginRotate()"></div>
+        <div class="wheel-bg" :style="rotateStyle">
           <div class="prize-list">
-            <div class="prize-item"
-              v-for="(item,index) in prizeList"
+            <div
+              class="prize-item"
+              v-for="(item, index) in prizeList"
               :key="index"
               :style="item.style">
               <div class="prize-pic">
                 <img :src="item.icon" />
               </div>
-              <div class="prize-type">{{item.name}}</div>
+              <div class="prize-type">{{ item.name }}</div>
             </div>
           </div>
         </div>
@@ -31,20 +30,20 @@ const config = {
   duration: 4000,
   // 旋转圈数
   circle: 8,
-  mode: 'ease-in-out'
+  mode: 'ease-in-out',
 };
 export default {
-  data () {
+  data() {
     return {
       count: 10, // 剩余抽奖次数
       duration: 3000, // 转盘旋转时间
       prizeList: [], // 奖品列表
       rotateAngle: 0, // 旋转角度
       index: 0,
-      prize: null
+      prize: null,
     };
   },
-  created () {
+  created() {
     // 初始化一些值
     this.angleList = [];
     // 是否正在旋转
@@ -55,33 +54,32 @@ export default {
     this.initPrizeList();
   },
   computed: {
-    rotateStyle () {
+    rotateStyle() {
       return `
         -webkit-transition: transform ${this.config.duration}ms ${this.config.mode};
         transition: transform ${this.config.duration}ms ${this.config.mode};
         -webkit-transform: rotate(${this.rotateAngle}deg);
             transform: rotate(${this.rotateAngle}deg);`;
     },
-    toastTitle () {
+    toastTitle() {
       return this.prize && this.prize.isPrize === 1
-        ? '恭喜您，获得' +
-        this.prize.name
+        ? '恭喜您，获得' + this.prize.name
         : '未中奖';
     },
-    toastIcon () {
+    toastIcon() {
       return this.prize && this.prize.isPrize === 1
         ? require('../assets/img/congratulation.png')
         : require('../assets/img/sorry.png');
-    }
+    },
   },
   methods: {
-    initPrizeList () {
+    initPrizeList() {
       // 这里可以发起请求，从服务端获取奖品列表
       // 这里使用模拟数据
       this.prizeList = this.formatPrizeList(prizeList);
     },
     // 格式化奖品列表，计算每个奖品的位置
-    formatPrizeList (list) {
+    formatPrizeList(list) {
       // 记录每个奖的位置
       const angleList = [];
       const l = list.length;
@@ -91,17 +89,17 @@ export default {
       // 循环计算给每个奖项添加style属性
       list.forEach((item, i) => {
         // 每个奖项旋转的位置为 当前 i * 平均值 + 平均值 / 2
-        const angle = -((i * average) + half);
+        const angle = -(i * average + half);
         // 增加 style
         item.style = `-webkit-transform: rotate(${angle}deg);
                       transform: rotate(${angle}deg);`;
         // 记录每个奖项的角度范围
-        angleList.push((i * average) + half);
+        angleList.push(i * average + half);
       });
       this.angleList = angleList;
       return list;
     },
-    beginRotate () {
+    beginRotate() {
       // 添加次数校验
 
       if (this.count === 0) return;
@@ -116,10 +114,10 @@ export default {
       // 开始旋转
       this.rotating();
     },
-    random (max, min = 0) {
+    random(max, min = 0) {
       return parseInt(Math.random() * (max - min + 1) + min);
     },
-    rotating () {
+    rotating() {
       const { isRotating, angleList, config, rotateAngle, index } = this;
       if (isRotating) return;
       this.isRotating = true;
@@ -140,16 +138,16 @@ export default {
         this.rotateOver();
       }, config.duration + 1000);
     },
-    rotateOver () {
+    rotateOver() {
       this.isRotating = false;
       this.prize = prizeList[this.index];
       // console.log(this.prize, this.index);
     },
     // 关闭弹窗
-    closeToast () {
+    closeToast() {
       this.prize = null;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

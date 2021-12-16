@@ -1,5 +1,6 @@
 <template>
-  <div ref="dragElement"
+  <div
+    ref="dragElement"
     :style="cmpt_getStyle"
     class="app-drag-elm"
     @touchstart="startDrag"
@@ -8,12 +9,8 @@
     @touchcancel="endDrag">
     <slot></slot>
 
-    <div v-if="showClose"
-      class="close"
-      @click.stop="handleClose">
-      <AppIcon name="iconguanbi1"
-        size="8"
-        color="#ffffff" />
+    <div v-if="showClose" class="close" @click.stop="handleClose">
+      <AppIcon name="iconguanbi1" size="8" color="#ffffff" />
     </div>
   </div>
 </template>
@@ -39,81 +36,84 @@ export default {
      */
     distance: {
       type: Object,
-      default () {
+      default() {
         return {};
-      }
+      },
     },
     // 拖拽方向
     directionX: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 拖拽方向
     directionY: {
       type: Boolean,
-      default: true
+      default: true,
     },
     initPosition: {
       type: String,
       default: 'right',
-      validator (v) {
+      validator(v) {
         return ['left', 'right'].includes(v);
-      }
+      },
     },
     // 是否展示关闭按钮
-    showClose: Boolean
+    showClose: Boolean,
   },
 
-  data () {
+  data() {
     return {
       elementPosition: {
         top: document.body.clientHeight / 2,
         left: 0,
         currentTop: document.body.clientHeight / 2,
-        currentLeft: 0
+        currentLeft: 0,
       },
       draging: false,
       bodyReact: {
         width: document.body.clientWidth,
-        height: document.body.clientHeight
+        height: document.body.clientHeight,
       },
       dragElementRect: {
         width: 0,
-        height: 0
+        height: 0,
       },
-      isInit: true
+      isInit: true,
     };
   },
 
   computed: {
-    cmpt_getStyle () {
+    cmpt_getStyle() {
       let { currentLeft, currentTop } = this.elementPosition;
       return {
         top: currentTop + 'px',
         left: currentLeft + 'px',
-        transition: (this.isInit || this.draging) ? 'none' : '.5s cubic-bezier(0.18, 0.89, 0.32, 1)'
+        transition:
+          this.isInit || this.draging
+            ? 'none'
+            : '.5s cubic-bezier(0.18, 0.89, 0.32, 1)',
       };
     },
-    cmpt_disdance () {
+    cmpt_disdance() {
       return Object.assign(
         {},
         {
           top: 44,
           bottom: 0,
           left: 0,
-          right: 0
+          right: 0,
         },
         this.distance
       );
-    }
+    },
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       let { clientWidth, clientHeight } = this.$refs.dragElement;
       this.dragElementRect = {
         width: clientWidth,
-        height: clientHeight
+        height: clientHeight,
       };
       // 初始化垂直位置：居中
       this.elementPosition.top = this.elementPosition.currentTop =
@@ -121,10 +121,12 @@ export default {
       // 初始化横向位置
       if (this.initPosition === 'right') {
         this.elementPosition.left = this.elementPosition.currentLeft =
-          this.bodyReact.width - this.dragElementRect.width - this.cmpt_disdance.right;
-      }
-      else {
-        this.elementPosition.left = this.elementPosition.currentLeft = this.cmpt_disdance.left;
+          this.bodyReact.width -
+          this.dragElementRect.width -
+          this.cmpt_disdance.right;
+      } else {
+        this.elementPosition.left = this.elementPosition.currentLeft =
+          this.cmpt_disdance.left;
       }
       setTimeout(() => {
         this.isInit = false;
@@ -133,41 +135,44 @@ export default {
   },
 
   methods: {
-    resetDragElement () {
+    resetDragElement() {
       let { clientWidth, clientHeight } = this.$refs.dragElement;
       this.dragElementRect = {
         width: clientWidth,
-        height: clientHeight
+        height: clientHeight,
       };
       if (this.elementPosition.currentLeft) {
-        this.elementPosition.currentLeft = this.bodyReact.width - this.dragElementRect.width;
+        this.elementPosition.currentLeft =
+          this.bodyReact.width - this.dragElementRect.width;
       }
     },
-    startDrag (event) {
+    startDrag(event) {
       // 兼容处理：如果没获取到宽或者高，那么再次获取一次
       if (!this.dragElementRect.width || !this.dragElementRect.height) {
         let { clientWidth, clientHeight } = this.$refs.dragElement;
         this.dragElementRect = {
           width: clientWidth,
-          height: clientHeight
+          height: clientHeight,
         };
       }
 
       this.draging = true;
       this.touchStartMixin(event);
     },
-    onDrag (event) {
+    onDrag(event) {
       this.touchMoveMixin(event);
       if (this.directionX) {
         !this.judgeOverScreen('horizontal') &&
-          (this.elementPosition.currentLeft = this.elementPosition.left + this.deltaXMixin);
+          (this.elementPosition.currentLeft =
+            this.elementPosition.left + this.deltaXMixin);
       }
       if (this.directionY) {
         !this.judgeOverScreen('vertical') &&
-          (this.elementPosition.currentTop = this.elementPosition.top + this.deltaYMixin);
+          (this.elementPosition.currentTop =
+            this.elementPosition.top + this.deltaYMixin);
       }
     },
-    endDrag () {
+    endDrag() {
       this.draging = false;
       this.elementPosition.left = this.elementPosition.currentLeft;
       this.elementPosition.top = this.elementPosition.currentTop;
@@ -178,43 +183,51 @@ export default {
 
       // 屏幕左侧
       if (this.elementPosition.left + _dragElementMiddle < _bodyMiddle) {
-        this.elementPosition.left = this.elementPosition.currentLeft = this.cmpt_disdance.left;
-      }
-      // 屏幕右侧
-      else {
         this.elementPosition.left = this.elementPosition.currentLeft =
-          this.bodyReact.width - this.dragElementRect.width - this.cmpt_disdance.right;
+          this.cmpt_disdance.left;
+      } else {
+        // 屏幕右侧
+        this.elementPosition.left = this.elementPosition.currentLeft =
+          this.bodyReact.width -
+          this.dragElementRect.width -
+          this.cmpt_disdance.right;
       }
     },
     // 判断是否超出屏幕
     /**
      * @param {String} flag horizontal：横向  vertical：纵向
      */
-    judgeOverScreen (flag = 'vertical') {
+    judgeOverScreen(flag = 'vertical') {
       const { left, top } = this.elementPosition;
       const { deltaXMixin, deltaYMixin } = this;
       const { width: dragElWidth, height: dragElHeight } = this.dragElementRect;
       const { width: bodyWidth, height: bodyHeight } = this.bodyReact;
-      const { left: disLeft, right: disRight, top: disTop, bottom: disBottom } = this.cmpt_disdance;
+      const {
+        left: disLeft,
+        right: disRight,
+        top: disTop,
+        bottom: disBottom,
+      } = this.cmpt_disdance;
 
       if (flag === 'horizontal') {
         // 是否超出左边
         if (left + deltaXMixin < disLeft) {
           return true;
-        }
-        // 是否超出右边
-        else if (left + deltaXMixin + dragElWidth + disRight > bodyWidth) {
+        } else if (
+          // 是否超出右边
+          left + deltaXMixin + dragElWidth + disRight >
+          bodyWidth
+        ) {
           return true;
         }
-      }
-      else if (flag === 'vertical') {
+      } else if (flag === 'vertical') {
         // 是否超出上边
         if (top + deltaYMixin < disTop) {
           return true;
-        }
-        // 是否超出下边
-        else if (
-          top + deltaYMixin + dragElHeight > bodyHeight - disBottom
+        } else if (
+          // 是否超出下边
+          top + deltaYMixin + dragElHeight >
+          bodyHeight - disBottom
         ) {
           return true;
         }
@@ -222,11 +235,11 @@ export default {
 
       return false;
     },
-    handleClose () {
+    handleClose() {
       this.$emit('close');
       this.$destroy();
-    }
-  }
+    },
+  },
 };
 </script>
 

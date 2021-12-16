@@ -4,7 +4,7 @@ export const IS_WX_BROWSER = /MicroMessenger/gi.test(navigator.userAgent);
 /**
  * 获取浏览器类型
  */
-export function getUA () {
+export function getUA() {
   /* eslint-disable */
   let test = {
       ipad: /iPad/gi.test(navigator.appVersion),

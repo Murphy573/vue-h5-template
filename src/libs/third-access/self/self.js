@@ -6,13 +6,13 @@ import { getUrlParam } from '@/utils/url';
 
 window.MALL_SELF = {
   // 登录
-  midwayLogin () {
+  midwayLogin() {
     store.dispatch('vx_ac_SetShowLoginPanel', true);
   },
   // 立即登录
-  immediatelyLogin (routerInfo) {
+  immediatelyLogin(routerInfo) {
     const _params = getUrlParam('params') || routerInfo.query.params || '';
 
     _params && store.dispatch('vx_ac_handleThirdLogin', _params);
-  }
+  },
 };

@@ -5,49 +5,49 @@ const direction4StyleKeyMapper = {
     transition: {
       main: 'height',
       side1: 'padding-top',
-      side2: 'padding-bottom'
+      side2: 'padding-bottom',
     },
     // padding
     padding: {
       p1: {
         newP: 'paddingTop',
-        oldP: 'oldPaddingTop'
+        oldP: 'oldPaddingTop',
       },
       p2: {
         newP: 'paddingBottom',
-        oldP: 'oldPaddingBottom'
-      }
+        oldP: 'oldPaddingBottom',
+      },
     },
     // 大小
     size: {
       target: 'height',
-      container: 'scrollHeight'
-    }
+      container: 'scrollHeight',
+    },
   },
   horizontal: {
     // transition字符串
     transition: {
       main: 'width',
       side1: 'padding-left',
-      side2: 'padding-right'
+      side2: 'padding-right',
     },
     // padding
     padding: {
       p1: {
         newP: 'paddingLeft',
-        oldP: 'oldPaddingLeft'
+        oldP: 'oldPaddingLeft',
       },
       p2: {
         newP: 'paddingRight',
-        oldP: 'oldPaddingRight'
-      }
+        oldP: 'oldPaddingRight',
+      },
     },
     // 大小
     size: {
       target: 'width',
-      container: 'scrollWidth'
-    }
-  }
+      container: 'scrollWidth',
+    },
+  },
 };
 
 export default {
@@ -59,19 +59,19 @@ export default {
     // 动画持续时长，单位秒(s)
     duration: {
       type: Number,
-      default: 0.2
+      default: 0.2,
     },
     // 动画方向，水平or垂直
     direction: {
       type: String,
       default: 'vertical',
-      validate (v) {
+      validate(v) {
         return ['horizontal', 'vertical'].includes(v);
-      }
-    }
+      },
+    },
   },
 
-  render (h, { children, props }) {
+  render(h, { children, props }) {
     const { duration, direction } = props;
 
     const { transition, padding, size } = direction4StyleKeyMapper[direction];
@@ -80,7 +80,7 @@ export default {
 
     const data = {
       on: {
-        beforeEnter (el) {
+        beforeEnter(el) {
           // addClass(el, 'collapse-transition');
           // 添加动画
           el.style.transition = transitionStyle;
@@ -94,14 +94,13 @@ export default {
           el.style[padding.p2.newP] = 0;
         },
 
-        enter (el) {
+        enter(el) {
           el.dataset.oldOverflow = el.style.overflow;
           if (el[size.container] !== 0) {
             el.style[size.target] = el[size.container] + 'px';
             el.style[padding.p1.newP] = el.dataset[padding.p1.oldP];
             el.style[padding.p2.newP] = el.dataset[padding.p2.oldP];
-          }
-          else {
+          } else {
             el.style[size.target] = '';
             el.style[padding.p1.newP] = el.dataset[padding.p1.oldP];
             el.style[padding.p2.newP] = el.dataset[padding.p2.oldP];
@@ -110,7 +109,7 @@ export default {
           el.style.overflow = 'hidden';
         },
 
-        afterEnter (el) {
+        afterEnter(el) {
           // for safari: remove class then reset height is necessary
           // removeClass(el, 'collapse-transition');
           // 移除动画
@@ -119,7 +118,7 @@ export default {
           el.style.overflow = el.dataset.oldOverflow;
         },
 
-        beforeLeave (el) {
+        beforeLeave(el) {
           if (!el.dataset) el.dataset = {};
           el.dataset[padding.p1.oldP] = el.style[padding.p1.newP];
           el.dataset[padding.p2.oldP] = el.style[padding.p2.newP];
@@ -129,7 +128,7 @@ export default {
           el.style.overflow = 'hidden';
         },
 
-        leave (el) {
+        leave(el) {
           if (el[size.container] !== 0) {
             // 添加动画
             el.style.transition = transitionStyle;
@@ -141,7 +140,7 @@ export default {
           }
         },
 
-        afterLeave (el) {
+        afterLeave(el) {
           // removeClass(el, 'collapse-transition');
           // 移除动画
           el.style.transition = 'none';
@@ -149,10 +148,10 @@ export default {
           el.style.overflow = el.dataset.oldOverflow;
           el.style[padding.p1.newP] = el.dataset[padding.p1.oldP];
           el.style[padding.p2.newP] = el.dataset[padding.p2.oldP];
-        }
-      }
+        },
+      },
     };
 
     return h('transition', data, children);
-  }
+  },
 };
